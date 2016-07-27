@@ -18,7 +18,9 @@
 @end
 
 @implementation MoreViewController
-
+{
+    ArticleViewController *articleVC;
+}
 //？？？？
 //+(MoreViewController*)share
 //{
@@ -29,6 +31,17 @@
 //    });
 //    return tempcontroller;
 //}
+
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self.view setFrame:CGRectMake(0, 84, ScreenWidth, 500)];
+    }
+    return self;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -121,15 +134,17 @@
 #pragma 按钮的点击事件
 - (void)buttonBeClickedMethod:(UIButton *)tempButton
 {
-    [self removeBtnClick];
     //根据点击的按钮  返回到对应的viewcontroller
-    ArticleViewController *articleVC = [[ArticleViewController alloc] init];
-    articleVC.moreBtn.enabled = YES;
+    articleVC = [[ArticleViewController alloc] init];
+    articleVC.moreBtn.selected = !articleVC.moreBtn.selected;
     [articleVC jumpViewController:tempButton];
+    [self removeBtnClick];
 }
 - (void)removeBtnClick
 {
+    articleVC.moreBtn.selected = !articleVC.moreBtn.selected;
     [self.view removeFromSuperview];
+    [self removeFromParentViewController];
 }
 
 - (void)didReceiveMemoryWarning {

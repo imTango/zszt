@@ -52,7 +52,9 @@
 @end
 
 @implementation ArticleViewController
-
+{
+    MoreViewController *moreVC;
+}
 //顶部使用collectionView的情况
 static NSString *reuseID = @"reuseID";
 static NSString *cellIdentifier = @"UICollectionViewCell";
@@ -63,7 +65,8 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
     self.titleArray = [NSMutableArray arrayWithObjects:@"热点", @"段子", @"养生", @"私房", @"点赞", @"生活", @"财经", @"汽车", @"科技", @"潮人", @"辣妈",  @"八卦", @"旅行", @"职场", @"美食", @"古今", @"学霸", @"星座", @"体育", nil];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
-    
+    moreVC = [[MoreViewController alloc] init];
+//    moreVC.view.frame = CGRectMake(0, 84, ScreenWidth, 500);
     //创建UI
     [self createUI];
     
@@ -271,7 +274,7 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
     //向下扩展按钮
     self.moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.moreBtn.frame = CGRectMake(ScreenWidth-100, 2, 45, 58);
-    [self.moreBtn addTarget:self action:@selector(moreBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.moreBtn addTarget:self action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.moreBtn setImage:[UIImage imageNamed:@"moreBtnImage"] forState:UIControlStateNormal];
     self.moreBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
     self.moreBtn.imageEdgeInsets = UIEdgeInsetsMake(10, 10, 10, 0);
@@ -343,14 +346,25 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
 
 #pragma BUtton按钮的关联方法
 //向下扩展按钮
--(void)moreBtnClick
+-(void)moreBtnClick:(UIButton*)btn
 {
+    
+    
+    if (!btn.selected) {
+        
+        self.moreBtn.selected = !btn.selected;
+        [self addChildViewController:moreVC];
+        [self.view addSubview:moreVC.view];
+//        [moreVC removeFromParentViewController];
+    }else{
+        self.moreBtn.selected = !btn.selected;
+        [moreVC.view removeFromSuperview];
+        [moreVC removeFromParentViewController];
+
+    }
     ZSLog(@"moreBtn按钮被点击了！！！");
 
-    MoreViewController *moreVC = [[MoreViewController alloc] init];
-    moreVC.view.frame = CGRectMake(0, 84, ScreenWidth, 500);
-    [self addChildViewController:moreVC];
-    [self.view addSubview:moreVC.view];
+    
     
     //否则就能连续点击，加载出多个界面
 //    if (self.view.subviews.count > 3) {
@@ -397,9 +411,9 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
 - (void)jumpViewController:(UIButton *)tempButton
 {
     // 关于选中的操作
-    self.selectedButton.selected = NO;
-    tempButton.selected = YES;
-    self.selectedButton = tempButton;
+//    self.selectedButton.selected = NO;
+//    tempButton.selected = YES;
+//    self.selectedButton = tempButton;
     //19个视图的控制器
     NSArray *viewControllers = @[@"ReDianViewController", @"DuanZiViewController", @"YangShengViewController", @"SiFangViewController", @"DianZanViewController", @"ShengHuoViewController", @"CaiJingViewController", @"QiCheViewController", @"KeJiViewController", @"ChaoRenViewController", @"LaMaViewController", @"BaGuaViewController", @"LvXingViewController", @"ZhiChangViewController", @"MeiShiViewController", @"GuJinViewController", @"XueBaViewController", @"XingZuoViewController", @"TiYuViewController"];
     
