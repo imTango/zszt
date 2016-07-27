@@ -8,7 +8,7 @@
 
 #import "ZaiXianZhiFuViewController.h"
 #import "MBProgressHUD+MJ.h"
-#import "WXApiRequestHandler.h"
+
 
 @interface ZaiXianZhiFuViewController ()<UIAlertViewDelegate>
 
@@ -143,72 +143,62 @@
 }
 -(void)saveInformationMethod
 {
-    //微信支付----------------------------
-    NSString *res = [WXApiRequestHandler jumpToBizPay];
-    if( ![@"" isEqual:res] ){
-        UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"支付失败" message:res delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        
-        [alter show];
-    }
-
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"系统将扣除您399.00元" message:nil delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"取消", nil];
     
-//    
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"系统将扣除您399.00元" message:nil delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"取消", nil];
-//    
-//    [alert show];
+    [alert show];
     
 }
 #pragma mark - 警示框代理方法
 
-//- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-//{
-//    switch (buttonIndex) {
-//        case 0:
-//        {
-//            [MBProgressHUD showSuccess:@"支付成功"];
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                
-//                //把数据存到沙盒中
-//                NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"yesOrNoPayMoney.txt"];//当前应用的沙盒路径
-//                self.saveArray = [NSKeyedUnarchiver unarchiveObjectWithFile:path];//将沙盒路径下的归档对象解档出来
-//                if (self.saveArray == nil) {
-//                    self.saveArray = [NSMutableArray array];
-//                }
-//                
-//                NSString *str = @"已支付399元";
-//                [self.saveArray insertObject:str atIndex:0];
-//                //把刚才写的数组存到沙盒当中去
-//                if ([NSKeyedArchiver archiveRootObject:self.saveArray toFile:path]) {
-//                    ZSLog(@"信息保存成功");
-//                    //            [self goBack];
-//                }else{
-//                    ZSLog(@"信息保存失败");
-//                }
-//                ZSLog(@"%@",path);
-//                [self goBack];
-//            });
-//            //用通知传值显示改变编辑后的内容
-//            NSNumber *number = [[NSNumber alloc] initWithInt:1];
-//            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeinfo" object:number];
-//
-//        }
-//            break;
-//        case 1:
-//        {
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+        {
+            [MBProgressHUD showSuccess:@"支付成功"];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                
+                //把数据存到沙盒中
+                NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"yesOrNoPayMoney.txt"];//当前应用的沙盒路径
+                self.saveArray = [NSKeyedUnarchiver unarchiveObjectWithFile:path];//将沙盒路径下的归档对象解档出来
+                if (self.saveArray == nil) {
+                    self.saveArray = [NSMutableArray array];
+                }
+                
+                NSString *str = @"已支付399元";
+                [self.saveArray insertObject:str atIndex:0];
+                //把刚才写的数组存到沙盒当中去
+                if ([NSKeyedArchiver archiveRootObject:self.saveArray toFile:path]) {
+                    ZSLog(@"信息保存成功");
+                    //            [self goBack];
+                }else{
+                    ZSLog(@"信息保存失败");
+                }
+                ZSLog(@"%@",path);
+                [self goBack];
+            });
+            //用通知传值显示改变编辑后的内容
+            NSNumber *number = [[NSNumber alloc] initWithInt:1];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"changeinfo" object:number];
 
-//          //点击取消  不做任何操作
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//                [MBProgressHUD hideHUD];
-//                [self goBack];
-//            });
+        }
+            break;
+        case 1:
+        {
+
+          //点击取消  不做任何操作
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [MBProgressHUD hideHUD];
+                [self goBack];
+            });
 
 
-//        }
-//            break;
-//        default:
-//            break;
-//    }
-//}
+        }
+            break;
+        default:
+            break;
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

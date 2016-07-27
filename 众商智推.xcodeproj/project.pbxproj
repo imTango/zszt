@@ -1708,7 +1708,7 @@
 				TargetAttributes = {
 					2FCCA71E1D2F404300D53EAC = {
 						CreatedOnToolsVersion = 7.3;
-						DevelopmentTeam = CGK3VY69EK;
+						DevelopmentTeam = 5RJG7AAFU7;
 					};
 					2FCCA7371D2F404300D53EAC = {
 						CreatedOnToolsVersion = 7.3;
@@ -2096,7 +2096,7 @@
 					"$(PROJECT_DIR)/众商智推/帮助文件/UMSocial_Sdk_4.4/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/yang/Desktop/众商智推/众商智推/帮助文件/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/众商智推/帮助文件/PrefixHeader.pch";
 				INFOPLIST_FILE = "众商智推/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2109,7 +2109,7 @@
 					"$(PROJECT_DIR)/众商智推/帮助文件/UMSocial_Sdk_4.4/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/众商智推/帮助文件/UMSocial_Sdk_4.4/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = zszt;
+				PRODUCT_BUNDLE_IDENTIFIER = myzszt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -2126,7 +2126,7 @@
 					"$(PROJECT_DIR)/众商智推/帮助文件/UMSocial_Sdk_4.4/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "/Users/yang/Desktop/众商智推/众商智推/帮助文件/PrefixHeader.pch";
+				GCC_PREFIX_HEADER = "$(SRCROOT)/众商智推/帮助文件/PrefixHeader.pch";
 				INFOPLIST_FILE = "众商智推/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -2139,7 +2139,7 @@
 					"$(PROJECT_DIR)/众商智推/帮助文件/UMSocial_Sdk_4.4/UMSocial_Sdk_Extra_Frameworks/TencentOpenAPI",
 					"$(PROJECT_DIR)/众商智推/帮助文件/UMSocial_Sdk_4.4/UMSocial_Sdk_Extra_Frameworks/Wechat",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = zszt;
+				PRODUCT_BUNDLE_IDENTIFIER = myzszt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

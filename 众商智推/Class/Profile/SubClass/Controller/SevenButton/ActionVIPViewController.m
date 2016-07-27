@@ -10,6 +10,7 @@
 #import "ZaiXianZhiFuViewController.h"
 #import "VIPJiHuoViewController.h"
 #import "MBProgressHUD+MJ.h"
+#import "WXApiRequestHandler.h"
 
 @interface ActionVIPViewController ()
 
@@ -131,8 +132,16 @@
 #pragma mark - 按钮的点击事件
 - (void)weiNameButtonClickEvent
 {
-    ZaiXianZhiFuViewController *popularizeVC = [[ZaiXianZhiFuViewController alloc] init];
-    [self presentViewController:popularizeVC animated:YES completion:nil];
+    //微信支付----------------------------
+    NSString *res = [WXApiRequestHandler jumpToBizPay];
+    if( ![@"" isEqual:res] ){
+        UIAlertView *alter = [[UIAlertView alloc] initWithTitle:@"支付失败" message:res delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        
+        [alter show];
+    }
+    
+//    ZaiXianZhiFuViewController *popularizeVC = [[ZaiXianZhiFuViewController alloc] init];
+//    [self presentViewController:popularizeVC animated:YES completion:nil];
     
 }
 - (void)ADsButtonClickEvent
