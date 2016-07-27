@@ -132,6 +132,7 @@
 #pragma mark - 按钮的点击事件
 - (void)weiNameButtonClickEvent
 {
+    
     //微信支付----------------------------
     NSString *res = [WXApiRequestHandler jumpToBizPay];
     if( ![@"" isEqual:res] ){

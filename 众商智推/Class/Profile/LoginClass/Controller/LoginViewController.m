@@ -56,8 +56,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIColor *color = [UIColor blackColor];
-    self.view.backgroundColor = [color colorWithAlphaComponent:0.7];
+    self.view.backgroundColor = [UIColor colorWithRed:0.2 green:0.2 blue:0.2 alpha:0.7];
+//    UIColor *color = [UIColor blackColor];
+//    self.view.backgroundColor = [color colorWithAlphaComponent:0.7];
 //    self.view.backgroundColor = [UIColor blackColor];
 //    self.view.alpha = 0.7;
 //    [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -73,7 +74,7 @@
     [self.loginView addSubview:self.qqBtn];
     [self.loginView addSubview:self.weiXinBtn];
     
-    [self addUserNameAndUserIcon];
+//    [self addUserNameAndUserIcon];
     
 }
 #pragma mark - 创建顶部View
@@ -286,13 +287,9 @@
 
 - (void)sanFangDengLuWithType:(NSString *)type
 {
-//    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:type];
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
-            [self.view removeFromSuperview];
-            
-            
             //            NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
             //            NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
@@ -325,10 +322,11 @@
             ZSLog(@"%@",USERINFOPATH);
             NSArray *list = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithFile:USERINFOPATH];
             ZSLog(@"%@",list);
-//            [self addUserNameAndUserIcon];
+            //            [self addUserNameAndUserIcon];
             //用通知传值显示改变编辑后的内容
             NSNumber *number = [[NSNumber alloc] initWithInt:1];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue1" object:number];
+            
             //登陆成功以后发给服务器用户的id
 //            [self sendUserIDToServerWithID:snsAccount.usid];
 //            [self.view removeFromSuperview];
@@ -337,12 +335,15 @@
 //            profileVC.loginVC = nil;
 //            profileVC.coverBtn = nil;
 //            [profileVC removeSelfAndLoginVC];
+            [self.view removeFromSuperview];
+//            [self dismissViewControllerAnimated:NO completion:nil];
             
            
         }
         else {
             
         [self.view removeFromSuperview];
+//        [self dismissViewControllerAnimated:NO completion:nil];
 
 //            [profileVC removeSelfAndLoginVC];
         }
@@ -351,25 +352,26 @@
     
 //    self.loginClickHandler 
 }
-
--(void)viewWillDisappear:(BOOL)animated{
-//    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
-////    [profileVC removeSelfAndLoginVC];
-//    profileVC.loginVC = nil;
-//    profileVC.coverBtn = nil;
-    [self.view removeFromSuperview];
-    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-    NSLog(@"loginDisappearTime:%@",date);
-
-
-    
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-    NSLog(@"loginappearTime:%@",date);
-}
+//
+//-(void)viewWillDisappear:(BOOL)animated{
+//    [super viewWillDisappear:YES];
+////    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+//////    [profileVC removeSelfAndLoginVC];
+////    profileVC.loginVC = nil;
+////    profileVC.coverBtn = nil;
+//    [self.view removeFromSuperview];
+//    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
+//    NSLog(@"loginDisappearTime:%@",date);
+//
+//
+//    
+//}
+//
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
+//    NSLog(@"loginappearTime:%@",date);
+//}
 /** 定义响应点击各平台授权登录后的block对象
  
  @param presentingController 点击后弹出的分享页面或者授权页面所在的UIViewController对象
@@ -419,9 +421,6 @@
 //    }
 
 }
-
-
-
 
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {

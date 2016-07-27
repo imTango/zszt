@@ -143,6 +143,7 @@
 }
 -(void)saveInformationMethod
 {
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"系统将扣除您399.00元" message:nil delegate:self cancelButtonTitle:@"好的" otherButtonTitles:@"取消", nil];
     
     [alert show];

@@ -452,6 +452,7 @@
 //        [self addChildViewController:self.loginVC];
 //         [self.view bringSubviewToFront:self.loginVC.view];
         [self.view addSubview:self.loginVC.view];
+//        [self presentViewController:self.loginVC animated:NO completion:nil];
         
     }
     
@@ -494,19 +495,19 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    LoginViewController *login = [[LoginViewController alloc] init];
-    [login.view removeFromSuperview];
-    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-    NSLog(@"profileDisappearTime:%@",date);
-
-}
--(void)viewWillAppear:(BOOL)animated{
-    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-    NSLog(@"peofileappearTime:%@",date);
-
-}
+//-(void)viewWillDisappear:(BOOL)animated
+//{
+//    LoginViewController *login = [[LoginViewController alloc] init];
+//    [login.view removeFromSuperview];
+//    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
+//    NSLog(@"profileDisappearTime:%@",date);
+//
+//}
+//-(void)viewWillAppear:(BOOL)animated{
+//    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
+//    NSLog(@"peofileappearTime:%@",date);
+//
+//}
 /*
  #pragma mark - Navigation
  
