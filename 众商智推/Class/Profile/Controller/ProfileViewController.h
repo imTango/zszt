@@ -13,7 +13,7 @@
 @property (strong, nonatomic) LoginViewController *loginVC;
 
 //阴影按钮
-@property (strong, nonatomic) UIButton *coverBtn;
+//@property (strong, nonatomic) UIButton *coverBtn;
 
 + (ProfileViewController*)share;
 - (void)removeSelfAndLoginVC;

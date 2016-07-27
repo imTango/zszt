@@ -34,6 +34,7 @@
 //微信
 @property (strong, nonatomic) UIButton *weiXinBtn;
 
+@property (nonatomic,strong) UIView * loginView;
 //处理点击登录事件后的block对象
 @property(nonatomic, copy) UMSocialSnsPlatformLoginHandler loginClickHandler;
 
@@ -47,24 +48,31 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         tempcontroller = [[LoginViewController alloc] init];
+//        tempcontroller.view.frame = [UIScreen mainScreen].bounds;
+
     });
     return tempcontroller;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self.view setBackgroundColor:[UIColor whiteColor]];
-    
+    UIColor *color = [UIColor blackColor];
+    self.view.backgroundColor = [color colorWithAlphaComponent:0.7];
+//    self.view.backgroundColor = [UIColor blackColor];
+//    self.view.alpha = 0.7;
+//    [self.view setBackgroundColor:[UIColor whiteColor]];
+
 //    [self createUI];
 //    [self.view addSubview:self.iconImage];
 //    [self.view addSubview:self.nameLabel];
-    [self.view addSubview:self.lineView];
-    [self.view addSubview:self.messageLabel];
-    [self.view addSubview:self.sinaBtn];
-    [self.view addSubview:self.qqBtn];
-    [self.view addSubview:self.weiXinBtn];
-    ;
+    [self.view addSubview:self.loginView];
+    [self.loginView addSubview:self.messageLabel];
+    [self.loginView addSubview:self.lineView];
+    
+    [self.loginView addSubview:self.sinaBtn];
+    [self.loginView addSubview:self.qqBtn];
+    [self.loginView addSubview:self.weiXinBtn];
+    
     [self addUserNameAndUserIcon];
     
 }
@@ -154,7 +162,7 @@
 - (UIView *)lineView
 {
     if (!_lineView) {
-        _lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 20, WIDTH - 80, 1)];
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 25, _loginView.width, 1)];
         [_lineView setBackgroundColor:[UIColor grayColor]];
     }
     return _lineView;
@@ -163,7 +171,7 @@
 - (UILabel *)messageLabel
 {
     if (!_messageLabel) {
-        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(30, 12, WIDTH - 10, 30)];
+        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, WIDTH - 10, 30)];
         _messageLabel.text = @"选择登录方式";
         [_messageLabel sizeToFit];
         _messageLabel.centerX = self.lineView.centerX;
@@ -240,6 +248,28 @@
     }
     return _sinaBtn;
 }
+
+//loginView
+-(UIView *)loginView
+{
+    if (!_loginView) {
+        _loginView = [[UIView alloc] initWithFrame:CGRectMake(30, 150, ScreenWidth-60, 250)];
+        _loginView.layer.cornerRadius = 5;
+        _loginView.layer.masksToBounds = YES;
+        _loginView.backgroundColor = [UIColor whiteColor];
+    }
+    return _loginView;
+    /**self.loginVC.view.x = 30;
+     self.loginVC.view.y = 150;
+     self.loginVC.view.height = 250;
+     self.loginVC.view.width = ScreenWidth - 60;
+     self.loginVC.view.layer.cornerRadius = 5;
+     self.loginVC.view.layer.masksToBounds = YES;
+     [self.view addSubview:self.loginVC.view];
+     //        [self addChildViewController:self.loginVC];
+     [self.view bringSubviewToFront:self.loginVC.view];*/
+}
+
 //新浪，QQ，微信的实现方法
 -(void)showSina
 {
@@ -256,9 +286,13 @@
 
 - (void)sanFangDengLuWithType:(NSString *)type
 {
+//    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:type];
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
+            [self.view removeFromSuperview];
+            
+            
             //            NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
             UMSocialAccountEntity *snsAccount = [[UMSocialAccountManager socialAccountDictionary] valueForKey:snsPlatform.platformName];
             //            NSLog(@"\nusername = %@,\n usid = %@,\n token = %@ iconUrl = %@,\n unionId = %@,\n thirdPlatformUserProfile = %@,\n thirdPlatformResponse = %@ \n, message = %@",snsAccount.userName,snsAccount.usid,snsAccount.accessToken,snsAccount.iconURL, snsAccount.unionId, response.thirdPlatformUserProfile, response.thirdPlatformResponse, response.message);
@@ -297,17 +331,20 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue1" object:number];
             //登陆成功以后发给服务器用户的id
 //            [self sendUserIDToServerWithID:snsAccount.usid];
-            [self.view removeFromSuperview];
+//            [self.view removeFromSuperview];
 //            [self addUserNameAndUserIcon];
-            ProfileViewController *profileVC = [[ProfileViewController alloc] init];
-            profileVC.loginVC = nil;
-            profileVC.coverBtn = nil;
-            [profileVC removeSelfAndLoginVC];
-        } else {
-            ProfileViewController *profileVC = [[ProfileViewController alloc] init];
-            profileVC.loginVC = nil;
-            profileVC.coverBtn = nil;
-            [profileVC removeSelfAndLoginVC];
+//            ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+//            profileVC.loginVC = nil;
+//            profileVC.coverBtn = nil;
+//            [profileVC removeSelfAndLoginVC];
+            
+           
+        }
+        else {
+            
+        [self.view removeFromSuperview];
+
+//            [profileVC removeSelfAndLoginVC];
         }
         
     });
@@ -316,10 +353,22 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
-//    [profileVC removeSelfAndLoginVC];
-    profileVC.loginVC = nil;
-    profileVC.coverBtn = nil;
+//    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+////    [profileVC removeSelfAndLoginVC];
+//    profileVC.loginVC = nil;
+//    profileVC.coverBtn = nil;
+    [self.view removeFromSuperview];
+    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
+    NSLog(@"loginDisappearTime:%@",date);
+
+
+    
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
+    NSLog(@"loginappearTime:%@",date);
 }
 /** 定义响应点击各平台授权登录后的block对象
  
@@ -339,7 +388,7 @@
 
 #pragma mark -
 #pragma mark -  登陆成功以后发给服务器用户的id
-- (void) sendUserIDToServerWithID:(NSString *)userID
+- (void)sendUserIDToServerWithID:(NSString *)userID
 {
     
 //    if (userID) {
@@ -371,5 +420,12 @@
 
 }
 
-@end
 
+
+
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view removeFromSuperview];
+}
+
+@end

@@ -8,7 +8,7 @@
 
 #import "ZaiXianZhiFuViewController.h"
 #import "MBProgressHUD+MJ.h"
-#import "WXApiRequestHandler.h"
+
 
 @interface ZaiXianZhiFuViewController ()<UIAlertViewDelegate>
 
