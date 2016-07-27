@@ -42,7 +42,7 @@
                                   @"prepayid":@"wx201607261645563886e8f0e80185944579",
                                   @"noncestr":@"08aac6ac98e59e523995c161e57875f5",
                                  @"timestamp":@"1469522756",
-                                   @"package":@"wx201607261645563886e8f0e80185944579",
+                                   @"package":@"Sign=WXPay",
                                       @"sign":@"ef6c0dd4c68972e871c2fd2d686f6ea8",
                                    @"retcode":@"0",
                           @"spbill_create_ip":@"192.168.112.112",
