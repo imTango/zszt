@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LoginViewController.h"
 @interface ProfileViewController : UIViewController
 
+@property (strong, nonatomic) LoginViewController *loginVC;
+
+//阴影按钮
+@property (strong, nonatomic) UIButton *coverBtn;
+
 + (ProfileViewController*)share;
+- (void)removeSelfAndLoginVC;
 
 @end

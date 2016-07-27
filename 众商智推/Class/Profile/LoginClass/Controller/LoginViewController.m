@@ -299,6 +299,15 @@
 //            [self sendUserIDToServerWithID:snsAccount.usid];
             [self.view removeFromSuperview];
 //            [self addUserNameAndUserIcon];
+            ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+            profileVC.loginVC = nil;
+            profileVC.coverBtn = nil;
+            [profileVC removeSelfAndLoginVC];
+        } else {
+            ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+            profileVC.loginVC = nil;
+            profileVC.coverBtn = nil;
+            [profileVC removeSelfAndLoginVC];
         }
         
     });
@@ -306,7 +315,12 @@
 //    self.loginClickHandler 
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated{
+    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
+//    [profileVC removeSelfAndLoginVC];
+    profileVC.loginVC = nil;
+    profileVC.coverBtn = nil;
+}
 /** 定义响应点击各平台授权登录后的block对象
  
  @param presentingController 点击后弹出的分享页面或者授权页面所在的UIViewController对象

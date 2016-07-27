@@ -11,7 +11,7 @@
 #import "EditPersonalinformationViewController.h"
 #import "PreviewViewController.h"
 #import "EditPIDataModel.h"
-#import "LoginViewController.h"
+
 #import "SettingViewController.h"
 //编辑AD
 #import "EditADViewController.h"
@@ -62,10 +62,7 @@
 //数据数组
 @property (strong, nonatomic) NSMutableArray *dataSourceArray;
 
-@property (strong, nonatomic) LoginViewController *loginVC;
 
-//阴影按钮
-@property (strong, nonatomic) UIButton *coverBtn;
 
 
 @end
