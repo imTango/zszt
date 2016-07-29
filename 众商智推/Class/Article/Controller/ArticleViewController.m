@@ -220,7 +220,7 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
     [self.view addSubview:vc.view];
 
 }
- */
+*/
 //顶部使用collectionView的情况   没有和页面连接起来
 //----------------------------------------------------------------------------------------------------
 
@@ -455,6 +455,7 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
     }
     return _headTitleCollectView;
 }
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

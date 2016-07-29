@@ -326,6 +326,7 @@
             //用通知传值显示改变编辑后的内容
             NSNumber *number = [[NSNumber alloc] initWithInt:1];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue1" object:number];
+
             
             //登陆成功以后发给服务器用户的id
 //            [self sendUserIDToServerWithID:snsAccount.usid];
