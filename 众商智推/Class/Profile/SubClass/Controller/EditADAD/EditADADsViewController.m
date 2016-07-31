@@ -9,6 +9,7 @@
 #import "EditADADsViewController.h"
 #import "EditADADsTypeViewController.h"
 #import "TypeOneViewController.h"
+#import "ADTableViewCell.h"
 
 @interface EditADADsViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -23,7 +24,6 @@
 //显示用户编辑的广告
 @property (strong, nonatomic) UITableView *userADTableView;
 
-
 @end
 
 @implementation EditADADsViewController
@@ -37,7 +37,7 @@
     [self createContentUI];
     //用来显示用户的广告类型
 //    [self showAddADType];
-
+    [self.view addSubview:self.userADTableView];
     //创建通知者
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getSecret:) name:@"passValue" object:nil];
     
@@ -150,6 +150,17 @@
     [self presentViewController:ADsTypeVC animated:YES completion:nil];
 }
 
+
+-(UITableView *)userADTableView
+{
+    if (!_userADTableView) {
+        _userADTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight-60-64) style:UITableViewStylePlain];
+        _userADTableView.delegate = self;
+        _userADTableView.dataSource = self;
+    }
+    return _userADTableView;
+}
+
 //显示广告的类型
 - (UIButton *)showBtn
 {
@@ -215,6 +226,15 @@
     [self.showBtn removeFromSuperview];
     [self.editADTypeBtn removeFromSuperview];
     [self.removeADTypeBtn removeFromSuperview];
+}
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return 0;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    ADTableViewCell * cell = [ADTableViewCell tempTableViewCellWith:tableView indexPath:indexPath];
+    return cell;
 }
 
 - (void)didReceiveMemoryWarning {

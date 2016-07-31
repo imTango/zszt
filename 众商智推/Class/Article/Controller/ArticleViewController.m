@@ -49,6 +49,9 @@
 @property (strong, nonatomic) UICollectionView *headTitleCollectView;
 @property (strong, nonatomic) UIButton *titleButton;
 
+@property (strong,nonatomic)  NSArray *allVC;
+@property (strong,nonatomic) UIViewController *showVC;
+
 @end
 
 @implementation ArticleViewController
@@ -61,7 +64,7 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.allVC = [NSArray array];
     self.titleArray = [NSMutableArray arrayWithObjects:@"热点", @"段子", @"养生", @"私房", @"点赞", @"生活", @"财经", @"汽车", @"科技", @"潮人", @"辣妈",  @"八卦", @"旅行", @"职场", @"美食", @"古今", @"学霸", @"星座", @"体育", nil];
     
     [self.view setBackgroundColor:[UIColor whiteColor]];
@@ -274,6 +277,7 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
     //向下扩展按钮
     self.moreBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.moreBtn.frame = CGRectMake(ScreenWidth-100, 2, 45, 58);
+    self.moreBtn.tag = 100;
     [self.moreBtn addTarget:self action:@selector(moreBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.moreBtn setImage:[UIImage imageNamed:@"moreBtnImage"] forState:UIControlStateNormal];
     self.moreBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
@@ -383,23 +387,42 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
 // headerView中按钮关联的方法
 - (void)buttonBeClicked:(UIButton *)sender
 {
+    self.moreBtn.selected = !self.moreBtn.selected;
+    [self moreBtnClick:self.moreBtn];
     // 关于选中的操作
     self.selectedButton.selected = NO;
     sender.selected = YES;
     self.selectedButton = sender;
     //19个视图的控制器
-    NSArray *viewControllers = @[@"ReDianViewController", @"DuanZiViewController", @"YangShengViewController", @"SiFangViewController", @"DianZanViewController", @"ShengHuoViewController", @"CaiJingViewController", @"QiCheViewController", @"KeJiViewController", @"ChaoRenViewController", @"LaMaViewController", @"BaGuaViewController", @"LvXingViewController", @"ZhiChangViewController", @"MeiShiViewController", @"GuJinViewController", @"XueBaViewController", @"XingZuoViewController", @"TiYuViewController"];
+//    NSArray *viewControllers = @[@"ReDianViewController", @"DuanZiViewController", @"YangShengViewController", @"SiFangViewController", @"DianZanViewController", @"ShengHuoViewController", @"CaiJingViewController", @"QiCheViewController", @"KeJiViewController", @"ChaoRenViewController", @"LaMaViewController", @"BaGuaViewController", @"LvXingViewController", @"ZhiChangViewController", @"MeiShiViewController", @"GuJinViewController", @"XueBaViewController", @"XingZuoViewController", @"TiYuViewController"];
     
     //移除多余的视图
-    if (self.view.subviews.count > 1) {
-        UIView *tempView = (UIView *)self.view.subviews.lastObject;
-        [tempView removeFromSuperview];
-    }
+//    if (self.view.subviews.count > 1) {
+//        UIView *tempView = (UIView *)self.view.subviews.lastObject;
+//        [tempView removeFromSuperview];
+//    }
     //创建新的视图
-    UIViewController *vc = [[NSClassFromString(viewControllers[sender.tag]) alloc] init];
+//    UIViewController *vc = [[NSClassFromString(viewControllers[sender.tag]) alloc] init];
+//    [self addChildViewController:vc];
+//    vc.view.frame = CGRectMake(0, 84, ScreenWidth, ScreenHeight-135);
+//    [self.view addSubview:vc.view];
+    
+   
+    
+    
+    self.allVC = @[
+  [[ReDianViewController alloc] init],[[DuanZiViewController alloc] init],[[YangShengViewController alloc] init],         [[SiFangViewController alloc] init], [[DianZanViewController alloc] init],[[ShengHuoViewController alloc] init],                   [[CaiJingViewController alloc] init],[[QiCheViewController alloc] init],[[KeJiViewController alloc] init],                         [[ChaoRenViewController alloc] init],[[LaMaViewController alloc] init],[[BaGuaViewController alloc] init],[[LvXingViewController alloc] init],[[ZhiChangViewController alloc] init],[[MeiShiViewController alloc] init],
+        [[GuJinViewController alloc] init],[[XueBaViewController alloc] init],[[XingZuoViewController alloc] init],
+    [[TiYuViewController alloc] init]];
+    
+    [self.showVC.view removeFromSuperview];
+    UIViewController *vc = [self.allVC objectAtIndex:sender.tag];
     [self addChildViewController:vc];
     vc.view.frame = CGRectMake(0, 84, ScreenWidth, ScreenHeight-135);
-    [self.view addSubview:vc.view];
+    self.showVC = vc;
+    [self.view addSubview:[[self.allVC objectAtIndex:sender.tag] view]];
+    
+    
 //    [self addChildViewController:vc];
     
 //    [self presentViewController:vc animated:YES completion:nil];
@@ -415,13 +438,13 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
 //    tempButton.selected = YES;
 //    self.selectedButton = tempButton;
     //19个视图的控制器
-    NSArray *viewControllers = @[@"ReDianViewController", @"DuanZiViewController", @"YangShengViewController", @"SiFangViewController", @"DianZanViewController", @"ShengHuoViewController", @"CaiJingViewController", @"QiCheViewController", @"KeJiViewController", @"ChaoRenViewController", @"LaMaViewController", @"BaGuaViewController", @"LvXingViewController", @"ZhiChangViewController", @"MeiShiViewController", @"GuJinViewController", @"XueBaViewController", @"XingZuoViewController", @"TiYuViewController"];
+//    NSArray *viewControllers = @[@"ReDianViewController", @"DuanZiViewController", @"YangShengViewController", @"SiFangViewController", @"DianZanViewController", @"ShengHuoViewController", @"CaiJingViewController", @"QiCheViewController", @"KeJiViewController", @"ChaoRenViewController", @"LaMaViewController", @"BaGuaViewController", @"LvXingViewController", @"ZhiChangViewController", @"MeiShiViewController", @"GuJinViewController", @"XueBaViewController", @"XingZuoViewController", @"TiYuViewController"];
     
     //创建新的视图
-    UIViewController *vc = [[NSClassFromString(viewControllers[tempButton.tag]) alloc] init];
-    [self addChildViewController:vc];
-    vc.view.frame = CGRectMake(0, 84, ScreenWidth, ScreenHeight-135);
-    [self.view addSubview:vc.view];
+//    UIViewController *vc = [[NSClassFromString(viewControllers[tempButton.tag]) alloc] init];
+//    [self addChildViewController:vc];
+//    vc.view.frame = CGRectMake(0, 84, ScreenWidth, ScreenHeight-135);
+//    [self.view addSubview:vc.view];
     
 }
 

@@ -37,6 +37,8 @@
 
 @property (strong,nonatomic)UIButton * tmpBtn;
 
+@property (strong,nonatomic) NSMutableDictionary * adInfoDic;
+
 @end
 
 @implementation TypeOneViewController
@@ -46,6 +48,7 @@
     [self.view setBackgroundColor:ZSColor(244, 244, 244)];
     [self createHeadUI];
     [self createContentControls];
+    self.adInfoDic = [[NSMutableDictionary alloc] init];
     
 }
 #pragma mark - 创建顶部View
@@ -170,7 +173,7 @@
  */
 -(void)buttonSelected:(UIButton*)sender
 {
-    
+    UIImage *bgImg = sender.currentBackgroundImage;
     if (_tmpBtn == nil){
         sender.selected = YES;
         _tmpBtn = sender;
@@ -217,6 +220,14 @@
         //发送带消息的通知
         [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue" object:str];
     }
+    
+    //点击保存之后，将数据存储到字典中
+    self.adInfoDic = @{
+                       @"adTextField":self.adTextField.text,
+                       @"linkTextField":self.linkTextField,
+                       @""
+                       };
+    
   
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

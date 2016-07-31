@@ -195,6 +195,23 @@
 		2FFF5C8E1D37661400089810 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF5C8D1D37661400089810 /* SettingViewController.m */; };
 		2FFF5C911D37821900089810 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF5C901D37821900089810 /* AboutUsViewController.m */; };
 		2FFF5C971D37911300089810 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF5C961D37911300089810 /* GeneralSettingViewController.m */; };
+		BFABA29B1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA2991D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m */; };
+		BFABA29C1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFABA29A1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib */; };
+		BFABA2A01D4B1F570022B732 /* ADTypeOneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA29E1D4B1F570022B732 /* ADTypeOneTableViewCell.m */; };
+		BFABA2A11D4B1F570022B732 /* ADTypeOneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFABA29F1D4B1F570022B732 /* ADTypeOneTableViewCell.xib */; };
+		BFABA2A81D4B28770022B732 /* ADTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA2A61D4B28770022B732 /* ADTableViewCell.m */; };
+		BFABA2A91D4B28770022B732 /* ADTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFABA2A71D4B28770022B732 /* ADTableViewCell.xib */; };
+		BFABA33A1D4B4E580022B732 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFABA3241D4B4E580022B732 /* Info.plist */; };
+		BFABA33B1D4B4E580022B732 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3271D4B4E580022B732 /* MJExtensionConst.m */; };
+		BFABA33C1D4B4E580022B732 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3291D4B4E580022B732 /* MJFoundation.m */; };
+		BFABA33D1D4B4E580022B732 /* MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA32B1D4B4E580022B732 /* MJProperty.m */; };
+		BFABA33E1D4B4E580022B732 /* MJPropertyKey.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA32D1D4B4E580022B732 /* MJPropertyKey.m */; };
+		BFABA33F1D4B4E580022B732 /* MJPropertyType.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA32F1D4B4E580022B732 /* MJPropertyType.m */; };
+		BFABA3401D4B4E580022B732 /* NSObject+MJClass.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3311D4B4E580022B732 /* NSObject+MJClass.m */; };
+		BFABA3411D4B4E580022B732 /* NSObject+MJCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3331D4B4E580022B732 /* NSObject+MJCoding.m */; };
+		BFABA3421D4B4E580022B732 /* NSObject+MJKeyValue.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3351D4B4E580022B732 /* NSObject+MJKeyValue.m */; };
+		BFABA3431D4B4E580022B732 /* NSObject+MJProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3371D4B4E580022B732 /* NSObject+MJProperty.m */; };
+		BFABA3441D4B4E580022B732 /* NSString+MJExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3391D4B4E580022B732 /* NSString+MJExtension.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -603,6 +620,37 @@
 		2FFF5C901D37821900089810 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		2FFF5C951D37911300089810 /* GeneralSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralSettingViewController.h; sourceTree = "<group>"; };
 		2FFF5C961D37911300089810 /* GeneralSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralSettingViewController.m; sourceTree = "<group>"; };
+		BFABA2981D4B1E4F0022B732 /* ADTypeTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTypeTwoTableViewCell.h; sourceTree = "<group>"; };
+		BFABA2991D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTypeTwoTableViewCell.m; sourceTree = "<group>"; };
+		BFABA29A1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADTypeTwoTableViewCell.xib; sourceTree = "<group>"; };
+		BFABA29D1D4B1F570022B732 /* ADTypeOneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTypeOneTableViewCell.h; sourceTree = "<group>"; };
+		BFABA29E1D4B1F570022B732 /* ADTypeOneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTypeOneTableViewCell.m; sourceTree = "<group>"; };
+		BFABA29F1D4B1F570022B732 /* ADTypeOneTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADTypeOneTableViewCell.xib; sourceTree = "<group>"; };
+		BFABA2A51D4B28770022B732 /* ADTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTableViewCell.h; sourceTree = "<group>"; };
+		BFABA2A61D4B28770022B732 /* ADTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTableViewCell.m; sourceTree = "<group>"; };
+		BFABA2A71D4B28770022B732 /* ADTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADTableViewCell.xib; sourceTree = "<group>"; };
+		BFABA3241D4B4E580022B732 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BFABA3251D4B4E580022B732 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
+		BFABA3261D4B4E580022B732 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
+		BFABA3271D4B4E580022B732 /* MJExtensionConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJExtensionConst.m; sourceTree = "<group>"; };
+		BFABA3281D4B4E580022B732 /* MJFoundation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJFoundation.h; sourceTree = "<group>"; };
+		BFABA3291D4B4E580022B732 /* MJFoundation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJFoundation.m; sourceTree = "<group>"; };
+		BFABA32A1D4B4E580022B732 /* MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJProperty.h; sourceTree = "<group>"; };
+		BFABA32B1D4B4E580022B732 /* MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJProperty.m; sourceTree = "<group>"; };
+		BFABA32C1D4B4E580022B732 /* MJPropertyKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyKey.h; sourceTree = "<group>"; };
+		BFABA32D1D4B4E580022B732 /* MJPropertyKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyKey.m; sourceTree = "<group>"; };
+		BFABA32E1D4B4E580022B732 /* MJPropertyType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJPropertyType.h; sourceTree = "<group>"; };
+		BFABA32F1D4B4E580022B732 /* MJPropertyType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MJPropertyType.m; sourceTree = "<group>"; };
+		BFABA3301D4B4E580022B732 /* NSObject+MJClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJClass.h"; sourceTree = "<group>"; };
+		BFABA3311D4B4E580022B732 /* NSObject+MJClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJClass.m"; sourceTree = "<group>"; };
+		BFABA3321D4B4E580022B732 /* NSObject+MJCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJCoding.h"; sourceTree = "<group>"; };
+		BFABA3331D4B4E580022B732 /* NSObject+MJCoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJCoding.m"; sourceTree = "<group>"; };
+		BFABA3341D4B4E580022B732 /* NSObject+MJKeyValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJKeyValue.h"; sourceTree = "<group>"; };
+		BFABA3351D4B4E580022B732 /* NSObject+MJKeyValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJKeyValue.m"; sourceTree = "<group>"; };
+		BFABA3361D4B4E580022B732 /* NSObject+MJProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MJProperty.h"; sourceTree = "<group>"; };
+		BFABA3371D4B4E580022B732 /* NSObject+MJProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MJProperty.m"; sourceTree = "<group>"; };
+		BFABA3381D4B4E580022B732 /* NSString+MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MJExtension.h"; sourceTree = "<group>"; };
+		BFABA3391D4B4E580022B732 /* NSString+MJExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MJExtension.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -745,6 +793,7 @@
 		2FCCA7551D2F40DA00D53EAC /* 帮助文件 */ = {
 			isa = PBXGroup;
 			children = (
+				BFABA3231D4B4E580022B732 /* MJExtension */,
 				2FCCA9A91D2F726300D53EAC /* UIView+Extension.h */,
 				2FCCA9AA1D2F726300D53EAC /* UIView+Extension.m */,
 				2FCCA7561D2F40DA00D53EAC /* Masonry */,
@@ -1545,6 +1594,7 @@
 				2FF8D02B1D2FE37500FC487E /* EditADADsViewController.m */,
 				2FF8D02C1D2FE37500FC487E /* EditADChangeIconViewController.h */,
 				2FF8D02D1D2FE37500FC487E /* EditADChangeIconViewController.m */,
+				BFABA2A21D4B22C50022B732 /* cell */,
 				2FF8D0691D2FE3AB00FC487E /* EditADType */,
 			);
 			path = EditADAD;
@@ -1639,6 +1689,51 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		BFABA2A21D4B22C50022B732 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				BFABA29D1D4B1F570022B732 /* ADTypeOneTableViewCell.h */,
+				BFABA29E1D4B1F570022B732 /* ADTypeOneTableViewCell.m */,
+				BFABA29F1D4B1F570022B732 /* ADTypeOneTableViewCell.xib */,
+				BFABA2981D4B1E4F0022B732 /* ADTypeTwoTableViewCell.h */,
+				BFABA2991D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m */,
+				BFABA29A1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib */,
+				BFABA2A51D4B28770022B732 /* ADTableViewCell.h */,
+				BFABA2A61D4B28770022B732 /* ADTableViewCell.m */,
+				BFABA2A71D4B28770022B732 /* ADTableViewCell.xib */,
+			);
+			name = cell;
+			sourceTree = "<group>";
+		};
+		BFABA3231D4B4E580022B732 /* MJExtension */ = {
+			isa = PBXGroup;
+			children = (
+				BFABA3241D4B4E580022B732 /* Info.plist */,
+				BFABA3251D4B4E580022B732 /* MJExtension.h */,
+				BFABA3261D4B4E580022B732 /* MJExtensionConst.h */,
+				BFABA3271D4B4E580022B732 /* MJExtensionConst.m */,
+				BFABA3281D4B4E580022B732 /* MJFoundation.h */,
+				BFABA3291D4B4E580022B732 /* MJFoundation.m */,
+				BFABA32A1D4B4E580022B732 /* MJProperty.h */,
+				BFABA32B1D4B4E580022B732 /* MJProperty.m */,
+				BFABA32C1D4B4E580022B732 /* MJPropertyKey.h */,
+				BFABA32D1D4B4E580022B732 /* MJPropertyKey.m */,
+				BFABA32E1D4B4E580022B732 /* MJPropertyType.h */,
+				BFABA32F1D4B4E580022B732 /* MJPropertyType.m */,
+				BFABA3301D4B4E580022B732 /* NSObject+MJClass.h */,
+				BFABA3311D4B4E580022B732 /* NSObject+MJClass.m */,
+				BFABA3321D4B4E580022B732 /* NSObject+MJCoding.h */,
+				BFABA3331D4B4E580022B732 /* NSObject+MJCoding.m */,
+				BFABA3341D4B4E580022B732 /* NSObject+MJKeyValue.h */,
+				BFABA3351D4B4E580022B732 /* NSObject+MJKeyValue.m */,
+				BFABA3361D4B4E580022B732 /* NSObject+MJProperty.h */,
+				BFABA3371D4B4E580022B732 /* NSObject+MJProperty.m */,
+				BFABA3381D4B4E580022B732 /* NSString+MJExtension.h */,
+				BFABA3391D4B4E580022B732 /* NSString+MJExtension.m */,
+			);
+			path = MJExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1752,9 +1847,12 @@
 				2FCCA7321D2F404300D53EAC /* LaunchScreen.storyboard in Resources */,
 				2FCCA8FA1D2F40DA00D53EAC /* MBProgressHUD.bundle in Resources */,
 				2FCCA9481D2F40DB00D53EAC /* WeiboSDK.bundle in Resources */,
+				BFABA2A91D4B28770022B732 /* ADTableViewCell.xib in Resources */,
 				2FCCA93C1D2F40DA00D53EAC /* UMSCommentInputController.xib in Resources */,
+				BFABA2A11D4B1F570022B732 /* ADTypeOneTableViewCell.xib in Resources */,
 				2FCCA9421D2F40DA00D53EAC /* UMSShareListController.xib in Resources */,
 				2FCCA93F1D2F40DA00D53EAC /* UMShareEditViewControlleriPad.xib in Resources */,
+				BFABA29C1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib in Resources */,
 				2FCCA93B1D2F40DA00D53EAC /* UMSCommentDetailController.xib in Resources */,
 				2FCCA93E1D2F40DA00D53EAC /* UMShareEditViewController.xib in Resources */,
 				2FCCA9391D2F40DA00D53EAC /* UMSocialLocalizable.strings in Resources */,
@@ -1765,6 +1863,7 @@
 				2FCCA90C1D2F40DA00D53EAC /* MJRefresh.bundle in Resources */,
 				2FCCA94E1D2F40DB00D53EAC /* UMSocialSDKResourcesNew.bundle in Resources */,
 				2FCCA72D1D2F404300D53EAC /* Main.storyboard in Resources */,
+				BFABA33A1D4B4E580022B732 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1792,6 +1891,8 @@
 				2FCCA9211D2F40DA00D53EAC /* UIButton+WebCache.m in Sources */,
 				2FCCA9021D2F40DA00D53EAC /* MJRefreshAutoNormalFooter.m in Sources */,
 				2FCCA9AB1D2F726300D53EAC /* UIView+Extension.m in Sources */,
+				BFABA2A01D4B1F570022B732 /* ADTypeOneTableViewCell.m in Sources */,
+				BFABA3441D4B4E580022B732 /* NSString+MJExtension.m in Sources */,
 				2FCCA92F1D2F40DA00D53EAC /* JSONUtil.m in Sources */,
 				2FCCA8FD1D2F40DA00D53EAC /* MJRefreshBackFooter.m in Sources */,
 				2FCCA9011D2F40DA00D53EAC /* MJRefreshAutoGifFooter.m in Sources */,
@@ -1801,6 +1902,7 @@
 				2FCCA9051D2F40DA00D53EAC /* MJRefreshBackNormalFooter.m in Sources */,
 				2FCCA9191D2F40DA00D53EAC /* NSData+ImageContentType.m in Sources */,
 				2FCCA9601D2F40DB00D53EAC /* XingZuoViewController.m in Sources */,
+				BFABA33E1D4B4E580022B732 /* MJPropertyKey.m in Sources */,
 				2FCCA9511D2F40DB00D53EAC /* BaGuaViewController.m in Sources */,
 				2FCCA8FF1D2F40DA00D53EAC /* MJRefreshFooter.m in Sources */,
 				2FFEF88B1D349303002F76AC /* TypeFiveViewController.m in Sources */,
@@ -1870,6 +1972,7 @@
 				2FCCA9141D2F40DA00D53EAC /* TAPageControl.m in Sources */,
 				2FCCA9341D2F40DA00D53EAC /* UIButton+AFNetworking.m in Sources */,
 				2FCCA9611D2F40DB00D53EAC /* XueBaViewController.m in Sources */,
+				BFABA2A81D4B28770022B732 /* ADTableViewCell.m in Sources */,
 				2F19D5FE1D473E35000EF283 /* WXApiRequestHandler.m in Sources */,
 				2FCCA8F61D2F40DA00D53EAC /* NSArray+MASAdditions.m in Sources */,
 				2FCCA98F1D2F40DB00D53EAC /* StatisticViewController.m in Sources */,
@@ -1878,9 +1981,12 @@
 				2FCCA9561D2F40DB00D53EAC /* GuJinViewController.m in Sources */,
 				2FCCA9031D2F40DA00D53EAC /* MJRefreshAutoStateFooter.m in Sources */,
 				2FFF5C911D37821900089810 /* AboutUsViewController.m in Sources */,
+				BFABA33B1D4B4E580022B732 /* MJExtensionConst.m in Sources */,
+				BFABA3401D4B4E580022B732 /* NSObject+MJClass.m in Sources */,
 				2FCCA9621D2F40DB00D53EAC /* YangShengViewController.m in Sources */,
 				2FCCA92C1D2F40DA00D53EAC /* AFURLResponseSerialization.m in Sources */,
 				2FF8D0681D2FE37500FC487E /* ZaiXianZhiFuViewController.m in Sources */,
+				BFABA33D1D4B4E580022B732 /* MJProperty.m in Sources */,
 				2FCCA95F1D2F40DB00D53EAC /* TiYuViewController.m in Sources */,
 				2F0A9F3D1D3E02B8007A8EEB /* JFSCViewController.m in Sources */,
 				2FCCA9671D2F40DB00D53EAC /* WebViewController.m in Sources */,
@@ -1897,12 +2003,14 @@
 				2FCCA9121D2F40DA00D53EAC /* TAAnimatedDotView.m in Sources */,
 				2F0A9F3A1D3E02B8007A8EEB /* JFSCGoodsViewController.m in Sources */,
 				2FCCA9271D2F40DA00D53EAC /* UIView+WebCacheOperation.m in Sources */,
+				BFABA33C1D4B4E580022B732 /* MJFoundation.m in Sources */,
 				2FF8D0781D2FE3AB00FC487E /* TypeTwoViewController.m in Sources */,
 				2FCCA95C1D2F40DB00D53EAC /* ReDianViewController.m in Sources */,
 				2FFF5C971D37911300089810 /* GeneralSettingViewController.m in Sources */,
 				2FCCA9311D2F40DA00D53EAC /* AFImageDownloader.m in Sources */,
 				2FCCA9201D2F40DA00D53EAC /* SDWebImagePrefetcher.m in Sources */,
 				2FCCA94F1D2F40DB00D53EAC /* LiangView.m in Sources */,
+				BFABA33F1D4B4E580022B732 /* MJPropertyType.m in Sources */,
 				2FCCA9651D2F40DB00D53EAC /* ArticleListModel.m in Sources */,
 				2FCCA92E1D2F40DA00D53EAC /* AFNetworkUtil.m in Sources */,
 				2FCCA90D1D2F40DA00D53EAC /* MJRefreshConst.m in Sources */,
@@ -1914,6 +2022,7 @@
 				2FCCA9901D2F40DB00D53EAC /* TaskViewController.m in Sources */,
 				2FCCA9111D2F40DA00D53EAC /* TAAbstractDotView.m in Sources */,
 				2FCCA90A1D2F40DA00D53EAC /* DIYMJRefreshBackGifFooter.m in Sources */,
+				BFABA3411D4B4E580022B732 /* NSObject+MJCoding.m in Sources */,
 				2FCCA9531D2F40DB00D53EAC /* ChaoRenViewController.m in Sources */,
 				2FCCA90E1D2F40DA00D53EAC /* UIScrollView+MJExtension.m in Sources */,
 				2FCCA9541D2F40DB00D53EAC /* DianZanViewController.m in Sources */,
@@ -1925,8 +2034,11 @@
 				2FCCA92A1D2F40DA00D53EAC /* AFSecurityPolicy.m in Sources */,
 				2FCCA91E1D2F40DA00D53EAC /* SDWebImageDownloaderOperation.m in Sources */,
 				2FCCA92D1D2F40DA00D53EAC /* AFURLSessionManager.m in Sources */,
+				BFABA29B1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m in Sources */,
+				BFABA3431D4B4E580022B732 /* NSObject+MJProperty.m in Sources */,
 				2FCCA95A1D2F40DB00D53EAC /* MeiShiViewController.m in Sources */,
 				2FCCA9591D2F40DB00D53EAC /* LvXingViewController.m in Sources */,
+				BFABA3421D4B4E580022B732 /* NSObject+MJKeyValue.m in Sources */,
 				2FCCA8F51D2F40DA00D53EAC /* MASViewConstraint.m in Sources */,
 				2FCCA8FC1D2F40DA00D53EAC /* MJRefreshAutoFooter.m in Sources */,
 				2FCCA98E1D2F40DB00D53EAC /* StatisticPopularizeViewController.m in Sources */,
