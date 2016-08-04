@@ -168,54 +168,6 @@
     }
     return _showBtn;
 }
-//编辑个人信息的按钮Btn
-- (UIButton *)editADTypeBtn
-{
-    if (!_editADTypeBtn) {
-        _editADTypeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _editADTypeBtn.frame = CGRectMake(10, 220, (ScreenWidth-30)/2, 50);
-        _editADTypeBtn.backgroundColor = [UIColor whiteColor];
-        [_editADTypeBtn setImage:[UIImage imageNamed:@"editImage.png"] forState:UIControlStateNormal];
-        [_editADTypeBtn setTitle:@"编辑" forState:UIControlStateNormal];
-        [_editADTypeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_editADTypeBtn addTarget:self action:@selector(editADTypeBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        _editADTypeBtn.layer.cornerRadius = 10;
-        _editADTypeBtn.layer.masksToBounds = YES;
-        
-    }
-    return _editADTypeBtn;
-}
-//编辑个人信息的按钮Btn
-- (UIButton *)removeADTypeBtn
-{
-    if (!_removeADTypeBtn) {
-        _removeADTypeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _removeADTypeBtn.frame = CGRectMake((ScreenWidth-30)/2 + 20, 220, (ScreenWidth-30)/2, 50);;
-        _removeADTypeBtn.backgroundColor = [UIColor whiteColor];
-        [_removeADTypeBtn setImage:[UIImage imageNamed:@"removeImage.png"] forState:UIControlStateNormal];
-        [_removeADTypeBtn setTitle:@"删除" forState:UIControlStateNormal];
-        [_removeADTypeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [_removeADTypeBtn addTarget:self action:@selector(removeADTypeBtnClick) forControlEvents:UIControlEventTouchUpInside];
-        _removeADTypeBtn.layer.cornerRadius = 10;
-        _removeADTypeBtn.layer.masksToBounds = YES;
-        
-    }
-    return _removeADTypeBtn;
-}
-
-//编辑广告按钮的实现方法
-- (void)editADTypeBtnClick
-{
-    TypeOneViewController *TypeOneVC = [[TypeOneViewController alloc] init];
-    [self presentViewController:TypeOneVC animated:YES completion:nil];
-}
-
-- (void)removeADTypeBtnClick
-{
-    [self.showBtn removeFromSuperview];
-    [self.editADTypeBtn removeFromSuperview];
-    [self.removeADTypeBtn removeFromSuperview];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

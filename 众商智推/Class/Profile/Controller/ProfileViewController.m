@@ -319,12 +319,12 @@
 - (UILabel *)nameLabel
 {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, 200, 30)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 20, self.headView.frame.size.width- 170, 30)];
         _nameLabel.backgroundColor = [UIColor clearColor];
         _nameLabel.text = @"昵称";
         //        _nameLabel.textColor= [UIColor blackColor];
         _nameLabel.textAlignment = NSTextAlignmentLeft;
-        _nameLabel.font = [UIFont boldSystemFontOfSize:20];
+        _nameLabel.font = [UIFont boldSystemFontOfSize:18];
     }
     return _nameLabel;
 }
@@ -373,6 +373,7 @@
         _profileTableView.delegate = self;
         _profileTableView.dataSource = self;
         _profileTableView.rowHeight = 60;
+        _profileTableView.tableFooterView = [[UIView alloc] init];
     }
     return _profileTableView;
 }
@@ -439,7 +440,7 @@
 //        [self.view bringSubviewToFront:self.coverBtn];
         
         
-        self.loginVC = [[LoginViewController alloc] init];
+//        self.loginVC = [[LoginViewController alloc] init];
         
         
         //        self.loginVC.view.x = 30;
@@ -451,8 +452,16 @@
 //        [self.view addSubview:self.loginVC.view];
 //        [self addChildViewController:self.loginVC];
 //         [self.view bringSubviewToFront:self.loginVC.view];
-        [self.view addSubview:self.loginVC.view];
+//        [self.view addSubview:self.loginVC.view];
 //        [self presentViewController:self.loginVC animated:NO completion:nil];
+        
+        self.loginVC = [[LoginViewController alloc] init];
+        [self presentViewController:self.loginVC animated:YES completion:nil];
+
+        
+        
+        
+        
         
     }
     

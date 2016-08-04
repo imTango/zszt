@@ -86,29 +86,14 @@
 {
     //开启交互功能
     imageView.userInteractionEnabled = YES;
-    // 1.分享给大家（checkbox）
-    UIButton *shareBtn = [[UIButton alloc] init];
-    [shareBtn setImage:[UIImage imageNamed:@"new_feature_share_false"] forState:UIControlStateNormal];
-    [shareBtn setImage:[UIImage imageNamed:@"new_feature_share_true"] forState:UIControlStateSelected];
-    [shareBtn setTitle:@"分享给大家" forState:UIControlStateNormal];
-    [shareBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    shareBtn.titleLabel.font = [UIFont systemFontOfSize:15];
-    shareBtn.width = 200;
-    shareBtn.height = 30;
-    //用比例设置位置 相当于直接做 屏幕适配
-    shareBtn.centerX = imageView.width * 0.5;
-    shareBtn.centerY = imageView.height * 0.65;
-    [shareBtn addTarget:self action:@selector(shareClick:) forControlEvents:UIControlEventTouchUpInside];
-    [imageView addSubview:shareBtn];
-    shareBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
     
     // 2.立即使用
     UIButton *startBtn = [[UIButton alloc] init];
-    [startBtn setBackgroundImage:[UIImage imageNamed:@"new_feature_finish_button"] forState:UIControlStateNormal];
-    [startBtn setBackgroundImage:[UIImage imageNamed:@"new_feature_finish_button_highlighted"] forState:UIControlStateHighlighted];
-    startBtn.size = startBtn.currentBackgroundImage.size;
-    startBtn.centerX = shareBtn.centerX;
-    startBtn.centerY = imageView.height * 0.75;
+    [startBtn setBackgroundColor:ZSColor(3, 154, 222)];
+    startBtn.width = 80;
+    startBtn.height = 40;
+    startBtn.centerX = self.view.centerX;
+    startBtn.centerY = imageView.height * 0.83;
     [startBtn setTitle:@"立即使用" forState:UIControlStateNormal];
     [startBtn addTarget:self action:@selector(startClick) forControlEvents:UIControlEventTouchUpInside];
     [imageView addSubview:startBtn];
