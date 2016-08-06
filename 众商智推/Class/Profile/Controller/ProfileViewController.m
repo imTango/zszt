@@ -430,14 +430,6 @@
         editPersonalInfoVC.delegate = self;
         [self presentViewController:editPersonalInfoVC animated:YES completion:nil];
     } else {
-//        self.coverBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//        self.coverBtn.frame = [UIScreen mainScreen].bounds;
-//        self.coverBtn.backgroundColor = [UIColor blackColor];
-//        self.coverBtn.alpha = 0.6;
-//        [self.coverBtn addTarget:self action:@selector(removeSelfAndLoginVC) forControlEvents:UIControlEventTouchUpInside];
-//        [self.view addSubview:self.coverBtn];
-//        [self.view bringSubviewToFront:self.coverBtn];
-        
         
         self.loginVC = [[LoginViewController alloc] init];
         
@@ -457,18 +449,6 @@
     
 }
 
-//- (void)removeSelfAndLoginVC
-//{
-////    //1.删除loginVC
-//    [self.loginVC.view removeFromSuperview];
-////
-////    //2.让阴影按钮的透明度变为0
-//////    self.coverBtn.alpha = 0.0;
-////    //3.移除阴影按钮
-////    [self.coverBtn removeFromSuperview];
-////    //当头像图片变成小图时候，再把self.cover设置成nil
-////    self.coverBtn = nil;
-//}
 
 -(void)deleteUserInfoPathMethod
 {
@@ -494,19 +474,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)viewWillDisappear:(BOOL)animated
-{
-    LoginViewController *login = [[LoginViewController alloc] init];
-    [login.view removeFromSuperview];
-    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-    NSLog(@"profileDisappearTime:%@",date);
-
-}
--(void)viewWillAppear:(BOOL)animated{
-    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-    NSLog(@"peofileappearTime:%@",date);
-
-}
 /*
  #pragma mark - Navigation
  

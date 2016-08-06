@@ -7,31 +7,30 @@
 //
 
 #import "TypeFourViewController.h"
+#import "PhotoLoadMethod.h"
 
-@interface TypeFourViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
-/**
- *标题
- */
-@property (strong, nonatomic) UITextField *adTitleTextField;
-/**
- *简介
- */
-@property (strong, nonatomic) UITextField *adIntroductionTextField;
+@interface TypeFourViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-/**
- *广告链接
- */
-@property (strong, nonatomic) UITextField *linkTextField;
 /**
  *保存按钮
  */
 @property (strong, nonatomic) UIButton *saveMessageBtn;
-
-
+/**
+ *  icon图片
+ */
+@property (nonatomic,strong) UIButton * pictureBtn;
+/**
+ *  二维码
+ */
+@property (nonatomic,strong) UIButton * qrCodeBtn;
 @end
 
 @implementation TypeFourViewController
-
+{
+    PhotoLoadMethod * ph;
+    UIButton *uploadpictureBtn;
+    UIButton *uploadQrCodeBtn;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:ZSColor(244, 244, 244)];
@@ -73,14 +72,14 @@
     pictureView.layer.masksToBounds = YES;
     [self.view addSubview:pictureView];
     
-    UIButton *pictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    pictureBtn.frame = CGRectMake(15, 12, 60, 60);
-    pictureBtn.backgroundColor = [UIColor grayColor];
-    pictureBtn.layer.cornerRadius = 30;
-    pictureBtn.layer.masksToBounds = YES;
-    [pictureView addSubview:pictureBtn];
+    self.pictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.pictureBtn.frame = CGRectMake(15, 12, 60, 60);
+    self.pictureBtn.backgroundColor = [UIColor grayColor];
+    self.pictureBtn.layer.cornerRadius = 30;
+    self.pictureBtn.layer.masksToBounds = YES;
+    [pictureView addSubview:self.pictureBtn];
     
-    UIButton *uploadpictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    uploadpictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     uploadpictureBtn.frame = CGRectMake(ScreenWidth - 280, 20, 260, 50);
     //    uploadQrCodeBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:211/255.0 blue:100/255.0 alpha:1];
     [uploadpictureBtn setTitle:@"上传图片(120px*120px)" forState:UIControlStateNormal];
@@ -88,7 +87,7 @@
     uploadpictureBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 240, 0, 0);
     uploadpictureBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 25);
     [uploadpictureBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    //    [uploadQrCodeBtn addTarget:self action:@selector(saveMessageBtnMethod) forControlEvents:UIControlEventTouchUpInside];
+    [uploadpictureBtn addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     [pictureView addSubview:uploadpictureBtn];
     //二维码
     UIView *qrCodeView = [[UIView alloc] initWithFrame:CGRectMake(10, 180, ScreenWidth-20, 85)];
@@ -97,12 +96,12 @@
     qrCodeView.layer.masksToBounds = YES;
     [self.view addSubview:qrCodeView];
     
-    UIButton *qrCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    qrCodeBtn.frame = CGRectMake(15, 12, 60, 60);
-    qrCodeBtn.backgroundColor = [UIColor grayColor];
-    [qrCodeView addSubview:qrCodeBtn];
+    self.qrCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.qrCodeBtn.frame = CGRectMake(15, 12, 60, 60);
+    self.qrCodeBtn.backgroundColor = [UIColor grayColor];
+    [qrCodeView addSubview:self.qrCodeBtn];
     
-    UIButton *uploadQrCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    uploadQrCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     uploadQrCodeBtn.frame = CGRectMake(ScreenWidth - 280, 20, 260, 50);
     //    uploadQrCodeBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:211/255.0 blue:100/255.0 alpha:1];
     [uploadQrCodeBtn setTitle:@"上传二维码(420px*420px)" forState:UIControlStateNormal];
@@ -110,7 +109,7 @@
     uploadQrCodeBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 240, 0, 0);
     uploadQrCodeBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 25);
     [uploadQrCodeBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    //    [uploadQrCodeBtn addTarget:self action:@selector(saveMessageBtnMethod) forControlEvents:UIControlEventTouchUpInside];
+    [uploadQrCodeBtn addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     [qrCodeView addSubview:uploadQrCodeBtn];
 
     UILabel *adLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 275, 100, 40)];
@@ -172,10 +171,66 @@
     
 }
 
+-(void)selectImage:(UIButton*)btn{
+    UIAlertController * alertView = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    ph = [[PhotoLoadMethod alloc] init];
+    [ph loadImageFromLibrayWithController:self alertController:alertView Block:^(UIImage *image) {
+        if (btn == uploadpictureBtn) {
+            self.imgData = UIImageJPEGRepresentation(image, 0.5);
+            [self.pictureBtn setBackgroundImage:image forState:UIControlStateNormal];
+        }else if(btn == uploadQrCodeBtn){
+            self.qrData = UIImageJPEGRepresentation(image, 0.5);
+            [self.qrCodeBtn setBackgroundImage:image forState:UIControlStateNormal];
+        }
+        
+    }];
+}
+
+
+
 - (void)saveMessageBtnMethod
 {
     ZSLog(@"保存按钮被点击!!");
+    
+    NSMutableDictionary * infoDic = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:self.adTitleTextField.text forKey:@"adTitle"];
+    [dic setValue:self.adIntroductionTextField.text forKey:@"adDescrible"];
+    [dic setValue:self.linkTextField.text forKey:@"url"];
+    [dic setValue:self.imgData forKey:@"iconImg"];
+    [dic setValue:self.qrData forKey:@"focusBtnImg"];
+    if (infoDic[@"ad4"] == nil) {
+        NSMutableArray * arr = [NSMutableArray array];
+        //非常重要
+        //        [dic setValue:@"id" forKey:@"id"];
+        [arr addObject:dic];
+        [infoDic setValue:arr forKey:@"ad4"];
+        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+    }else{
+        //            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
+        [infoDic[@"ad4"] addObject:dic];
+        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
+        //        for (NSDictionary * dic in tempArr) {
+        //            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
+        //            {
+        //                [dic setValue:self.adTextField.text forKey:@"adTitle"];
+        //                [dic setValue:self.linkTextField.text forKey:@"url"];
+        //                [dic setValue:self.imgData forKey:@"bgImg"];
+        //            }
+        //        }
+        [infoDic setValue:infoDic[@"ad2"] forKey:@"ad2"];
+    }
+    //把刚才写的数组存到沙盒当中去
+    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+        ZSLog(@"信息保存成功");
+        //        [self changeEnable];
+        [self goBack];
+    }else{
+        ZSLog(@"信息保存失败");
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -205,11 +260,10 @@
     
     [UIView commitAnimations];
     return YES;
-    
 }
-
-
-
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
+    [self.view endEditing:YES];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

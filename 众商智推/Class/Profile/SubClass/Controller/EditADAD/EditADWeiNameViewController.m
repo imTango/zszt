@@ -54,6 +54,7 @@
     [self.view addSubview:self.previewBtn];
     [self.view addSubview:self.textLabel];
 
+
     
 }
 #pragma mark - 创建顶部View

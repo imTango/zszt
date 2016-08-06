@@ -195,12 +195,18 @@
 		2FFF5C8E1D37661400089810 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF5C8D1D37661400089810 /* SettingViewController.m */; };
 		2FFF5C911D37821900089810 /* AboutUsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF5C901D37821900089810 /* AboutUsViewController.m */; };
 		2FFF5C971D37911300089810 /* GeneralSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FFF5C961D37911300089810 /* GeneralSettingViewController.m */; };
-		BFABA29B1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA2991D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m */; };
-		BFABA29C1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFABA29A1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib */; };
-		BFABA2A01D4B1F570022B732 /* ADTypeOneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA29E1D4B1F570022B732 /* ADTypeOneTableViewCell.m */; };
-		BFABA2A11D4B1F570022B732 /* ADTypeOneTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFABA29F1D4B1F570022B732 /* ADTypeOneTableViewCell.xib */; };
-		BFABA2A81D4B28770022B732 /* ADTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA2A61D4B28770022B732 /* ADTableViewCell.m */; };
-		BFABA2A91D4B28770022B732 /* ADTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFABA2A71D4B28770022B732 /* ADTableViewCell.xib */; };
+		BF4EBDF01D4E5E7F00BB7107 /* AdtypeOneModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBDEF1D4E5E7F00BB7107 /* AdtypeOneModel.m */; };
+		BF4EBDF31D4E5E8E00BB7107 /* AdtypeTwoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBDF21D4E5E8E00BB7107 /* AdtypeTwoModel.m */; };
+		BF4EBDF61D4E5E9F00BB7107 /* AdtypeThreeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBDF51D4E5E9F00BB7107 /* AdtypeThreeModel.m */; };
+		BF4EBDF91D4E5EAC00BB7107 /* AdtypeFourModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBDF81D4E5EAC00BB7107 /* AdtypeFourModel.m */; };
+		BF4EBDFC1D4E5EB700BB7107 /* AdtypeFiveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBDFB1D4E5EB700BB7107 /* AdtypeFiveModel.m */; };
+		BF4EBDFE1D507D4800BB7107 /* 对勾.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4EBDFD1D507D4800BB7107 /* 对勾.png */; };
+		BF4EBE4D1D5197B400BB7107 /* ADTwoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBE4C1D5197B400BB7107 /* ADTwoTableViewCell.m */; };
+		BF4EBE501D5197C300BB7107 /* ADThreeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBE4F1D5197C300BB7107 /* ADThreeTableViewCell.m */; };
+		BF4EBE531D5197D500BB7107 /* ADFourTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBE521D5197D500BB7107 /* ADFourTableViewCell.m */; };
+		BF4EBE561D5197EB00BB7107 /* ADFiveTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4EBE551D5197EB00BB7107 /* ADFiveTableViewCell.m */; };
+		BF9D49281D51A03A00DF9920 /* ADOneTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9D49271D51A03A00DF9920 /* ADOneTableViewCell.m */; };
+		BF9D492B1D51D81400DF9920 /* PhotoLoadMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9D492A1D51D81400DF9920 /* PhotoLoadMethod.m */; };
 		BFABA33A1D4B4E580022B732 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFABA3241D4B4E580022B732 /* Info.plist */; };
 		BFABA33B1D4B4E580022B732 /* MJExtensionConst.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3271D4B4E580022B732 /* MJExtensionConst.m */; };
 		BFABA33C1D4B4E580022B732 /* MJFoundation.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABA3291D4B4E580022B732 /* MJFoundation.m */; };
@@ -620,15 +626,29 @@
 		2FFF5C901D37821900089810 /* AboutUsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutUsViewController.m; sourceTree = "<group>"; };
 		2FFF5C951D37911300089810 /* GeneralSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeneralSettingViewController.h; sourceTree = "<group>"; };
 		2FFF5C961D37911300089810 /* GeneralSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneralSettingViewController.m; sourceTree = "<group>"; };
-		BFABA2981D4B1E4F0022B732 /* ADTypeTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTypeTwoTableViewCell.h; sourceTree = "<group>"; };
-		BFABA2991D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTypeTwoTableViewCell.m; sourceTree = "<group>"; };
-		BFABA29A1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADTypeTwoTableViewCell.xib; sourceTree = "<group>"; };
-		BFABA29D1D4B1F570022B732 /* ADTypeOneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTypeOneTableViewCell.h; sourceTree = "<group>"; };
-		BFABA29E1D4B1F570022B732 /* ADTypeOneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTypeOneTableViewCell.m; sourceTree = "<group>"; };
-		BFABA29F1D4B1F570022B732 /* ADTypeOneTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADTypeOneTableViewCell.xib; sourceTree = "<group>"; };
-		BFABA2A51D4B28770022B732 /* ADTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTableViewCell.h; sourceTree = "<group>"; };
-		BFABA2A61D4B28770022B732 /* ADTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTableViewCell.m; sourceTree = "<group>"; };
-		BFABA2A71D4B28770022B732 /* ADTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ADTableViewCell.xib; sourceTree = "<group>"; };
+		BF4EBDEE1D4E5E7F00BB7107 /* AdtypeOneModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdtypeOneModel.h; sourceTree = "<group>"; };
+		BF4EBDEF1D4E5E7F00BB7107 /* AdtypeOneModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdtypeOneModel.m; sourceTree = "<group>"; };
+		BF4EBDF11D4E5E8E00BB7107 /* AdtypeTwoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdtypeTwoModel.h; sourceTree = "<group>"; };
+		BF4EBDF21D4E5E8E00BB7107 /* AdtypeTwoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdtypeTwoModel.m; sourceTree = "<group>"; };
+		BF4EBDF41D4E5E9F00BB7107 /* AdtypeThreeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdtypeThreeModel.h; sourceTree = "<group>"; };
+		BF4EBDF51D4E5E9F00BB7107 /* AdtypeThreeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdtypeThreeModel.m; sourceTree = "<group>"; };
+		BF4EBDF71D4E5EAC00BB7107 /* AdtypeFourModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdtypeFourModel.h; sourceTree = "<group>"; };
+		BF4EBDF81D4E5EAC00BB7107 /* AdtypeFourModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdtypeFourModel.m; sourceTree = "<group>"; };
+		BF4EBDFA1D4E5EB700BB7107 /* AdtypeFiveModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdtypeFiveModel.h; sourceTree = "<group>"; };
+		BF4EBDFB1D4E5EB700BB7107 /* AdtypeFiveModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdtypeFiveModel.m; sourceTree = "<group>"; };
+		BF4EBDFD1D507D4800BB7107 /* 对勾.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "对勾.png"; sourceTree = "<group>"; };
+		BF4EBE4B1D5197B400BB7107 /* ADTwoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADTwoTableViewCell.h; sourceTree = "<group>"; };
+		BF4EBE4C1D5197B400BB7107 /* ADTwoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADTwoTableViewCell.m; sourceTree = "<group>"; };
+		BF4EBE4E1D5197C300BB7107 /* ADThreeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADThreeTableViewCell.h; sourceTree = "<group>"; };
+		BF4EBE4F1D5197C300BB7107 /* ADThreeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADThreeTableViewCell.m; sourceTree = "<group>"; };
+		BF4EBE511D5197D500BB7107 /* ADFourTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADFourTableViewCell.h; sourceTree = "<group>"; };
+		BF4EBE521D5197D500BB7107 /* ADFourTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADFourTableViewCell.m; sourceTree = "<group>"; };
+		BF4EBE541D5197EB00BB7107 /* ADFiveTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADFiveTableViewCell.h; sourceTree = "<group>"; };
+		BF4EBE551D5197EB00BB7107 /* ADFiveTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADFiveTableViewCell.m; sourceTree = "<group>"; };
+		BF9D49261D51A03A00DF9920 /* ADOneTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ADOneTableViewCell.h; sourceTree = "<group>"; };
+		BF9D49271D51A03A00DF9920 /* ADOneTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ADOneTableViewCell.m; sourceTree = "<group>"; };
+		BF9D49291D51D81400DF9920 /* PhotoLoadMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PhotoLoadMethod.h; path = ../../Class/Profile/SubClass/Controller/EditADAD/EditADType/PhotoLoadMethod.h; sourceTree = "<group>"; };
+		BF9D492A1D51D81400DF9920 /* PhotoLoadMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PhotoLoadMethod.m; path = ../../Class/Profile/SubClass/Controller/EditADAD/EditADType/PhotoLoadMethod.m; sourceTree = "<group>"; };
 		BFABA3241D4B4E580022B732 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BFABA3251D4B4E580022B732 /* MJExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtension.h; sourceTree = "<group>"; };
 		BFABA3261D4B4E580022B732 /* MJExtensionConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJExtensionConst.h; sourceTree = "<group>"; };
@@ -1037,6 +1057,8 @@
 		2FCCA7DB1D2F40DA00D53EAC /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				BF9D49291D51D81400DF9920 /* PhotoLoadMethod.h */,
+				BF9D492A1D51D81400DF9920 /* PhotoLoadMethod.m */,
 				2FCCA7DC1D2F40DA00D53EAC /* AFNetworking */,
 				2FCCA7EA1D2F40DA00D53EAC /* AFNetworkUtil.h */,
 				2FCCA7EB1D2F40DA00D53EAC /* AFNetworkUtil.m */,
@@ -1419,6 +1441,7 @@
 		2FCCA89A1D2F40DA00D53EAC /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				BF4EBDFD1D507D4800BB7107 /* 对勾.png */,
 				2FCCA89B1D2F40DA00D53EAC /* UserInfoModel.h */,
 				2FCCA89C1D2F40DA00D53EAC /* UserInfoModel.m */,
 			);
@@ -1595,6 +1618,7 @@
 				2FF8D02C1D2FE37500FC487E /* EditADChangeIconViewController.h */,
 				2FF8D02D1D2FE37500FC487E /* EditADChangeIconViewController.m */,
 				BFABA2A21D4B22C50022B732 /* cell */,
+				BF4EBDED1D4E5E3800BB7107 /* cellModel */,
 				2FF8D0691D2FE3AB00FC487E /* EditADType */,
 			);
 			path = EditADAD;
@@ -1691,18 +1715,36 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		BF4EBDED1D4E5E3800BB7107 /* cellModel */ = {
+			isa = PBXGroup;
+			children = (
+				BF4EBDEE1D4E5E7F00BB7107 /* AdtypeOneModel.h */,
+				BF4EBDEF1D4E5E7F00BB7107 /* AdtypeOneModel.m */,
+				BF4EBDF11D4E5E8E00BB7107 /* AdtypeTwoModel.h */,
+				BF4EBDF21D4E5E8E00BB7107 /* AdtypeTwoModel.m */,
+				BF4EBDF41D4E5E9F00BB7107 /* AdtypeThreeModel.h */,
+				BF4EBDF51D4E5E9F00BB7107 /* AdtypeThreeModel.m */,
+				BF4EBDF71D4E5EAC00BB7107 /* AdtypeFourModel.h */,
+				BF4EBDF81D4E5EAC00BB7107 /* AdtypeFourModel.m */,
+				BF4EBDFA1D4E5EB700BB7107 /* AdtypeFiveModel.h */,
+				BF4EBDFB1D4E5EB700BB7107 /* AdtypeFiveModel.m */,
+			);
+			name = cellModel;
+			sourceTree = "<group>";
+		};
 		BFABA2A21D4B22C50022B732 /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				BFABA29D1D4B1F570022B732 /* ADTypeOneTableViewCell.h */,
-				BFABA29E1D4B1F570022B732 /* ADTypeOneTableViewCell.m */,
-				BFABA29F1D4B1F570022B732 /* ADTypeOneTableViewCell.xib */,
-				BFABA2981D4B1E4F0022B732 /* ADTypeTwoTableViewCell.h */,
-				BFABA2991D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m */,
-				BFABA29A1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib */,
-				BFABA2A51D4B28770022B732 /* ADTableViewCell.h */,
-				BFABA2A61D4B28770022B732 /* ADTableViewCell.m */,
-				BFABA2A71D4B28770022B732 /* ADTableViewCell.xib */,
+				BF9D49261D51A03A00DF9920 /* ADOneTableViewCell.h */,
+				BF9D49271D51A03A00DF9920 /* ADOneTableViewCell.m */,
+				BF4EBE4B1D5197B400BB7107 /* ADTwoTableViewCell.h */,
+				BF4EBE4C1D5197B400BB7107 /* ADTwoTableViewCell.m */,
+				BF4EBE4E1D5197C300BB7107 /* ADThreeTableViewCell.h */,
+				BF4EBE4F1D5197C300BB7107 /* ADThreeTableViewCell.m */,
+				BF4EBE511D5197D500BB7107 /* ADFourTableViewCell.h */,
+				BF4EBE521D5197D500BB7107 /* ADFourTableViewCell.m */,
+				BF4EBE541D5197EB00BB7107 /* ADFiveTableViewCell.h */,
+				BF4EBE551D5197EB00BB7107 /* ADFiveTableViewCell.m */,
 			);
 			name = cell;
 			sourceTree = "<group>";
@@ -1843,16 +1885,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF4EBDFE1D507D4800BB7107 /* 对勾.png in Resources */,
 				2FCCA94B1D2F40DB00D53EAC /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				2FCCA7321D2F404300D53EAC /* LaunchScreen.storyboard in Resources */,
 				2FCCA8FA1D2F40DA00D53EAC /* MBProgressHUD.bundle in Resources */,
 				2FCCA9481D2F40DB00D53EAC /* WeiboSDK.bundle in Resources */,
-				BFABA2A91D4B28770022B732 /* ADTableViewCell.xib in Resources */,
 				2FCCA93C1D2F40DA00D53EAC /* UMSCommentInputController.xib in Resources */,
-				BFABA2A11D4B1F570022B732 /* ADTypeOneTableViewCell.xib in Resources */,
 				2FCCA9421D2F40DA00D53EAC /* UMSShareListController.xib in Resources */,
 				2FCCA93F1D2F40DA00D53EAC /* UMShareEditViewControlleriPad.xib in Resources */,
-				BFABA29C1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.xib in Resources */,
 				2FCCA93B1D2F40DA00D53EAC /* UMSCommentDetailController.xib in Resources */,
 				2FCCA93E1D2F40DA00D53EAC /* UMShareEditViewController.xib in Resources */,
 				2FCCA9391D2F40DA00D53EAC /* UMSocialLocalizable.strings in Resources */,
@@ -1891,7 +1931,6 @@
 				2FCCA9211D2F40DA00D53EAC /* UIButton+WebCache.m in Sources */,
 				2FCCA9021D2F40DA00D53EAC /* MJRefreshAutoNormalFooter.m in Sources */,
 				2FCCA9AB1D2F726300D53EAC /* UIView+Extension.m in Sources */,
-				BFABA2A01D4B1F570022B732 /* ADTypeOneTableViewCell.m in Sources */,
 				BFABA3441D4B4E580022B732 /* NSString+MJExtension.m in Sources */,
 				2FCCA92F1D2F40DA00D53EAC /* JSONUtil.m in Sources */,
 				2FCCA8FD1D2F40DA00D53EAC /* MJRefreshBackFooter.m in Sources */,
@@ -1917,6 +1956,7 @@
 				2FCCA9101D2F40DA00D53EAC /* UIView+MJExtension.m in Sources */,
 				2FCCA9641D2F40DB00D53EAC /* ZhuanFaJiaADViewController.m in Sources */,
 				2FCCA9361D2F40DA00D53EAC /* UIProgressView+AFNetworking.m in Sources */,
+				BF4EBDF61D4E5E9F00BB7107 /* AdtypeThreeModel.m in Sources */,
 				2FCCA9731D2F40DB00D53EAC /* UserInfoModel.m in Sources */,
 				2FCCA9551D2F40DB00D53EAC /* DuanZiViewController.m in Sources */,
 				2FCCA96E1D2F40DB00D53EAC /* EditADViewController.m in Sources */,
@@ -1926,6 +1966,7 @@
 				2FCCA9A81D2F70A200D53EAC /* NewfeatureViewController.m in Sources */,
 				2FCCA91B1D2F40DA00D53EAC /* SDWebImageCompat.m in Sources */,
 				2FCCA9681D2F40DB00D53EAC /* CityListViewController.m in Sources */,
+				BF4EBDF31D4E5E8E00BB7107 /* AdtypeTwoModel.m in Sources */,
 				2FCCA91F1D2F40DA00D53EAC /* SDWebImageManager.m in Sources */,
 				2FF8D0551D2FE37500FC487E /* EditADADsViewController.m in Sources */,
 				2FF8D0771D2FE3AB00FC487E /* TypeThreeViewController.m in Sources */,
@@ -1944,9 +1985,11 @@
 				2FCCA9151D2F40DA00D53EAC /* SDCollectionViewCell.m in Sources */,
 				2FCCA9691D2F40DB00D53EAC /* MoreViewController.m in Sources */,
 				2FCCA9041D2F40DA00D53EAC /* MJRefreshBackGifFooter.m in Sources */,
+				BF9D49281D51A03A00DF9920 /* ADOneTableViewCell.m in Sources */,
 				2FCCA9371D2F40DA00D53EAC /* UIRefreshControl+AFNetworking.m in Sources */,
 				2FCCA91D1D2F40DA00D53EAC /* SDWebImageDownloader.m in Sources */,
 				2FCCA8F71D2F40DA00D53EAC /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
+				BF9D492B1D51D81400DF9920 /* PhotoLoadMethod.m in Sources */,
 				2FF8D0621D2FE37500FC487E /* ContentViewController.m in Sources */,
 				2FCCA95E1D2F40DB00D53EAC /* SiFangViewController.m in Sources */,
 				2FF8D0561D2FE37500FC487E /* EditADChangeIconViewController.m in Sources */,
@@ -1954,6 +1997,7 @@
 				2FCCA95B1D2F40DB00D53EAC /* QiCheViewController.m in Sources */,
 				2FCCA8F31D2F40DA00D53EAC /* MASLayoutConstraint.m in Sources */,
 				2FCCA96C1D2F40DB00D53EAC /* LaunchingViewController.m in Sources */,
+				BF4EBE4D1D5197B400BB7107 /* ADTwoTableViewCell.m in Sources */,
 				2FCCA9321D2F40DA00D53EAC /* AFNetworkActivityIndicatorManager.m in Sources */,
 				2FCCA96B1D2F40DB00D53EAC /* AppDelegate.m in Sources */,
 				2FCCA9351D2F40DA00D53EAC /* UIImageView+AFNetworking.m in Sources */,
@@ -1972,19 +2016,20 @@
 				2FCCA9141D2F40DA00D53EAC /* TAPageControl.m in Sources */,
 				2FCCA9341D2F40DA00D53EAC /* UIButton+AFNetworking.m in Sources */,
 				2FCCA9611D2F40DB00D53EAC /* XueBaViewController.m in Sources */,
-				BFABA2A81D4B28770022B732 /* ADTableViewCell.m in Sources */,
 				2F19D5FE1D473E35000EF283 /* WXApiRequestHandler.m in Sources */,
 				2FCCA8F61D2F40DA00D53EAC /* NSArray+MASAdditions.m in Sources */,
 				2FCCA98F1D2F40DB00D53EAC /* StatisticViewController.m in Sources */,
 				2FCCA92B1D2F40DA00D53EAC /* AFURLRequestSerialization.m in Sources */,
 				2FF8D0631D2FE37500FC487E /* HongBaoTiXianViewController.m in Sources */,
 				2FCCA9561D2F40DB00D53EAC /* GuJinViewController.m in Sources */,
+				BF4EBDF01D4E5E7F00BB7107 /* AdtypeOneModel.m in Sources */,
 				2FCCA9031D2F40DA00D53EAC /* MJRefreshAutoStateFooter.m in Sources */,
 				2FFF5C911D37821900089810 /* AboutUsViewController.m in Sources */,
 				BFABA33B1D4B4E580022B732 /* MJExtensionConst.m in Sources */,
 				BFABA3401D4B4E580022B732 /* NSObject+MJClass.m in Sources */,
 				2FCCA9621D2F40DB00D53EAC /* YangShengViewController.m in Sources */,
 				2FCCA92C1D2F40DA00D53EAC /* AFURLResponseSerialization.m in Sources */,
+				BF4EBE531D5197D500BB7107 /* ADFourTableViewCell.m in Sources */,
 				2FF8D0681D2FE37500FC487E /* ZaiXianZhiFuViewController.m in Sources */,
 				BFABA33D1D4B4E580022B732 /* MJProperty.m in Sources */,
 				2FCCA95F1D2F40DB00D53EAC /* TiYuViewController.m in Sources */,
@@ -1993,6 +2038,7 @@
 				2FCCA9631D2F40DB00D53EAC /* ZhiChangViewController.m in Sources */,
 				2FCCA9091D2F40DA00D53EAC /* MJRefreshStateHeader.m in Sources */,
 				2FCCA98D1D2F40DB00D53EAC /* StatisticArticleListViewController.m in Sources */,
+				BF4EBE501D5197C300BB7107 /* ADThreeTableViewCell.m in Sources */,
 				2FCCA8FB1D2F40DA00D53EAC /* MBProgressHUD.m in Sources */,
 				2FCCA96A1D2F40DB00D53EAC /* SearchViewController.m in Sources */,
 				2FCCA9571D2F40DB00D53EAC /* KeJiViewController.m in Sources */,
@@ -2007,6 +2053,7 @@
 				2FF8D0781D2FE3AB00FC487E /* TypeTwoViewController.m in Sources */,
 				2FCCA95C1D2F40DB00D53EAC /* ReDianViewController.m in Sources */,
 				2FFF5C971D37911300089810 /* GeneralSettingViewController.m in Sources */,
+				BF4EBDFC1D4E5EB700BB7107 /* AdtypeFiveModel.m in Sources */,
 				2FCCA9311D2F40DA00D53EAC /* AFImageDownloader.m in Sources */,
 				2FCCA9201D2F40DA00D53EAC /* SDWebImagePrefetcher.m in Sources */,
 				2FCCA94F1D2F40DB00D53EAC /* LiangView.m in Sources */,
@@ -2034,7 +2081,6 @@
 				2FCCA92A1D2F40DA00D53EAC /* AFSecurityPolicy.m in Sources */,
 				2FCCA91E1D2F40DA00D53EAC /* SDWebImageDownloaderOperation.m in Sources */,
 				2FCCA92D1D2F40DA00D53EAC /* AFURLSessionManager.m in Sources */,
-				BFABA29B1D4B1E4F0022B732 /* ADTypeTwoTableViewCell.m in Sources */,
 				BFABA3431D4B4E580022B732 /* NSObject+MJProperty.m in Sources */,
 				2FCCA95A1D2F40DB00D53EAC /* MeiShiViewController.m in Sources */,
 				2FCCA9591D2F40DB00D53EAC /* LvXingViewController.m in Sources */,
@@ -2048,9 +2094,11 @@
 				2FCCA8F81D2F40DA00D53EAC /* View+MASAdditions.m in Sources */,
 				2FF8D0671D2FE37500FC487E /* VIPJiHuoViewController.m in Sources */,
 				2FCCA9521D2F40DB00D53EAC /* CaiJingViewController.m in Sources */,
+				BF4EBE561D5197EB00BB7107 /* ADFiveTableViewCell.m in Sources */,
 				2FCCA96F1D2F40DB00D53EAC /* EditPersonalinformationViewController.m in Sources */,
 				2FF8D0661D2FE37500FC487E /* TaskMyViewController.m in Sources */,
 				2FCCA8F41D2F40DA00D53EAC /* MASViewAttribute.m in Sources */,
+				BF4EBDF91D4E5EAC00BB7107 /* AdtypeFourModel.m in Sources */,
 				2FCCA9701D2F40DB00D53EAC /* PreviewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,42 +7,21 @@
 //
 
 #import "TypeOneViewController.h"
+#import "PhotoLoadMethod.h"
 
-@interface TypeOneViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
-/**
- *广告语
- */
-@property (strong, nonatomic) UITextField *adTextField;
-/**
- *广告链接
- */
-@property (strong, nonatomic) UITextField *linkTextField;
+@interface TypeOneViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-/**
- *广告背景图1
- */
-@property (strong, nonatomic) UIButton *background1;
-/**
- *广告背景图2
- */
-@property (strong, nonatomic) UIButton *background2;
-/**
- *广告背景图3
- */
-@property (strong, nonatomic) UIButton *background3;
-/**
- *保存按钮
- */
-@property (strong, nonatomic) UIButton *saveMessageBtn;
-
-@property (strong,nonatomic)UIButton * tmpBtn;
 
 @property (strong,nonatomic) NSMutableDictionary * adInfoDic;
 
+//从广告条界面跳转过来之后携带者广告ID，用来查找该广告条位置并获取原始数据修改重新提交，如果是添加个人广告跳转进来则ID为空
+@property (strong,nonatomic) NSString * ID;
 @end
 
 @implementation TypeOneViewController
-
+{
+    PhotoLoadMethod * ph;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:ZSColor(244, 244, 244)];
@@ -80,83 +59,109 @@
 #pragma mark - 加载内容控件
 - (void)createContentControls
 {
-    //背景scrollView
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight-64)];
-    [scrollView setBackgroundColor:ZSColor(244, 244, 244)];
-    scrollView.delegate = self;
-    scrollView.showsVerticalScrollIndicator = NO;
-    scrollView.contentSize = CGSizeMake(0, 700);
-    [self.view addSubview:scrollView];
+    //背景self.scrollView
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight-64)];
+    [self.scrollView setBackgroundColor:ZSColor(244, 244, 244)];
+    self.scrollView.delegate = self;
+    self.scrollView.showsVerticalScrollIndicator = NO;
+    [self.view addSubview:self.scrollView];
     
     UILabel *adLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 100, 40)];
     adLabel.text = @"广告语";
     adLabel.font = [UIFont boldSystemFontOfSize:20];
-    [scrollView addSubview:adLabel];
+    [self.scrollView addSubview:adLabel];
     
     self.adTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 55, ScreenWidth-20, 60)];
-    //获取沙盒中存取的数据信息
-    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"adType.txt"];//当前应用的沙盒路径
-    NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
-    self.adTextField.text = [array objectAtIndex:0];
     self.adTextField.placeholder = @"请添加您的广告语(限30字)...";
     self.adTextField.delegate = self;
     self.adTextField.borderStyle = UITextBorderStyleRoundedRect;
-    [scrollView addSubview:self.adTextField];
+    [self.scrollView addSubview:self.adTextField];
     
     UILabel *linkLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 120, 100, 40)];
     linkLabel.text = @"广告链接";
     linkLabel.font = [UIFont boldSystemFontOfSize:20];
-    [scrollView addSubview:linkLabel];
+    [self.scrollView addSubview:linkLabel];
     
     self.linkTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 165, ScreenWidth-20, 60)];
     self.linkTextField.placeholder = @"请输入您的广告链接，网址请加http://";
     self.linkTextField.delegate = self;
     self.linkTextField.borderStyle = UITextBorderStyleRoundedRect;
-    [scrollView addSubview:self.linkTextField];
+    [self.scrollView addSubview:self.linkTextField];
     
     UILabel *backgroundLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 235, 100, 40)];
     backgroundLabel.text = @"广告背景";
     backgroundLabel.font = [UIFont boldSystemFontOfSize:20];
-    [scrollView addSubview:backgroundLabel];
+    [self.scrollView addSubview:backgroundLabel];
     
+    
+    //选中的按钮
+    self.selectedImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vv"]];
+    [self.scrollView addSubview:self.selectedImg];
+
     //背景1
     self.background1 = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.background1.tag = 11;
     self.background1.frame = CGRectMake(10, 285, ScreenWidth-20, 90);
     self.background1.layer.cornerRadius = 5;
     self.background1.layer.masksToBounds = YES;
     [self.background1 setTitle:@"广告语" forState:UIControlStateNormal];
     [self.background1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.background1 setBackgroundImage:[UIImage imageNamed:@"adBackgroundNormal1.png"] forState:UIControlStateNormal];
-    [self.background1 setBackgroundImage:[UIImage imageNamed:@"adBackgroundSelect1.png"] forState:UIControlStateSelected];
+    [self.background1 setBackgroundImage:[UIImage imageNamed:@"11.png"] forState:UIControlStateNormal];
+    [self.background1 setBackgroundImage:[UIImage imageNamed:@"11.png"] forState:UIControlStateSelected];
     [self.background1 addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:self.background1];
+    [self.scrollView addSubview:self.background1];
     
     //背景2
     self.background2 = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.background2.tag = 22;
     self.background2.frame = CGRectMake(10, 385, ScreenWidth-20, 90);
     self.background2.layer.cornerRadius = 5;
     self.background2.layer.masksToBounds = YES;
     [self.background2 setTitle:@"广告语" forState:UIControlStateNormal];
     [self.background2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.background2 setBackgroundImage:[UIImage imageNamed:@"adBackgroundNormal2.png"] forState:UIControlStateNormal];
-    [self.background2 setBackgroundImage:[UIImage imageNamed:@"adBackgroundSelect2.png"] forState:UIControlStateSelected];
+    [self.background2 setBackgroundImage:[UIImage imageNamed:@"22.png"] forState:UIControlStateNormal];
+    [self.background2 setBackgroundImage:[UIImage imageNamed:@"22.png"] forState:UIControlStateSelected];
     [self.background2 addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:self.background2];
+    [self.scrollView addSubview:self.background2];
     //背景3
     self.background3 = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.background3.tag = 33;
     self.background3.frame = CGRectMake(10, 485, ScreenWidth-20, 90);
     self.background3.layer.cornerRadius = 5;
     self.background3.layer.masksToBounds = YES;
     [self.background3 setTitle:@"广告语" forState:UIControlStateNormal];
     [self.background3 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.background3 setBackgroundImage:[UIImage imageNamed:@"adBackgroundNormal3.png"] forState:UIControlStateNormal];
-    [self.background3 setBackgroundImage:[UIImage imageNamed:@"adBackgroundSelect3.png"] forState:UIControlStateSelected];
+    [self.background3 setBackgroundImage:[UIImage imageNamed:@"33.png"] forState:UIControlStateNormal];
+    [self.background3 setBackgroundImage:[UIImage imageNamed:@"33.png"] forState:UIControlStateSelected];
     [self.background3 addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
-    [scrollView addSubview:self.background3];
+    [self.scrollView addSubview:self.background3];
+    
+    
+    self.hiddenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.hiddenBtn.frame = CGRectMake(10, 585, ScreenWidth-20, 90);
+    //    self.hiddenBtn.hidden = YES;
+//    self.hiddenBtn.backgroundColor = [UIColor redColor];
+    self.hiddenBtn.layer.cornerRadius = 5;
+    self.hiddenBtn.layer.masksToBounds = YES;
+    [self.scrollView addSubview:self.hiddenBtn];
+
+    
+    self.photoLibraryBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.photoLibraryBtn.frame = CGRectMake(10, 585, ScreenWidth-20, 90);
+    self.photoLibraryBtn.backgroundColor = [UIColor grayColor];
+    self.photoLibraryBtn.layer.cornerRadius = 5;
+    self.photoLibraryBtn.layer.masksToBounds = YES;
+    NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:@"+点击上传广告图片（600px*160px)"];
+    NSRange strRange = {0,[str length]};
+    [str addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:strRange];
+    [self.photoLibraryBtn setAttributedTitle:str forState:UIControlStateNormal];
+    [self.photoLibraryBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [self.photoLibraryBtn addTarget:self action:@selector(selectImage) forControlEvents:UIControlEventTouchUpInside];
+    [self.scrollView addSubview:self.photoLibraryBtn];
     
     self.saveMessageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     //        _saveBtn.frame = CGRectMake(10, 500, ScreenWidth-20, 50);
-    self.saveMessageBtn.frame = CGRectMake(10, 585, ScreenWidth-20, 50);
+    self.saveMessageBtn.frame = CGRectMake(10, 690, ScreenWidth-20, 50);
     self.saveMessageBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:211/255.0 blue:100/255.0 alpha:1];
     [self.saveMessageBtn setTitle:@"保存" forState:UIControlStateNormal];
     self.saveMessageBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -165,75 +170,109 @@
     [self.saveMessageBtn addTarget:self action:@selector(saveMessageBtnMethod) forControlEvents:UIControlEventTouchUpInside];
     self.saveMessageBtn.layer.cornerRadius = 5;
     self.saveMessageBtn.layer.masksToBounds = YES;
-    [scrollView addSubview:self.saveMessageBtn];
+    [self.scrollView addSubview:self.saveMessageBtn];
     
+    self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.saveMessageBtn.frame)+20);
+
 }
 /**
  *选择广告类型的背景
  */
 -(void)buttonSelected:(UIButton*)sender
 {
-    UIImage *bgImg = sender.currentBackgroundImage;
-    if (_tmpBtn == nil){
-        sender.selected = YES;
-        _tmpBtn = sender;
-    }
-    else if (_tmpBtn != nil && _tmpBtn == sender){
-        sender.selected = YES;
-        
-    }
-    else if (_tmpBtn != sender && _tmpBtn != nil){
-        _tmpBtn.selected = NO;
-        sender.selected = YES;
-        _tmpBtn = sender;
-    }
+    self.orderNum = sender.tag;
+    [self.selectedImg removeFromSuperview];
+    self.selectedImg.size = CGSizeMake(20,20);
+    self.selectedImg.center = CGPointMake(CGRectGetMaxX(sender.frame), CGRectGetMinY(sender.frame));
+    UIImage * img = [UIImage imageNamed:[NSString stringWithFormat:@"%ld.png",(long)sender.tag]];
+    self.imgData = UIImagePNGRepresentation(img);
 }
 
 - (void)saveMessageBtnMethod
 {
     ZSLog(@"保存按钮被点击!!");
-    
-    //保存用户编辑的信息
-    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"adType.txt"];//当前应用的沙盒路径
-    NSMutableArray *array = [NSKeyedUnarchiver unarchiveObjectWithFile:path];//将沙盒路径下的归档对象解档出来
-    //    NSString *imageString = (NSString *)[NSKeyedArchiver keyPathsForValuesAffectingValueForKey:self.imagePath];
-    
-    if (array == nil) {
-        array = [NSMutableArray array];
+
+    NSMutableDictionary * infoDic = [NSMutableDictionary dictionaryWithCapacity:0];
+    infoDic = (NSMutableDictionary*)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:self.adTextField.text forKey:@"adTitle"];
+    [dic setValue:self.linkTextField.text forKey:@"url"];
+    [dic setValue:self.imgData forKey:@"bgImg"];
+    [dic setValue:[NSString stringWithFormat:@"%ld",self.orderNum] forKey:@"orderNum"];
+    if (infoDic[@"ad1"] == nil) {
+        NSMutableArray * arr = [NSMutableArray array];
+        //非常重要
+//        [dic setValue:@"id" forKey:@"id"];
+
+        [arr addObject:dic];
+        
+        [infoDic setValue:arr forKey:@"ad1"];
+        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
     }
-    
-    [array insertObject:self.adTextField.text atIndex:0];
-    
+    else{
+//        NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad1"]];
+//        ZSLog(@"temp%@",tempArr);
+        if ([infoDic[@"ad1"] isKindOfClass:[NSMutableArray class]]) {
+            [infoDic[@"ad1"] addObject:dic];
+            [infoDic setValue:infoDic[@"ad1"] forKey:@"ad1"];
+        }
+    //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
+//    for (NSDictionary * dic in tempArr) {
+//        if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
+//        {
+//            [dic setValue:self.adTextField.text forKey:@"adTitle"];
+//            [dic setValue:self.linkTextField.text forKey:@"url"];
+//            [dic setValue:self.imgData forKey:@"bgImg"];
+//        }
+//    }
+        
+    }
     //把刚才写的数组存到沙盒当中去
-    if ([NSKeyedArchiver archiveRootObject:array toFile:path]) {
+    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
         ZSLog(@"信息保存成功");
+//        NSLog(@"plist:%@",infoDic);
         //        [self changeEnable];
         [self goBack];
     }else{
         ZSLog(@"信息保存失败");
     }
     
-    //返回上级模态视图
     [self dismissViewControllerAnimated:YES completion:nil];
-    if (self.adTextField.text.length != 0) {
-        NSString *str = self.adTextField.text;
-        //发送带消息的通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue" object:str];
-    }
-    
-    //点击保存之后，将数据存储到字典中
-    self.adInfoDic = @{
-                       @"adTextField":self.adTextField.text,
-                       @"linkTextField":self.linkTextField,
-                       @""
-                       };
-    
-  
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+
+#pragma mark - 自定义封装的获取相机或图库的图片的方法
+-(void)selectImage{
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+
+    ph = [[PhotoLoadMethod alloc] init];
+    [ph loadImageFromLibrayWithController:self alertController:alertController Block:^(UIImage *image) {
+//        NSLog(@"img----------------%@",image);
+        self.orderNum = 44;
+        [self.hiddenBtn setBackgroundImage:image forState:UIControlStateNormal];
+        [self.selectedImg removeFromSuperview];
+        self.selectedImg.size = CGSizeMake(20,20);
+        self.selectedImg.center = CGPointMake(CGRectGetMaxX(self.hiddenBtn.frame), CGRectGetMinY(self.hiddenBtn.frame));
+        [self.scrollView addSubview:self.selectedImg];
+        
+        self.imgData = UIImageJPEGRepresentation(image, 0.5);
+        
+        CGSize size = CGSizeMake(0, 840);
+        self.scrollView.contentSize = size;
+        
+        CGRect frame = self.photoLibraryBtn.frame;
+        frame = CGRectMake(10, 685, ScreenWidth-20, 90);
+        self.photoLibraryBtn.frame = frame;
+        
+        CGRect saveFrame = self.saveMessageBtn.frame;
+        saveFrame = CGRectMake(10, 790, ScreenWidth-20, 50);
+        self.saveMessageBtn.frame = saveFrame;
+    }];
 }
 
 
@@ -260,4 +299,4 @@
 }
 */
 
-@end
+    @end

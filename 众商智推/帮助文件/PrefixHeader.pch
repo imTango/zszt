@@ -32,6 +32,8 @@
 #define kCurrentVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString*)kCFBundleVersionKey]
 #define WS(weakSelf) __unsafe_unretained __typeof(&*self)weakSelf = self;
 
+//沙盒路径/Documents
+#define kPath [NSHomeDirectory() stringByAppendingPathComponent:@"/Documents/ADInfo.plist"]
 /*
  RGB_16(0x42a2a2a)
  */

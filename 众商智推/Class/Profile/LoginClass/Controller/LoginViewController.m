@@ -274,14 +274,17 @@
 -(void)showSina
 {
     [self sanFangDengLuWithType:UMShareToSina];
+
 }
 -(void)showQQ
 {
     [self sanFangDengLuWithType:UMShareToQQ];
+
 }
 -(void)showWeiXin
 {
     [self sanFangDengLuWithType:UMShareToWechatSession];
+
 }
 
 - (void)sanFangDengLuWithType:(NSString *)type
@@ -290,7 +293,7 @@
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:type];
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
-            [self.view removeFromSuperview];
+
             
             
             //            NSDictionary *dict = [UMSocialAccountManager socialAccountDictionary];
@@ -337,12 +340,12 @@
 //            profileVC.loginVC = nil;
 //            profileVC.coverBtn = nil;
 //            [profileVC removeSelfAndLoginVC];
-            
+            [self huidiao];
+
            
         }
         else {
-            
-        [self.view removeFromSuperview];
+            [self huidiao];
 
 //            [profileVC removeSelfAndLoginVC];
         }
@@ -352,7 +355,11 @@
 //    self.loginClickHandler 
 }
 
--(void)viewWillDisappear:(BOOL)animated{
+-(void)huidiao{
+    [self.view removeFromSuperview];
+}
+
+-(void)applicationFinishedRestoringState{
 //    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
 ////    [profileVC removeSelfAndLoginVC];
 //    profileVC.loginVC = nil;
@@ -360,16 +367,9 @@
     [self.view removeFromSuperview];
     NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
     NSLog(@"loginDisappearTime:%@",date);
-
-
     
 }
 
--(void)viewWillAppear:(BOOL)animated
-{
-    NSDate * date = [NSDate dateWithTimeIntervalSinceNow:0.1];
-    NSLog(@"loginappearTime:%@",date);
-}
 /** 定义响应点击各平台授权登录后的block对象
  
  @param presentingController 点击后弹出的分享页面或者授权页面所在的UIViewController对象

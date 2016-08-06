@@ -7,32 +7,21 @@
 //
 
 #import "TypeTwoViewController.h"
+#import "PhotoLoadMethod.h"
 
-@interface TypeTwoViewController ()<UITextFieldDelegate,UIScrollViewDelegate>
-/**
- *标题
- */
-@property (strong, nonatomic) UITextField *adTitleTextField;
-/**
- *简介
- */
-@property (strong, nonatomic) UITextField *adIntroductionTextField;
+@interface TypeTwoViewController ()<UITextFieldDelegate,UIScrollViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
-/**
- *广告链接
- */
-@property (strong, nonatomic) UITextField *linkTextField;
 /**
  *保存按钮
  */
 @property (strong, nonatomic) UIButton *saveMessageBtn;
 
-@property (strong,nonatomic)UIButton * tmpBtn;
-
 @end
 
 @implementation TypeTwoViewController
-
+{
+    PhotoLoadMethod * ph;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view setBackgroundColor:ZSColor(244, 244, 244)];
@@ -75,12 +64,12 @@
     pictureView.layer.masksToBounds = YES;
     [self.view addSubview:pictureView];
     
-    UIButton *pictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    pictureBtn.frame = CGRectMake(15, 12, 60, 60);
-    pictureBtn.backgroundColor = [UIColor grayColor];
-    pictureBtn.layer.cornerRadius = 30;
-    pictureBtn.layer.masksToBounds = YES;
-    [pictureView addSubview:pictureBtn];
+    self.pictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.pictureBtn.frame = CGRectMake(15, 12, 60, 60);
+    self.pictureBtn.backgroundColor = [UIColor grayColor];
+    self.pictureBtn.layer.cornerRadius = 30;
+    self.pictureBtn.layer.masksToBounds = YES;
+    [pictureView addSubview:self.pictureBtn];
     
     UIButton *uploadpictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     uploadpictureBtn.frame = CGRectMake(ScreenWidth - 280, 20, 260, 50);
@@ -90,7 +79,7 @@
     uploadpictureBtn.imageEdgeInsets = UIEdgeInsetsMake(0, 240, 0, 0);
     uploadpictureBtn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 25);
     [uploadpictureBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-    //    [uploadQrCodeBtn addTarget:self action:@selector(saveMessageBtnMethod) forControlEvents:UIControlEventTouchUpInside];
+    [uploadpictureBtn addTarget:self action:@selector(selectImage) forControlEvents:UIControlEventTouchUpInside];
     [pictureView addSubview:uploadpictureBtn];
     
     UILabel *adLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 180, 100, 40)];
@@ -155,7 +144,76 @@
 - (void)saveMessageBtnMethod
 {
     ZSLog(@"保存按钮被点击!!");
+    
+    //保存用户编辑的信息
+    //    NSString *path = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"ADInfo.plist"];//当前应用的沙盒路径
+    //    NSString *imageString = (NSString *)[NSKeyedArchiver keyPathsForValuesAffectingValueForKey:self.imagePath];
+    
+    
+    NSMutableDictionary * infoDic = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
+    NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+    [dic setValue:self.adTitleTextField.text forKey:@"adTitle"];
+    [dic setValue:self.adIntroductionTextField.text forKey:@"adDescrible"];
+    [dic setValue:self.linkTextField.text forKey:@"url"];
+    [dic setValue:self.imgData forKey:@"iconImg"];
+    if (infoDic[@"ad2"] == nil) {
+        NSMutableArray * arr = [NSMutableArray array];
+        //非常重要
+        //        [dic setValue:@"id" forKey:@"id"];
+        [arr addObject:dic];
+        [infoDic setValue:arr forKey:@"ad2"];
+        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+    }else{
+//            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
+        [infoDic[@"ad2"] addObject:dic];
+        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
+//        for (NSDictionary * dic in tempArr) {
+//            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
+//            {
+//                [dic setValue:self.adTextField.text forKey:@"adTitle"];
+//                [dic setValue:self.linkTextField.text forKey:@"url"];
+//                [dic setValue:self.imgData forKey:@"bgImg"];
+//            }
+//        }
+        [infoDic setValue:infoDic[@"ad2"] forKey:@"ad2"];
+        }
+    //把刚才写的数组存到沙盒当中去
+    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+        ZSLog(@"信息保存成功");
+        //        [self changeEnable];
+        [self goBack];
+    }else{
+        ZSLog(@"信息保存失败");
+    }
+    
+    //返回上级模态视图
+//    if (self.adTextField.text.length != 0) {
+//        NSString *str = self.adTextField.text;
+//        //发送带消息的通知
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue" object:str];
+//    }
+    
+    //点击保存之后，先进行网络保存，后台返回广告条的ID并将其将数据存储到字典中，然后存储到本地
+    //    self.adInfoDic = @{
+    //                       @"adTextField":self.adTextField.text,
+    //                       @"linkTextField":self.linkTextField.text
+    //                       };
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    
 }
+
+#pragma mark 系统调用相机或图库获取图片
+-(void)selectImage{
+    UIAlertController * alertView = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    ph = [[PhotoLoadMethod alloc] init];
+    [ph loadImageFromLibrayWithController:self alertController:alertView Block:^(UIImage *image) {
+        self.imgData = UIImagePNGRepresentation(image);
+        [self.pictureBtn setBackgroundImage:image forState:UIControlStateNormal];
+    }];
+}
+
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];

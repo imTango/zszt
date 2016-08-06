@@ -16,6 +16,6 @@
 //@property (strong, nonatomic) UIButton *coverBtn;
 
 + (ProfileViewController*)share;
-- (void)removeSelfAndLoginVC;
+
 
 @end

@@ -59,8 +59,17 @@
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
-    
-    
+    //个人广告条存储地址
+    NSMutableDictionary * infoDic = [NSMutableDictionary dictionary];
+    infoDic = (NSMutableDictionary*)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];
+    if (infoDic == nil) {
+        NSMutableDictionary * dic = [NSMutableDictionary dictionary];
+        [NSKeyedArchiver archiveRootObject:dic toFile:kPath];
+    }else{
+//        ZSLog(@"appdelegate:%@",infoDic);
+//        [infoDic removeAllObjects];
+        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+    }
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -75,15 +84,22 @@
 //}
 
 
-//- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
-//{
-//    BOOL result = [UMSocialSnsService handleOpenURL:url];
-//    if (result == FALSE) {
-//        //调用其他SDK，例如支付宝SDK等
-//    }
-//    return result;
-//}
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    BOOL result = [UMSocialSnsService handleOpenURL:url];
+    if (result == FALSE) {
+        //调用其他SDK，例如支付宝SDK等
+    }
+    return result;
+}
 
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url{
+    return  [UMSocialSnsService handleOpenURL:url];
+}
+
+-(BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options{
+    return [UMSocialSnsService handleOpenURL:url];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
