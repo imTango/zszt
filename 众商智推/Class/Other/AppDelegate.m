@@ -15,8 +15,14 @@
 #import "WXApi.h"
 #import "WXApiObject.h"
 //#import "WXApiManager.h"
+#import "ZSTabBarViewController.h"
+#import "BaiduMobAdSDK/BaiduMobAdSplash.h"
 
-@interface AppDelegate ()
+@interface AppDelegate ()<BaiduMobAdSplashDelegate>
+
+@property (nonatomic, strong) BaiduMobAdSplash *splash;
+
+@property (nonatomic, retain) UIView *customSplashView;
 
 @end
 
@@ -49,14 +55,59 @@
     NSString *currentVersion = [NSBundle mainBundle].infoDictionary[key];
     
     if ([currentVersion isEqualToString:lastVersion]) {
-        LaunchingViewController *launchVC = [[LaunchingViewController alloc] init];
-        self.window.rootViewController = launchVC;
+        //第二次的时候直接显示开平广告  不加载新特性了
+//        LaunchingViewController *launchVC = [[LaunchingViewController alloc] init];
+//        self.window.rootViewController = launchVC;
+        
+        
+        //        UIWindow *window = [UIApplication sharedApplication].keyWindow;
+        self.window.rootViewController = [[ZSTabBarViewController alloc] init];
+        [self.window makeKeyAndVisible];
+        
+        BaiduMobAdSplash *splash = [[BaiduMobAdSplash alloc] init];
+        splash.delegate = self;
+        splash.AdUnitTag = @"2058492";
+        splash.canSplashClick = YES;
+        self.splash = splash;
+        
+        //可以在customSplashView上显示包含icon的自定义开屏
+        self.customSplashView = [[UIView alloc]initWithFrame:self.window.frame];
+        self.customSplashView.backgroundColor = [UIColor whiteColor];
+        [self.window addSubview:self.customSplashView];
+        
+        CGFloat screenWidth = self.window.frame.size.width;
+        CGFloat screenHeight = self.window.frame.size.height;
+        
+        //在baiduSplashContainer用做上展现百度广告的容器，注意尺寸必须大于200*200，并且baiduSplashContainer需要全部在window内，同时开机画面不建议旋转
+        UIView * baiduSplashContainer = [[UIView alloc]initWithFrame:CGRectMake(0, 10, screenWidth, screenHeight - 50)];
+        [self.customSplashView addSubview:baiduSplashContainer];
+        
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(screenWidth*0.5 - 40, screenHeight - 40, 80, 20)];
+        label.text = @"众商智推";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.font = [UIFont boldSystemFontOfSize:20];
+        [self.customSplashView addSubview:label];
+        
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(screenWidth - 80, screenHeight - 40, 80, 20)];
+        [btn setTitle:@"进入" forState:UIControlStateNormal];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn setImage:[UIImage imageNamed:@"right_icon"] forState:UIControlStateNormal];
+        btn.imageEdgeInsets = UIEdgeInsetsMake(0, 60, 0, 0);
+        btn.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 25);
+        btn.titleLabel.font = [UIFont systemFontOfSize:18];
+        [btn addTarget:self action:@selector(removeGuangGao) forControlEvents:UIControlEventTouchUpInside];
+        [self.customSplashView addSubview:btn];
+        
+        //在的baiduSplashContainer里展现百度广告
+        [splash loadAndDisplayUsingContainerView:baiduSplashContainer];
+        
     }else {
         //这次打开的版本和上次不一样，显示新特性
         self.window.rootViewController = [[NewfeatureViewController alloc] init];
         //将当前的版本号存进沙盒
         [[NSUserDefaults standardUserDefaults] setObject:currentVersion forKey:key];
         [[NSUserDefaults standardUserDefaults] synchronize];
+        [self.window makeKeyAndVisible];
     }
     
     //个人广告条存储地址
@@ -73,6 +124,57 @@
     [self.window makeKeyAndVisible];
     
     return YES;
+}
+- (void)removeGuangGao
+{
+    [self splashDidDismissScreen:nil];
+}
+
+//应用的APPID
+- (NSString *)publisherId {
+    return @"ccb60059";
+}
+/**
+ *  广告被点击
+ */
+- (void)splashDidClicked:(BaiduMobAdSplash *)splash {
+    NSLog(@"splashDidClicked");
+}
+/**
+ *  广告详情页消失
+ */
+- (void)splashDidDismissLp:(BaiduMobAdSplash *)splash {
+    NSLog(@"splashDidDismissLp");
+}
+/**
+ *  广告展示结束
+ */
+- (void)splashDidDismissScreen:(BaiduMobAdSplash *)splash {
+    NSLog(@"splashDidDismissScreen");
+    [self removeSplash];
+}
+/**
+ *  广告展示成功
+ */
+- (void)splashSuccessPresentScreen:(BaiduMobAdSplash *)splash {
+    NSLog(@"splashSuccessPresentScreen");
+}
+/**
+ *  广告展示失败
+ */
+- (void)splashlFailPresentScreen:(BaiduMobAdSplash *)splash withError:(BaiduMobFailReason)reason {
+    NSLog(@"splashlFailPresentScreen withError %d", reason);
+    [self removeSplash];
+}
+/**
+ *  展示结束or展示失败后, 手动移除splash和delegate
+ */
+- (void) removeSplash {
+    if (self.splash) {
+        self.splash.delegate = nil;
+        self.splash = nil;
+        [self.customSplashView removeFromSuperview];
+    }
 }
 
 //- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {

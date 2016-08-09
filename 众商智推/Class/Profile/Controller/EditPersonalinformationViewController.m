@@ -14,7 +14,7 @@
 #import "LoginViewController.h"
 #import "ProfileViewController.h"
 
-@interface EditPersonalinformationViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate>
+@interface EditPersonalinformationViewController ()<UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIScrollViewDelegate,UITextFieldDelegate>
 //整体的scrollView
 @property (strong, nonatomic) UIScrollView *allScrollView;
 //头像View
@@ -126,7 +126,7 @@
 //        _allScrollView.scrollEnabled = YES;
         //        _allScrollView.bounces = NO; // 弹簧效果
         _allScrollView.showsVerticalScrollIndicator = NO;
-        _allScrollView.contentSize = CGSizeMake(0, 1200);
+        _allScrollView.contentSize = CGSizeMake(0, 1080);
     }
     return _allScrollView;
 }
@@ -207,7 +207,11 @@
         _editPIView.backgroundColor = [UIColor whiteColor];
         _editPIView.layer.cornerRadius = 4;
         _editPIView.layer.masksToBounds = YES;
-        
+        _editPIView.telephoneTextField.delegate = self;
+        _editPIView.jobTextField.delegate = self;
+        _editPIView.nameTextField.delegate = self;
+        _editPIView.companyTextField.delegate = self;
+        _editPIView.qqTextField.delegate = self;
     }
     return _editPIView;
 }
@@ -260,7 +264,11 @@
         _editPIExtensionView.backgroundColor = [UIColor whiteColor];
         _editPIExtensionView.layer.cornerRadius = 4;
         _editPIExtensionView.layer.masksToBounds = YES;
-        
+        _editPIExtensionView.emailTextField.delegate = self;
+        _editPIExtensionView.WXAccountTextField.delegate = self;
+        _editPIExtensionView.addressTextField.delegate = self;
+        _editPIExtensionView.focusTextField.delegate = self;
+        _editPIExtensionView.findTextField.delegate = self;
     }
     return _editPIExtensionView;
 }
@@ -529,13 +537,47 @@
         NSString *str = @"删除成功";
         [self.delegate performSelector:@selector(deleteUserInfoPathMethod) withObject:str];
     }
-
-    
-    
     
     [self goBack];
 
 }
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
+}
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+    //上下文动画内，改变当前视图坐标
+    [UIView beginAnimations:@"text" context:nil];
+    [UIView setAnimationDuration:0.3];
+    
+    CGRect rect = self.view.frame;
+    rect.origin.y = -210;
+    self.view.frame = rect;
+    
+    [UIView commitAnimations];
+    return YES;
+}
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    [UIView beginAnimations:@"text" context:nil];
+    [UIView setAnimationDuration:0.3];
+    
+    CGRect rect = self.view.frame;
+    rect.origin.y = 0;
+    self.view.frame = rect;
+    
+    [UIView commitAnimations];
+    return YES;
+    
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

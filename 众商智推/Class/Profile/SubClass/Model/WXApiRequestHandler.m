@@ -32,26 +32,45 @@
         //IOS5自带解析类NSJSONSerialization从response中解析出数据放到字典中
         dict = [NSJSONSerialization JSONObjectWithData:response options:NSJSONReadingMutableLeaves error:&error];
         
-        NSLog(@"url:%@",urlString);
+        ZSLog(@"url:%@",urlString);
+        ZSLog(@"%@",dict);
+        
+        
+        NSDictionary *dictionary = @{
+                                     @"appid":@"wx9c560386596469e2",
+                                 @"partnerid":@"1369142802",
+                                  @"prepayid":@"wx20160727164751d616bfdb0f0730956308",
+                                  @"noncestr":@"a3b9a50971db27a1056541b58054277a",
+                                 @"timestamp":@"1469609271",
+                                   @"package":@"Sign=WXPay",
+                                      @"sign":@"4C9248F4D6D2CC371428EE040BEF9D36",
+                                   @"retcode":@"0",
+                          @"spbill_create_ip":@"192.168.112.112",
+                                 @"total_fee":@"123",
+                                      @"body":@"VIP"
+                                     };
+        
+        
         if(dict != nil){
-            NSMutableString *retcode = [dict objectForKey:@"retcode"];
+            NSMutableString *retcode = [dictionary objectForKey:@"retcode"];
+            ZSLog(@"%@",retcode);
             if (retcode.intValue == 0){
-                NSMutableString *stamp  = [dict objectForKey:@"timestamp"];
+                NSMutableString *stamp  = [dictionary objectForKey:@"timestamp"];
                 
                 //调起微信支付
                 PayReq* req             = [[PayReq alloc] init];
-                req.partnerId           = [dict objectForKey:@"partnerid"];
-                req.prepayId            = [dict objectForKey:@"prepayid"];
-                req.nonceStr            = [dict objectForKey:@"noncestr"];
+                req.partnerId           = [dictionary objectForKey:@"partnerid"];
+                req.prepayId            = [dictionary objectForKey:@"prepayid"];
+                req.nonceStr            = [dictionary objectForKey:@"noncestr"];
                 req.timeStamp           = stamp.intValue;
-                req.package             = [dict objectForKey:@"package"];
-                req.sign                = [dict objectForKey:@"sign"];
+                req.package             = [dictionary objectForKey:@"package"];
+                req.sign                = [dictionary objectForKey:@"sign"];
                 [WXApi sendReq:req];
                 //日志输出
-                NSLog(@"appid=%@\npartid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",[dict objectForKey:@"appid"],req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
+                NSLog(@"appid=%@\npartid=%@\nprepayid=%@\nnoncestr=%@\ntimestamp=%ld\npackage=%@\nsign=%@",[dictionary objectForKey:@"appid"],req.partnerId,req.prepayId,req.nonceStr,(long)req.timeStamp,req.package,req.sign );
                 return @"";
             }else{
-                return [dict objectForKey:@"retmsg"];
+                return [dictionary objectForKey:@"retmsg"];
             }
         }else{
             return @"服务器返回错误，未获取到json对象";

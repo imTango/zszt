@@ -13,14 +13,12 @@
 #import "UIImageView+WebCache.h"
 #import "ProfileViewController.h"
 
-#define WIDTH self.view.frame.size.width
-#define HEIGHT self.view.frame.size.height
 #define USERINFOPATH [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject] stringByAppendingPathComponent:@"userInfo.txt"]
 
 @interface LoginViewController ()<UMSocialUIDelegate>
 
-//显示三方登录的头像和昵称
-@property (strong, nonatomic) UIImageView *iconImage;
+//logo和名称
+@property (strong, nonatomic) UIImageView *logoImage;
 @property (strong, nonatomic) UILabel *nameLabel;
 
 //线
@@ -33,8 +31,6 @@
 @property (nonatomic, strong) UIButton *qqBtn;
 //微信
 @property (strong, nonatomic) UIButton *weiXinBtn;
-
-@property (nonatomic,strong) UIView * loginView;
 //处理点击登录事件后的block对象
 @property(nonatomic, copy) UMSocialSnsPlatformLoginHandler loginClickHandler;
 
@@ -56,60 +52,56 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIColor *color = [UIColor blackColor];
-    self.view.backgroundColor = [color colorWithAlphaComponent:0.7];
-//    self.view.backgroundColor = [UIColor blackColor];
-//    self.view.alpha = 0.7;
-//    [self.view setBackgroundColor:[UIColor whiteColor]];
-
-//    [self createUI];
-//    [self.view addSubview:self.iconImage];
-//    [self.view addSubview:self.nameLabel];
-    [self.view addSubview:self.loginView];
-    [self.loginView addSubview:self.messageLabel];
-    [self.loginView addSubview:self.lineView];
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    [self.loginView addSubview:self.sinaBtn];
-    [self.loginView addSubview:self.qqBtn];
-    [self.loginView addSubview:self.weiXinBtn];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background"]];
     
-    [self addUserNameAndUserIcon];
+    [self createUI];
+    [self.view addSubview:self.logoImage];
+    [self.view addSubview:self.nameLabel];
+//    [self.view addSubview:self.lineView];
+    [self.view addSubview:self.messageLabel];
+    
+    [self.view addSubview:self.sinaBtn];
+    [self.view addSubview:self.qqBtn];
+    [self.view addSubview:self.weiXinBtn];
+    
+//    [self addUserNameAndUserIcon];
     
 }
 #pragma mark - 创建顶部View
 - (void)createUI
 {
-    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 375, 64)];
+    UIView *headView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, 64)];
 //    headView.backgroundColor = [UIColor colorWithRed:19/255.0 green:143/255.0 blue:253/255.0 alpha:1];
     [self.view addSubview:headView];
     
     
     UIButton *backBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    backBtn.frame = CGRectMake(5, 25, 80, 40);
+    backBtn.frame = CGRectMake(5, 25, 40, 40);
     [backBtn setImage:[UIImage imageNamed:@"back"] forState:UIControlStateNormal];
-    [backBtn setTitle:@"登录" forState:UIControlStateNormal];
     [backBtn setTitleColor:ZSColor(19, 143, 253) forState:UIControlStateNormal];
     [backBtn addTarget:self action:@selector(goBack) forControlEvents:UIControlEventTouchUpInside];
     [headView addSubview:backBtn];
     
-    //横线
-    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, 375, 3)];
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = (CGRect){CGPointZero,CGSizeMake(375, 3)};
-    //颜色分配
-    gradient.colors = [NSArray arrayWithObjects:
-                       (id)[UIColor blueColor].CGColor,
-                       (id)[UIColor purpleColor].CGColor,
-                       (id)[UIColor redColor].CGColor
-                       ,nil];
-    // 颜色分割线
-    gradient.locations = @[@(0.25),@(0.5),@(0.75)];
-    // 起始点
-    gradient.startPoint = CGPointMake(0, 0);
-    // 结束点
-    gradient.endPoint = CGPointMake(1, 0);
-    [lineLabel.layer insertSublayer:gradient atIndex:0];
-    [self.view addSubview:lineLabel];
+//    //横线
+//    UILabel *lineLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, 3)];
+//    CAGradientLayer *gradient = [CAGradientLayer layer];
+//    gradient.frame = (CGRect){CGPointZero,CGSizeMake(ScreenWidth, 3)};
+//    //颜色分配
+//    gradient.colors = [NSArray arrayWithObjects:
+//                       (id)[UIColor blueColor].CGColor,
+//                       (id)[UIColor purpleColor].CGColor,
+//                       (id)[UIColor redColor].CGColor
+//                       ,nil];
+//    // 颜色分割线
+//    gradient.locations = @[@(0.25),@(0.5),@(0.75)];
+//    // 起始点
+//    gradient.startPoint = CGPointMake(0, 0);
+//    // 结束点
+//    gradient.endPoint = CGPointMake(1, 0);
+//    [lineLabel.layer insertSublayer:gradient atIndex:0];
+//    [self.view addSubview:lineLabel];
 }
 - (void)goBack
 {
@@ -126,35 +118,36 @@
     UserInfoModel *model = [array objectAtIndex:0];
     if (model) {
         //如果沙盒中存储与输入的值形同的模型，则做出相应操作之后，跳出整个函数
-        [_iconImage sd_setImageWithURL:[NSURL URLWithString:model.iconUrlStr] placeholderImage:[UIImage imageNamed:@"head_default.png"]];
+        [_logoImage sd_setImageWithURL:[NSURL URLWithString:model.iconUrlStr] placeholderImage:[UIImage imageNamed:@"head_default.png"]];
         _nameLabel.text = model.userNameStr;
     } else {
         _nameLabel.text = @"昵称";
     }
     
-   
-//    [self goBack];
+    [self goBack];
 }
 
 #pragma mark -
 #pragma mark - 懒加载
-- (UIImageView *)iconImage
+- (UIImageView *)logoImage
 {
-    if (!_iconImage) {
-        _iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-40, 120, 80, 80)];
-        _iconImage.layer.cornerRadius = 40;
-        _iconImage.layer.masksToBounds = YES;
-        _iconImage.image = [UIImage imageNamed:@"head_default.png"];
+    if (!_logoImage) {
+        _logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(ScreenWidth/2-50, 90, 100, 100)];
+        _logoImage.layer.cornerRadius = 50;
+        _logoImage.layer.masksToBounds = YES;
+        _logoImage.backgroundColor = [UIColor redColor];
+        _logoImage.image = [UIImage imageNamed:@"logo"];
 
     }
-    return _iconImage;
+    return _logoImage;
 }
 - (UILabel *)nameLabel
 {
     if (!_nameLabel) {
-        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2-50, 210, 100, 40)];
+        _nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(ScreenWidth/2-100, 190, 200, 50)];
         _nameLabel.textAlignment = NSTextAlignmentCenter;
-        _nameLabel.text = @"昵称";
+        _nameLabel.font = [UIFont systemFontOfSize:30];
+        _nameLabel.text = @"众商智推";
     }
     return _nameLabel;
 }
@@ -162,7 +155,7 @@
 - (UIView *)lineView
 {
     if (!_lineView) {
-        _lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 25, _loginView.width, 1)];
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(10, ScreenHeight - 260, ScreenWidth - 20, 1)];
         [_lineView setBackgroundColor:[UIColor grayColor]];
     }
     return _lineView;
@@ -171,14 +164,14 @@
 - (UILabel *)messageLabel
 {
     if (!_messageLabel) {
-        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 10, WIDTH - 10, 30)];
+        _messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, ScreenHeight - 270, ScreenWidth - 10, 30)];
         _messageLabel.text = @"选择登录方式";
         [_messageLabel sizeToFit];
         _messageLabel.centerX = self.lineView.centerX;
         _messageLabel.textAlignment = NSTextAlignmentCenter;
         _messageLabel.font = [UIFont systemFontOfSize:14];
         _messageLabel.textColor = [UIColor grayColor];
-        _messageLabel.backgroundColor = [UIColor whiteColor];
+        _messageLabel.backgroundColor = [UIColor clearColor];
     }
     return _messageLabel;
 }
@@ -188,17 +181,18 @@
 {
     if (!_weiXinBtn) {
         _weiXinBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _weiXinBtn.frame = CGRectMake(20, 45, ScreenWidth - 100, 50);
+        _weiXinBtn.frame = CGRectMake(30, ScreenHeight - 220, ScreenWidth - 60, 50);
         [_weiXinBtn setImage:[UIImage imageNamed:@"微信"] forState:UIControlStateNormal];
         [_weiXinBtn setTitle:@"微信登录" forState:UIControlStateNormal];
-        [_weiXinBtn setTitleColor:[UIColor greenColor] forState:UIControlStateNormal];
+        [_weiXinBtn setTitleColor:ZSColor(0, 181, 93) forState:UIControlStateNormal];
         _weiXinBtn.imageEdgeInsets = UIEdgeInsetsMake(3, 3, 0, 50);
         _weiXinBtn.titleEdgeInsets = UIEdgeInsetsMake(3, 50, 0, 1);
-        _weiXinBtn.layer.cornerRadius = 5;
+        _weiXinBtn.layer.cornerRadius = 25;
         _weiXinBtn.layer.masksToBounds = YES;
         _weiXinBtn.layer.borderWidth = 1;
         _weiXinBtn.layer.borderColor = [UIColor greenColor].CGColor;
         [_weiXinBtn setBackgroundColor:[UIColor clearColor]];
+//        [_weiXinBtn setBackgroundColor:ZSColor(0, 181, 93)];
         [_weiXinBtn addTarget:self action:@selector(showWeiXin) forControlEvents:UIControlEventTouchUpInside];
     }
     return _weiXinBtn;
@@ -208,17 +202,18 @@
 {
     if (!_qqBtn) {
         _qqBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _qqBtn.frame = CGRectMake(20, 105, ScreenWidth - 100, 50);
+        _qqBtn.frame = CGRectMake(30, ScreenHeight - 160, ScreenWidth - 60, 50);
         [_qqBtn setImage:[UIImage imageNamed:@"QQ"] forState:UIControlStateNormal];
         [_qqBtn setTitle:@"QQ登录" forState:UIControlStateNormal];
-        [_qqBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+        [_qqBtn setTitleColor:ZSColor(0, 163, 226) forState:UIControlStateNormal];
         _qqBtn.imageEdgeInsets = UIEdgeInsetsMake(3, 3, 0, 50);
         _qqBtn.titleEdgeInsets = UIEdgeInsetsMake(3, 50, 0, 1);
-        _qqBtn.layer.cornerRadius = 5;
+        _qqBtn.layer.cornerRadius = 25;
         _qqBtn.layer.masksToBounds = YES;
         _qqBtn.layer.borderWidth = 1;
         _qqBtn.layer.borderColor = [UIColor blueColor].CGColor;
-        [_qqBtn setBackgroundColor:[UIColor clearColor]];
+//        [_qqBtn setBackgroundColor:ZSColor(0, 163, 226)];
+         [_qqBtn setBackgroundColor:[UIColor clearColor]];
         [_qqBtn addTarget:self action:@selector(showQQ) forControlEvents:UIControlEventTouchUpInside];
 //        _qqBtn.layer.cornerRadius = 25;
 //        _qqBtn.layer.masksToBounds = YES;
@@ -230,44 +225,24 @@
 {
     if (!_sinaBtn) {
         _sinaBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _sinaBtn.frame = CGRectMake(20, 165, ScreenWidth - 100, 50);
+        _sinaBtn.frame = CGRectMake(30, ScreenHeight - 100, ScreenWidth - 60, 50);
 
         [_sinaBtn setImage:[UIImage imageNamed:@"新浪"] forState:UIControlStateNormal];
         [_sinaBtn setTitle:@"新浪登录" forState:UIControlStateNormal];
-        [_sinaBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+        [_sinaBtn setTitleColor: ZSColor(244, 9, 10) forState:UIControlStateNormal];
         _sinaBtn.imageEdgeInsets = UIEdgeInsetsMake(3, 3, 0, 50);
         _sinaBtn.titleEdgeInsets = UIEdgeInsetsMake(3, 50, 0, 1);
-        _sinaBtn.layer.cornerRadius = 5;
+        _sinaBtn.layer.cornerRadius = 25;
         _sinaBtn.layer.masksToBounds = YES;
         _sinaBtn.layer.borderWidth = 1;
         _sinaBtn.layer.borderColor = [UIColor redColor].CGColor;
-        [_sinaBtn setBackgroundColor:[UIColor clearColor]];
+       [_sinaBtn setBackgroundColor:[UIColor clearColor]];
+//        [_sinaBtn setBackgroundColor:ZSColor(244, 9, 10)];
         [_sinaBtn addTarget:self action:@selector(showSina) forControlEvents:UIControlEventTouchUpInside];
         //        _sinaBtn.layer.cornerRadius = 25;
         //        _sinaBtn.layer.masksToBounds = YES;
     }
     return _sinaBtn;
-}
-
-//loginView
--(UIView *)loginView
-{
-    if (!_loginView) {
-        _loginView = [[UIView alloc] initWithFrame:CGRectMake(30, 150, ScreenWidth-60, 250)];
-        _loginView.layer.cornerRadius = 5;
-        _loginView.layer.masksToBounds = YES;
-        _loginView.backgroundColor = [UIColor whiteColor];
-    }
-    return _loginView;
-    /**self.loginVC.view.x = 30;
-     self.loginVC.view.y = 150;
-     self.loginVC.view.height = 250;
-     self.loginVC.view.width = ScreenWidth - 60;
-     self.loginVC.view.layer.cornerRadius = 5;
-     self.loginVC.view.layer.masksToBounds = YES;
-     [self.view addSubview:self.loginVC.view];
-     //        [self addChildViewController:self.loginVC];
-     [self.view bringSubviewToFront:self.loginVC.view];*/
 }
 
 //新浪，QQ，微信的实现方法
@@ -289,7 +264,6 @@
 
 - (void)sanFangDengLuWithType:(NSString *)type
 {
-//    ProfileViewController *profileVC = [[ProfileViewController alloc] init];
     UMSocialSnsPlatform *snsPlatform = [UMSocialSnsPlatformManager getSocialPlatformWithName:type];
     snsPlatform.loginClickHandler(self,[UMSocialControllerService defaultControllerService],YES,^(UMSocialResponseEntity *response){
         if (response.responseCode == UMSResponseCodeSuccess) {
@@ -332,6 +306,7 @@
             //用通知传值显示改变编辑后的内容
             NSNumber *number = [[NSNumber alloc] initWithInt:1];
             [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue1" object:number];
+ 
             //登陆成功以后发给服务器用户的id
 //            [self sendUserIDToServerWithID:snsAccount.usid];
 //            [self.view removeFromSuperview];
@@ -420,12 +395,9 @@
 
 }
 
-
-
-
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self.view removeFromSuperview];
-}
+//-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+//{
+//    [self goBack];
+//}
 
 @end
