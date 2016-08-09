@@ -46,7 +46,7 @@
 
 
 //顶部使用collectionView的情况
-@property (strong, nonatomic) UICollectionView *headTitleCollectView;
+@property (strong, nonatomic) UICollectionView * headTitleCollectView;
 @property (strong, nonatomic) UIButton *titleButton;
 
 @property (strong,nonatomic)  NSArray *allVC;
@@ -429,7 +429,7 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
 
 }
 
-#warning 跳转-------------------------------------
+#pragma mark 跳转-------------------------------------
 //--------------------------控制跳转的方法----------------------------
 - (void)jumpViewController:(UIButton *)tempButton
 {
@@ -448,7 +448,7 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
     
 }
 
-#pragma 懒加载
+#pragma mark 懒加载
 //滚动字体的滑动视图
 - (UIScrollView *)headerscrollView
 {
