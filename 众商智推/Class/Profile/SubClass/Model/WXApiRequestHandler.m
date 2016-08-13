@@ -39,16 +39,20 @@
         NSDictionary *dictionary = @{
                                      @"appid":@"wx9c560386596469e2",
                                  @"partnerid":@"1369142802",
-                                  @"prepayid":@"wx20160727164751d616bfdb0f0730956308",
-                                  @"noncestr":@"a3b9a50971db27a1056541b58054277a",
-                                 @"timestamp":@"1469609271",
+                                  @"prepayid":@"wx20160812172150fc696ab68f0200087373",
+                                  @"noncestr":@"99fb655c1e2840ae8fd1e0fc2489c871",
+                                 @"timestamp":@"1470993620",
                                    @"package":@"Sign=WXPay",
-                                      @"sign":@"4C9248F4D6D2CC371428EE040BEF9D36",
-                                   @"retcode":@"0",
+                                      @"sign":@"391316FD1D9D8083A88E89F9D162BEA0",
                           @"spbill_create_ip":@"192.168.112.112",
                                  @"total_fee":@"123",
                                       @"body":@"VIP"
                                      };
+        
+        /*
+         [{"timestamp":"1470993620","partnerid":"1369142802","noncestr":"99fb655c1e2840ae8fd1e0fc2489c871","prepayid":"wx20160812172150fc696ab68f0200087373","sing":"391316FD1D9D8083A88E89F9D162BEA0","package":"Sign=WXPay","appid":"wx9c560386596469e2"}]
+         */
+        
         
         
         if(dict != nil){

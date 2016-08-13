@@ -14,17 +14,20 @@
     
     self = [super init];
     if (self) {
-        if (![dic[@"iconImg"] isKindOfClass:[NSNull class]]) {
-            self.iconImg = dic[@"iconImg"];
+        if (![dic[@"image"] isKindOfClass:[NSNull class]]) {
+            self.image = dic[@"image"];
         }
-        if (![dic[@"adTitle"] isKindOfClass:[NSNull class]]) {
-            self.adTitle = dic[@"adTitle"];
+        if (![dic[@"title"] isKindOfClass:[NSNull class]]) {
+            self.title = dic[@"title"];
         }
-        if (![dic[@"adDescrible"] isKindOfClass:[NSNull class]]) {
-            self.adDescrible = dic[@"adDescrible"];
+        if (![dic[@"content"] isKindOfClass:[NSNull class]]) {
+            self.content = dic[@"content"];
         }
-        if (![dic[@"url"] isKindOfClass:[NSNull class]]) {
-            self.url = dic[@"url"];
+        if (![dic[@"image"] isKindOfClass:[NSNull class]]) {
+            self.adurl = dic[@"adurl"];
+        }
+        if (![dic[@"adId"] isKindOfClass:[NSNull class]]) {
+            self.adId = dic[@"adId"];
         }
     }
     return self;

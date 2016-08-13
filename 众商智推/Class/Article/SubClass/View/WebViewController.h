@@ -17,6 +17,10 @@
 //分享按钮
 @property (strong, nonatomic) UIButton *shareBtn;
 
+@property (nonatomic,strong) UIView * bottomView;
+@property (nonatomic,strong) UIButton * insertAdBtn;
+@property (nonatomic,strong) UIButton * completeBtn;
+
 -(void)jiaZaiDataWithModel:(ArticleListModel *)model;
 - (void)jiaZaiDataWithTaskModel:(TaskAllModel *)model;
 

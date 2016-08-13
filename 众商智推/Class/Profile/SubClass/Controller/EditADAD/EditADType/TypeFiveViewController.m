@@ -76,7 +76,7 @@
     [scrollView setBackgroundColor:ZSColor(244, 244, 244)];
     scrollView.delegate = self;
     scrollView.showsVerticalScrollIndicator = NO;
-    scrollView.contentSize = CGSizeMake(0, 700);
+    scrollView.contentSize = CGSizeMake(0, ScreenHeight-64);
     [self.view addSubview:scrollView];
     
     UILabel *adLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 5, 100, 40)];
@@ -170,48 +170,42 @@
     NSMutableDictionary * infoDic = [NSMutableDictionary dictionaryWithCapacity:0];
     infoDic = (NSMutableDictionary*)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:self.adTextField.text forKey:@"adTitle"];
-    [dic setValue:self.linkTextField.text forKey:@"url"];
-    [dic setValue:self.imgData forKey:@"bgImg"];
-    if (infoDic[@"ad1"] == nil) {
-        NSMutableArray * arr = [NSMutableArray array];
-        //非常重要
-        //        [dic setValue:@"id" forKey:@"id"];
-        
-        [arr addObject:dic];
-        
-        [infoDic setValue:arr forKey:@"ad1"];
-        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
-    }
-    else{
-        //        NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad1"]];
-        //        ZSLog(@"temp%@",tempArr);
-        if ([infoDic[@"ad1"] isKindOfClass:[NSMutableArray class]]) {
-            [infoDic[@"ad1"] addObject:dic];
-            [infoDic setValue:infoDic[@"ad1"] forKey:@"ad1"];
-        }
-        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
-        //    for (NSDictionary * dic in tempArr) {
-        //        if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
-        //        {
-        //            [dic setValue:self.adTextField.text forKey:@"adTitle"];
-        //            [dic setValue:self.linkTextField.text forKey:@"url"];
-        //            [dic setValue:self.imgData forKey:@"bgImg"];
-        //        }
-        //    }
-        
-    }
-    //把刚才写的数组存到沙盒当中去
-    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
-        ZSLog(@"信息保存成功");
-        //        NSLog(@"plist:%@",infoDic);
-        //        [self changeEnable];
-        [self goBack];
-    }else{
-        ZSLog(@"信息保存失败");
-    }
+    [dic setValue:self.adTextField.text forKey:@"title"];
+    [dic setValue:self.linkTextField.text forKey:@"adurl"];
+    [dic setValue:@"5" forKey:@"type"];
+    NSDictionary * para = [NSDictionary dictionaryWithDictionary:dic];
+    NSMutableArray * arr = [NSMutableArray array];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //存在ad1，先去查找ad1里面的所有广告id，有的话说明是要编辑，没有自然就是添加喽
+    if (self.adId != nil) {
+        for (__strong NSMutableDictionary * tempDic in infoDic[@"ad1"]) {
+            NSString * adIdStr = tempDic[@"adId"];
+            if ([self.adId isEqualToString:adIdStr]) {
+                //如果当前类中adId有值且和本地储存的一个广告中的adId相等，说明用户在修改广告条
+                tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [HTTPToolsPost EditPostRequestWithUrl:EditUrl parameters:para imageData:self.imgData QRCode:nil completion:^{
+                    [tempDic setValue:self.imgData forKey:@"image"];
+                    [arr addObject:tempDic];
+                    [infoDic setValue:arr forKey:@"ad1"];
+                    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                        [self goBack];
+                    }
+                }];
+            }
+        }
+    }else{
+        [HTTPToolsPost StoragePostRequestWithUrl:StorageUrl parameters:para imageData:self.imgData QRCode:nil success:^(NSString *ADId) {
+            [dic setValue:ADId forKey:@"adId"];
+            [dic setValue:self.imgData forKey:@"image"];
+            [arr addObject:dic];
+            [infoDic setValue:arr forKey:@"ad1"];
+            if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                [self goBack];
+            }
+        } fail:^{
+            //
+        }];
+    }
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -219,6 +213,13 @@
     [textField resignFirstResponder];
     return YES;
 }
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+    
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     //上下文动画内，改变当前视图坐标
@@ -226,7 +227,7 @@
     [UIView setAnimationDuration:0.3];
     
     CGRect rect = self.view.frame;
-    rect.origin.y = -210;
+    rect.origin.y = -50;
     self.view.frame = rect;
     
     [UIView commitAnimations];

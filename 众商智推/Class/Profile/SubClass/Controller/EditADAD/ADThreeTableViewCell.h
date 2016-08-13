@@ -14,6 +14,7 @@
 @property (strong, nonatomic)  UIButton * thirdFocusBtn;
 @property (strong, nonatomic)  UILabel * thirdAdTitle;
 @property (nonatomic,strong)  NSString * thirdUrl;
+@property (nonatomic, strong) NSString    * adId;
 
 -(void)loadDataWithModel:(AdtypeThreeModel*)model indexPath:(NSIndexPath *)indexpath;
 

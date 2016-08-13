@@ -17,16 +17,12 @@
 #import "ZhuanFaJiaADViewController.h"
 
 
-@interface WebViewController ()<UMSocialUIDelegate>
+@interface WebViewController ()<UMSocialUIDelegate,UIWebViewDelegate>
 
 //分享的标题
 @property (strong, nonatomic) NSString *shareTitle;
 //分享的图片
 @property (strong, nonatomic) UIImage *shareImage;
-//立即转换的view
-@property (strong, nonatomic) UIView *changeView;
-//立即转换按钮
-@property (strong, nonatomic) UIButton *changeBtn;
 
 @end
 
@@ -71,7 +67,6 @@
     [super viewDidLoad];
     [self createHeadUI];
     [self.view setBackgroundColor: [UIColor whiteColor]];
-    
     //加载web视图
     [self createWebView];
     //设置微信分享Appkey  微信开放平台注册的应用的AppId和appSecret
@@ -82,6 +77,25 @@
     [[UMSocialData defaultData].urlResource setResourceType:UMSocialUrlResourceTypeDefault url:self.shareUrl];
     
 }
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+
+{
+    
+    CGRect frame = webView.frame;
+    
+    frame.size.height = 1;
+    
+    webView.frame = frame;
+    
+    CGSize fittingSize = [webView sizeThatFits:CGSizeZero];
+    
+    frame.size = fittingSize;
+    
+    webView.frame = frame;
+    
+}
+
 #pragma mark -
 #pragma mark - 创建顶部View
 - (void)createHeadUI
@@ -108,6 +122,18 @@
     [headView addSubview:self.shareBtn];
     
 }
+
+//插入广告按钮的点击事件
+-(void)insertAdBtnClick{
+    
+}
+//完成按钮的点击事件
+-(void)completeBtnClick{
+    
+}
+
+
+
 - (void)goBack
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -187,35 +213,50 @@
 #pragma mark - 创建webview
 - (void)createWebView
 {
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 65, ScreenWidth, ScreenHeight - 65)];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 65, ScreenWidth, 1)];
     [webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.shareUrl]]];
-    [webView allowsPictureInPictureMediaPlayback];
+    webView.allowsPictureInPictureMediaPlayback = YES;
+    webView.scalesPageToFit = YES;
+    webView.delegate = self;
     [self.view addSubview:webView];
     
-    self.changeView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight - 40, ScreenWidth, 40)];
-    self.changeView.backgroundColor = [UIColor clearColor];
-    [self.view addSubview:self.changeView];
+    self.bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, ScreenHeight-40, ScreenWidth, 40)];
+    [self.bottomView setBackgroundColor:[[UIColor darkGrayColor] colorWithAlphaComponent:0.5f]];
+    [self.view addSubview:self.bottomView];
     
-    self.changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.changeBtn.frame = CGRectMake(self.changeView.frame.size.width/2 - 65, 2 , 130, 36);
-    self.changeBtn.backgroundColor = [UIColor clearColor];
-//    self.changeBtn.layer.cornerRadius = 5;
-//    self.changeBtn.layer.masksToBounds = YES;
-//    [self.changeBtn setTitle:@"立即转换" forState:UIControlStateNormal];
-//    [self.changeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [self.changeBtn addTarget:self action:@selector(changeBtnBeClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.changeView addSubview:self.changeBtn];
+    self.insertAdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.insertAdBtn.frame = CGRectMake(0.15*ScreenWidth, 3, 0.25*ScreenWidth, 30);
+    [self.insertAdBtn setBackgroundColor:[UIColor whiteColor]];
+    [self.insertAdBtn setTitle:@"插入广告" forState:UIControlStateNormal];
+    self.insertAdBtn.titleLabel.textColor = [UIColor blackColor];
+    self.insertAdBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.insertAdBtn.layer.cornerRadius = 5;
+    self.insertAdBtn.layer.masksToBounds = YES;
+    [self.insertAdBtn addTarget:self action:@selector(insertAdBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomView addSubview:self.insertAdBtn];
+    
+    self.completeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.completeBtn.frame = CGRectMake(0.6*ScreenWidth, 3, 0.25*ScreenWidth, 30);
+    self.completeBtn.backgroundColor = [UIColor whiteColor];
+    [self.completeBtn setTitle:@"完成" forState:UIControlStateNormal];
+    self.completeBtn.titleLabel.textColor = [UIColor blackColor];
+    self.completeBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.completeBtn.layer.cornerRadius = 5;
+    self.completeBtn.layer.masksToBounds = YES;
+    [self.completeBtn addTarget:self action:@selector(completeBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    [self.bottomView addSubview:self.completeBtn];
+    
 }
 
-#warning -----------------------------------------------------------------------------------------
+#pragma  mark   -------------------------------------------------------------------------------------
 - (void)changeBtnBeClick
 {
-    [MBProgressHUD showMessage:@"正在转换"];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        ZhuanFaJiaADViewController *zhuanFaVC = [[ZhuanFaJiaADViewController alloc] init];
-        [self presentViewController:zhuanFaVC animated:YES completion:nil];
-        [MBProgressHUD hideHUD];
-    });
+    ZhuanFaJiaADViewController *zhuanFaVC = [[ZhuanFaJiaADViewController alloc] init];
+    [self presentViewController:zhuanFaVC animated:YES completion:nil];
+//    [MBProgressHUD showMessage:@"正在转换"];
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [MBProgressHUD hideHUD];
+//    });
 }
 
 - (void)didReceiveMemoryWarning {

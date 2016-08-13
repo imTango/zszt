@@ -152,55 +152,70 @@
     
     NSMutableDictionary * infoDic = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:self.adTitleTextField.text forKey:@"adTitle"];
-    [dic setValue:self.adIntroductionTextField.text forKey:@"adDescrible"];
-    [dic setValue:self.linkTextField.text forKey:@"url"];
-    [dic setValue:self.imgData forKey:@"iconImg"];
-    if (infoDic[@"ad2"] == nil) {
-        NSMutableArray * arr = [NSMutableArray array];
-        //非常重要
-        //        [dic setValue:@"id" forKey:@"id"];
-        [arr addObject:dic];
-        [infoDic setValue:arr forKey:@"ad2"];
-        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
-    }else{
-//            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
-        [infoDic[@"ad2"] addObject:dic];
-        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
-//        for (NSDictionary * dic in tempArr) {
-//            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
-//            {
-//                [dic setValue:self.adTextField.text forKey:@"adTitle"];
-//                [dic setValue:self.linkTextField.text forKey:@"url"];
-//                [dic setValue:self.imgData forKey:@"bgImg"];
-//            }
-//        }
-        [infoDic setValue:infoDic[@"ad2"] forKey:@"ad2"];
+    [dic setValue:self.adTitleTextField.text forKey:@"title"];
+    [dic setValue:self.adIntroductionTextField.text forKey:@"content"];
+    [dic setValue:self.linkTextField.text forKey:@"adurl"];
+    [dic setValue:@"2" forKey:@"type"];
+    NSDictionary * para = [NSDictionary dictionaryWithDictionary:dic];
+    NSMutableArray * arr = [NSMutableArray array];
+
+    //存在ad1，先去查找ad1里面的所有广告id，有的话说明是要编辑，没有自然就是添加喽
+    if (self.adId != nil) {
+        for (__strong NSMutableDictionary * tempDic in infoDic[@"ad1"]) {
+            NSString * adIdStr = tempDic[@"adId"];
+            if ([self.adId isEqualToString:adIdStr]) {
+                tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [HTTPToolsPost EditPostRequestWithUrl:EditUrl parameters:para imageData:self.imgData QRCode:nil completion:^{
+                    [tempDic setValue:self.imgData forKey:@"image"];
+                    [arr addObject:tempDic];
+                    [infoDic setValue:arr forKey:@"ad1"];
+                    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                        [self goBack];
+                    }
+                }];
+            }
         }
-    //把刚才写的数组存到沙盒当中去
-    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
-        ZSLog(@"信息保存成功");
-        //        [self changeEnable];
-        [self goBack];
+            
     }else{
-        ZSLog(@"信息保存失败");
-    }
+        [HTTPToolsPost StoragePostRequestWithUrl:StorageUrl parameters:para imageData:self.imgData QRCode:nil success:^(NSString *ADId) {
+            [dic setValue:ADId forKey:@"adId"];
+            [dic setValue:self.imgData forKey:@"image"];
+            [arr addObject:dic];
+            [infoDic setValue:arr forKey:@"ad1"];
+            if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                [self goBack];
+            }
+        } fail:^{
+            //
+        }];
+     }
     
-    //返回上级模态视图
-//    if (self.adTextField.text.length != 0) {
-//        NSString *str = self.adTextField.text;
-//        //发送带消息的通知
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"passValue" object:str];
+    
+    
+    
+    
+    
+//    if (infoDic[@"ad2"] == nil) {
+//        NSMutableArray * arr = [NSMutableArray array];
+//        //非常重要
+//        //        [dic setValue:@"id" forKey:@"id"];
+//        [arr addObject:dic];
+//        [infoDic setValue:arr forKey:@"ad2"];
+//        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+//    }else{
+////            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
+//        [infoDic[@"ad2"] addObject:dic];
+//        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
+////        for (NSDictionary * dic in tempArr) {
+////            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
+////            {
+////                [dic setValue:self.adTextField.text forKey:@"adTitle"];
+////                [dic setValue:self.linkTextField.text forKey:@"url"];
+////                [dic setValue:self.imgData forKey:@"bgImg"];
+////            }
+////        }
+//        [infoDic setValue:infoDic[@"ad2"] forKey:@"ad2"];
 //    }
-    
-    //点击保存之后，先进行网络保存，后台返回广告条的ID并将其将数据存储到字典中，然后存储到本地
-    //    self.adInfoDic = @{
-    //                       @"adTextField":self.adTextField.text,
-    //                       @"linkTextField":self.linkTextField.text
-    //                       };
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-    
 }
 
 #pragma mark 系统调用相机或图库获取图片
@@ -219,6 +234,12 @@
     [textField resignFirstResponder];
     return YES;
 }
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    [self.view endEditing:YES];
+    
+}
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
     //上下文动画内，改变当前视图坐标
@@ -226,13 +247,13 @@
     [UIView setAnimationDuration:0.3];
     
     CGRect rect = self.view.frame;
-    rect.origin.y = -210;
+    rect.origin.y = -170;
     self.view.frame = rect;
     
     [UIView commitAnimations];
     return YES;
 }
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+-(void)textFieldDidEndEditing:(UITextField *)textField
 {
     [UIView beginAnimations:@"text" context:nil];
     [UIView setAnimationDuration:0.3];
@@ -242,8 +263,6 @@
     self.view.frame = rect;
     
     [UIView commitAnimations];
-    return YES;
-    
 }
 
 

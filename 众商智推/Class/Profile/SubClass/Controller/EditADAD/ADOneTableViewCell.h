@@ -13,6 +13,7 @@
 @property (nonatomic,strong) UIImageView * firstBgImg;
 @property (strong, nonatomic)  UILabel * fisrtADLabel;
 @property (nonatomic,strong)   NSString * firstUrl;
+@property (nonatomic, strong) NSString  * adId;
 
 -(void)loadDataWithModel:(AdtypeOneModel*)model indexPath:(NSIndexPath *)indexpath;
 @end

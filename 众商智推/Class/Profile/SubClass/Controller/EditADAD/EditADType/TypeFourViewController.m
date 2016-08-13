@@ -30,6 +30,7 @@
     PhotoLoadMethod * ph;
     UIButton *uploadpictureBtn;
     UIButton *uploadQrCodeBtn;
+    UIScrollView * scrollView;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -65,12 +66,19 @@
 }
 - (void)createContentControls
 {
+    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 64, ScreenWidth, ScreenHeight-64)];
+    [scrollView setBackgroundColor:ZSColor(244, 244, 244)];
+    scrollView.delegate = self;
+    scrollView.showsVerticalScrollIndicator = NO;
+    scrollView.contentSize = CGSizeMake(0, ScreenHeight-64);
+    [self.view addSubview:scrollView];
+    
     //上传图片
-    UIView *pictureView = [[UIView alloc] initWithFrame:CGRectMake(10, 80, ScreenWidth-20, 85)];
+    UIView *pictureView = [[UIView alloc] initWithFrame:CGRectMake(10, 10, ScreenWidth-20, 85)];
     pictureView.backgroundColor = [UIColor whiteColor];
     pictureView.layer.cornerRadius = 5;
     pictureView.layer.masksToBounds = YES;
-    [self.view addSubview:pictureView];
+    [scrollView addSubview:pictureView];
     
     self.pictureBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.pictureBtn.frame = CGRectMake(15, 12, 60, 60);
@@ -90,11 +98,11 @@
     [uploadpictureBtn addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     [pictureView addSubview:uploadpictureBtn];
     //二维码
-    UIView *qrCodeView = [[UIView alloc] initWithFrame:CGRectMake(10, 180, ScreenWidth-20, 85)];
+    UIView *qrCodeView = [[UIView alloc] initWithFrame:CGRectMake(10, 110, ScreenWidth-20, 85)];
     qrCodeView.backgroundColor = [UIColor whiteColor];
     qrCodeView.layer.cornerRadius = 5;
     qrCodeView.layer.masksToBounds = YES;
-    [self.view addSubview:qrCodeView];
+    [scrollView addSubview:qrCodeView];
     
     self.qrCodeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     self.qrCodeBtn.frame = CGRectMake(15, 12, 60, 60);
@@ -112,16 +120,16 @@
     [uploadQrCodeBtn addTarget:self action:@selector(selectImage:) forControlEvents:UIControlEventTouchUpInside];
     [qrCodeView addSubview:uploadQrCodeBtn];
 
-    UILabel *adLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 275, 100, 40)];
+    UILabel *adLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 205, 100, 40)];
     adLabel.text = @"广告语";
     adLabel.font = [UIFont boldSystemFontOfSize:20];
-    [self.view addSubview:adLabel];
+    [scrollView addSubview:adLabel];
     
-    UIView *adView = [[UIView alloc] initWithFrame:CGRectMake(10, 325, ScreenWidth-20, 110)];
+    UIView *adView = [[UIView alloc] initWithFrame:CGRectMake(10, 255, ScreenWidth-20, 110)];
     adView.backgroundColor = [UIColor whiteColor];
     adView.layer.cornerRadius = 5;
     adView.layer.masksToBounds = YES;
-    [self.view addSubview:adView];
+    [scrollView addSubview:adView];
     
     UILabel *adTitleLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, 50, 40)];
     adTitleLabel.text = @"标题:";
@@ -148,17 +156,17 @@
     UILabel *linkLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 445, 100, 40)];
     linkLabel.text = @"广告链接";
     linkLabel.font = [UIFont boldSystemFontOfSize:20];
-    [self.view addSubview:linkLabel];
+    [scrollView addSubview:linkLabel];
     
-    self.linkTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 495, ScreenWidth-20, 60)];
+    self.linkTextField = [[UITextField alloc] initWithFrame:CGRectMake(10, 425, ScreenWidth-20, 60)];
     self.linkTextField.placeholder = @"请输入您的广告链接，网址请加http://";
     self.linkTextField.delegate = self;
     self.linkTextField.borderStyle = UITextBorderStyleRoundedRect;
-    [self.view addSubview:self.linkTextField];
+    [scrollView addSubview:self.linkTextField];
     
     self.saveMessageBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     //        _saveBtn.frame = CGRectMake(10, 500, ScreenWidth-20, 50);
-    self.saveMessageBtn.frame = CGRectMake(10, 565, ScreenWidth-20, 50);
+    self.saveMessageBtn.frame = CGRectMake(10, 495, ScreenWidth-20, 50);
     self.saveMessageBtn.backgroundColor = [UIColor colorWithRed:0/255.0 green:211/255.0 blue:100/255.0 alpha:1];
     [self.saveMessageBtn setTitle:@"保存" forState:UIControlStateNormal];
     self.saveMessageBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
@@ -167,7 +175,7 @@
     [self.saveMessageBtn addTarget:self action:@selector(saveMessageBtnMethod) forControlEvents:UIControlEventTouchUpInside];
     self.saveMessageBtn.layer.cornerRadius = 5;
     self.saveMessageBtn.layer.masksToBounds = YES;
-    [self.view addSubview:self.saveMessageBtn];
+    [scrollView addSubview:self.saveMessageBtn];
     
 }
 
@@ -179,7 +187,7 @@
             self.imgData = UIImageJPEGRepresentation(image, 0.5);
             [self.pictureBtn setBackgroundImage:image forState:UIControlStateNormal];
         }else if(btn == uploadQrCodeBtn){
-            self.qrData = UIImageJPEGRepresentation(image, 0.5);
+            self.qrCodeData = UIImageJPEGRepresentation(image, 0.5);
             [self.qrCodeBtn setBackgroundImage:image forState:UIControlStateNormal];
         }
         
@@ -194,41 +202,80 @@
     
     NSMutableDictionary * infoDic = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:self.adTitleTextField.text forKey:@"adTitle"];
-    [dic setValue:self.adIntroductionTextField.text forKey:@"adDescrible"];
-    [dic setValue:self.linkTextField.text forKey:@"url"];
-    [dic setValue:self.imgData forKey:@"iconImg"];
-    [dic setValue:self.qrData forKey:@"focusBtnImg"];
-    if (infoDic[@"ad4"] == nil) {
-        NSMutableArray * arr = [NSMutableArray array];
-        //非常重要
-        //        [dic setValue:@"id" forKey:@"id"];
-        [arr addObject:dic];
-        [infoDic setValue:arr forKey:@"ad4"];
-        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+    [dic setValue:self.adTitleTextField.text forKey:@"title"];
+    [dic setValue:self.adIntroductionTextField.text forKey:@"content"];
+    [dic setValue:self.linkTextField.text forKey:@"adurl"];  
+    [dic setValue:@"4" forKey:@"type"];
+    NSDictionary * para = [NSDictionary dictionaryWithDictionary:dic];
+    NSMutableArray * arr = [NSMutableArray array];
+    
+    //存在ad1，先去查找ad1里面的所有广告id，有的话说明是要编辑，没有自然就是添加喽
+    if (self.adId != nil) {
+        for (__strong NSMutableDictionary * tempDic in infoDic[@"ad1"]) {
+            NSString * adIdStr = tempDic[@"adId"];
+            if ([self.adId isEqualToString:adIdStr]) {
+                //如果当前类中adId有值且和本地储存的一个广告中的adId相等，说明用户在修改广告条
+                tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [HTTPToolsPost EditPostRequestWithUrl:EditUrl parameters:para imageData:self.imgData QRCode:self.qrCodeData completion:^{
+                    [tempDic setValue:self.imgData forKey:@"image"];
+                    [tempDic setValue:self.qrCodeData forKey:@"twoDimensionCode"];
+                    [arr addObject:tempDic];
+                    [infoDic setValue:arr forKey:@"ad1"];
+                    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                        [self goBack];
+                    }
+                }];
+            }
+        }
     }else{
-        //            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
-        [infoDic[@"ad4"] addObject:dic];
-        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
-        //        for (NSDictionary * dic in tempArr) {
-        //            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
-        //            {
-        //                [dic setValue:self.adTextField.text forKey:@"adTitle"];
-        //                [dic setValue:self.linkTextField.text forKey:@"url"];
-        //                [dic setValue:self.imgData forKey:@"bgImg"];
-        //            }
-        //        }
-        [infoDic setValue:infoDic[@"ad2"] forKey:@"ad2"];
+        [HTTPToolsPost StoragePostRequestWithUrl:StorageUrl parameters:para imageData:self.imgData QRCode:self.qrCodeData success:^(NSString *ADId) {
+            [dic setValue:ADId forKey:@"adId"];
+            [dic setValue:self.imgData forKey:@"image"];
+            [dic setValue:self.qrCodeData forKey:@"twoDimensionCode"];
+            [arr addObject:dic];
+            [infoDic setValue:arr forKey:@"ad1"];
+            if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                [self goBack];
+            }
+        } fail:^{
+            //
+        }];
     }
-    //把刚才写的数组存到沙盒当中去
-    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
-        ZSLog(@"信息保存成功");
-        //        [self changeEnable];
-        [self goBack];
-    }else{
-        ZSLog(@"信息保存失败");
-    }
-    [self dismissViewControllerAnimated:YES completion:nil];
+
+    
+    
+    
+    
+    //    if (infoDic[@"ad4"] == nil) {
+//        NSMutableArray * arr = [NSMutableArray array];
+//        //非常重要
+//        //        [dic setValue:@"id" forKey:@"id"];
+//        [arr addObject:dic];
+//        [infoDic setValue:arr forKey:@"ad4"];
+//        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+//    }else{
+//        //            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
+//        [infoDic[@"ad4"] addObject:dic];
+//        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
+//        //        for (NSDictionary * dic in tempArr) {
+//        //            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
+//        //            {
+//        //                [dic setValue:self.adTextField.text forKey:@"adTitle"];
+//        //                [dic setValue:self.linkTextField.text forKey:@"url"];
+//        //                [dic setValue:self.imgData forKey:@"bgImg"];
+//        //            }
+//        //        }
+//        [infoDic setValue:infoDic[@"ad2"] forKey:@"ad2"];
+//    }
+//    //把刚才写的数组存到沙盒当中去
+//    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+//        ZSLog(@"信息保存成功");
+//        //        [self changeEnable];
+//        [self goBack];
+//    }else{
+//        ZSLog(@"信息保存失败");
+//    }
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
@@ -249,7 +296,7 @@
     [UIView commitAnimations];
     return YES;
 }
-- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+-(void)textFieldDidEndEditing:(UITextField *)textField
 {
     [UIView beginAnimations:@"text" context:nil];
     [UIView setAnimationDuration:0.3];
@@ -259,7 +306,6 @@
     self.view.frame = rect;
     
     [UIView commitAnimations];
-    return YES;
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event{
     [self.view endEditing:YES];

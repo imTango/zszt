@@ -40,12 +40,15 @@
     [UMSocialQQHandler setQQWithAppId:@"100424468" appKey:@"b65df68fd13efe2842da5e141bc8d8a9" url:nil];
     //向微信注册wxd930ea5d5a258f4f
     [WXApi registerApp:@"wx9c560386596469e2" withDescription:@"demo 2.0"];
+
+    
     
     //返回的Url网址   微信消息url地址
 //    http://www.umeng.com/social
     
-    
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+    
+
     
     //2.设置跟控制器
     NSString *key = @"CFBundleVersion";
@@ -118,7 +121,7 @@
         [NSKeyedArchiver archiveRootObject:dic toFile:kPath];
     }else{
 //        ZSLog(@"appdelegate:%@",infoDic);
-//        [infoDic removeAllObjects];
+        [infoDic removeAllObjects];
         [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
     }
     [self.window makeKeyAndVisible];
@@ -184,7 +187,9 @@
 //- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
 //    return [WXApi handleOpenURL:url delegate:[WXApiManager sharedManager]];
 //}
-
+//-(BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options{
+//    return [WXApi handleOpenURL:url delegate:self];
+//}
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {

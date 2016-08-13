@@ -73,6 +73,13 @@
 #define ScreenHeight  [UIScreen mainScreen].bounds.size.height
 // 屏幕宽
 #define ScreenWidth   [[UIScreen mainScreen] bounds].size.width
+//存储广告条的URL
+#define StorageUrl [NSString stringWithFormat:@"http://"]
+//修改广告条的URL
+#define EditUrl [NSString stringWithFormat:@"http://"]
+//删除广告条的URL
+#define DeleteUrl [NSString stringWithFormat:@"http://"]
+
 
 //打印日志
 #ifdef DEBUG // 调试状态, 打开LOG功能
@@ -104,6 +111,14 @@
 /**  *  2 判断是否为4.7inch   375*667   750*1334  */
 #define THREESCREEN ([UIScreen mainScreen].bounds.size.width == 375)
 /**  *  3 判断是否为5.5inch   414*1104   1242*2208  */
+
+//导入头文件网络传入广告条的封装类
+#ifdef __OBJC__
+
+#import "HTTPToolsPost.h"
+
+#endif
+
 
 //#import "UIColor+Extension.h"
 //#import "NSString+Helper.h"

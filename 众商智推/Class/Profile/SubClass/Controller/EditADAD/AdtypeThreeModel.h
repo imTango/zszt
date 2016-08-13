@@ -10,10 +10,11 @@
 
 @interface AdtypeThreeModel : NSObject
 
-@property (nonatomic,strong) NSData * bgImg;
-@property (nonatomic,strong) NSData * focusBtnImg;
-@property (nonatomic,strong) NSString * adTitle;
-@property (nonatomic,strong) NSString * url;
+@property (nonatomic,strong) NSData * image;
+@property (nonatomic,strong) NSData * twoDimensionCode;
+@property (nonatomic,strong) NSString * title;
+@property (nonatomic,strong) NSString * adurl;
+@property (nonatomic,strong) NSString * adId;
 
 -(instancetype)initWithDictionary:(NSDictionary *)dic;
 

@@ -10,10 +10,11 @@
 
 @interface AdtypeTwoModel : NSObject
 
-@property (nonatomic,strong) NSData * iconImg;
-@property (nonatomic,strong) NSString * adTitle;
-@property (nonatomic,strong) NSString * adDescrible;
-@property (nonatomic,strong) NSString * url;
+@property (nonatomic,strong) NSData * image;
+@property (nonatomic,strong) NSString * title;
+@property (nonatomic,strong) NSString * content;
+@property (nonatomic,strong) NSString * adurl;
+@property (nonatomic,strong) NSString * adId;
 
 -(instancetype)initWithDictionary:(NSDictionary *)dic;
 

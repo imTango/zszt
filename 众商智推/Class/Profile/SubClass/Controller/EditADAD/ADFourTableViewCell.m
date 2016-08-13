@@ -21,6 +21,9 @@
 
 -(void)createUI{
     self.fourthIconImg = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 70, 70)];
+    self.fourthIconImg.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.fourthIconImg.layer.shadowOffset = CGSizeMake(1, 0);
+    self.fourthIconImg.layer.shadowRadius = 5;
     [self.contentView addSubview:self.fourthIconImg];
     
     self.fourthAdTitle = [[UILabel alloc] initWithFrame:CGRectMake(90, 20, ScreenWidth-90-100, 30)];
@@ -39,12 +42,13 @@
 }
 
 -(void)loadDataWithModel:(AdtypeFourModel*)model indexPath:(NSIndexPath *)indexpath{
-    self.fourthIconImg.image = [UIImage imageWithData:model.iconImg];
-    [self.fourthFocusBtn setBackgroundImage:[UIImage imageWithData:model.focusBtnImg] forState:UIControlStateNormal];
+    self.fourthIconImg.image = [UIImage imageWithData:model.image];
+    [self.fourthFocusBtn setBackgroundImage:[UIImage imageWithData:model.twoDimensionCode] forState:UIControlStateNormal];
     [self.fourthFocusBtn setTitle:@"+关注" forState:UIControlStateNormal];
-    self.fourthAdTitle.text = model.adTitle;
-    self.fourthAdDescrible.text = model.adDescrible;
-    self.fourthUrl = model.url;
+    self.fourthAdTitle.text = model.title;
+    self.fourthAdDescrible.text = model.content;
+    self.fourthUrl = model.adurl;
+    self.adId = model.adId;
     
 }
 

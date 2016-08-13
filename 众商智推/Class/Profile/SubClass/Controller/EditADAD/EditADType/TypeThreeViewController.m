@@ -36,6 +36,7 @@
     [self.view setBackgroundColor:ZSColor(244, 244, 244)];
     [self createHeadUI];
     [self createContentControls];
+    self.imgData = [NSData dataWithData:UIImagePNGRepresentation([UIImage imageNamed:@"11"])];
     
 }
 #pragma mark - 创建顶部View
@@ -126,12 +127,6 @@
     backgroundLabel.font = [UIFont boldSystemFontOfSize:20];
     [scrollView addSubview:backgroundLabel];
     
-    //选中的按钮
-    self.selectedImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vv"]];
-    self.selectedImg.size = CGSizeMake(20,20);
-    self.selectedImg.center = CGPointMake(CGRectGetMaxX(self.background1.frame),CGRectGetMinY(self.background1.frame));
-    self.imgData = UIImagePNGRepresentation([UIImage imageNamed:@"11.png"]);
-    
     //背景1
     self.background1 = [UIButton buttonWithType:UIButtonTypeCustom];
     self.background1.frame = CGRectMake(10, 425, ScreenWidth-20, 90);
@@ -203,6 +198,14 @@
     self.saveMessageBtn.layer.cornerRadius = 5;
     self.saveMessageBtn.layer.masksToBounds = YES;
     [scrollView addSubview:self.saveMessageBtn];
+    
+    //选中的按钮
+    self.selectedImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vv"]];
+    self.selectedImg.size = CGSizeMake(20,20);
+    self.selectedImg.center = CGPointMake(CGRectGetMaxX(self.background1.frame),CGRectGetMinY(self.background1.frame));
+    [scrollView addSubview:self.selectedImg];
+    self.imgData = UIImagePNGRepresentation([UIImage imageNamed:@"11.png"]);
+    
     scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.saveMessageBtn.frame)+20);
 }
 
@@ -210,7 +213,7 @@
     
     [self.selectedImg removeFromSuperview];
     self.selectedImg.center = CGPointMake(CGRectGetMaxX(sender.frame), CGRectGetMinY(sender.frame));
-    
+    [scrollView addSubview:self.selectedImg];
     UIImage * img = [UIImage imageNamed:[NSString stringWithFormat:@"%ld.png",(long)sender.tag]];
     self.imgData = UIImagePNGRepresentation(img);
 }
@@ -246,42 +249,80 @@
     
     NSMutableDictionary * infoDic = (NSMutableDictionary *)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:self.adTextField.text forKey:@"adTitle"];
-    [dic setValue:self.linkTextField.text forKey:@"url"];
-    [dic setValue:self.imgData forKey:@"bgImg"];
-    [dic setValue:self.qrCodeData forKey:@"focusBtnImg"];
-    [dic setValue:[NSString stringWithFormat:@"%ld",self.orderNum] forKey:@"orderNum"];
-    if (infoDic[@"ad3"] == nil) {
-        NSMutableArray * arr = [NSMutableArray array];
-        //非常重要
-        //        [dic setValue:@"id" forKey:@"id"];
-        [arr addObject:dic];
-        [infoDic setValue:arr forKey:@"ad3"];
-        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
-    }else{
-        //            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
-        [infoDic[@"ad3"] addObject:dic];
-        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
-        //        for (NSDictionary * dic in tempArr) {
-        //            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
-        //            {
-        //                [dic setValue:self.adTextField.text forKey:@"adTitle"];
-        //                [dic setValue:self.linkTextField.text forKey:@"url"];
-        //                [dic setValue:self.imgData forKey:@"bgImg"];
-        //            }
-        //        }
-        [infoDic setValue:infoDic[@"ad3"] forKey:@"ad3"];
-    }
-    //把刚才写的数组存到沙盒当中去
-    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
-        ZSLog(@"信息保存成功");
-        //        [self changeEnable];
-        [self goBack];
-    }else{
-        ZSLog(@"信息保存失败");
-    }
+    [dic setValue:self.adTextField.text forKey:@"title"];
+    [dic setValue:self.linkTextField.text forKey:@"adurl"];
+    [dic setValue:@"3" forKey:@"type"];
+    NSDictionary * para = [NSDictionary dictionaryWithDictionary:dic];
+    NSMutableArray * arr = [NSMutableArray array];
     
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //存在ad1，先去查找ad1里面的所有广告id，有的话说明是要编辑，没有自然就是添加喽
+    if (self.adId != nil) {
+        for (__strong NSMutableDictionary * tempDic in infoDic[@"ad1"]) {
+            NSString * adIdStr = tempDic[@"adId"];
+            if ([self.adId isEqualToString:adIdStr]) {
+                //如果当前类中adId有值且和本地储存的一个广告中的adId相等，说明用户在修改广告条
+                tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [HTTPToolsPost EditPostRequestWithUrl:EditUrl parameters:para imageData:self.imgData QRCode:self.qrCodeData completion:^{
+                    [tempDic setValue:self.imgData forKey:@"image"];
+                    [tempDic setValue:self.qrCodeData forKey:@"twoDimensionCode"];
+                    [arr addObject:tempDic];
+                    [infoDic setValue:arr forKey:@"ad1"];
+                    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                        [self goBack];
+                    }
+                }];
+            }
+        }
+    }else{
+        [HTTPToolsPost StoragePostRequestWithUrl:StorageUrl parameters:para imageData:self.imgData QRCode:self.qrCodeData success:^(NSString *ADId) {
+                [dic setValue:ADId forKey:@"adId"];
+                [dic setValue:self.imgData forKey:@"image"];
+                [dic setValue:self.qrCodeData forKey:@"twoDimensionCode"];
+                [arr addObject:dic];
+                [infoDic setValue:arr forKey:@"ad1"];
+                if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                    [self goBack];
+                }
+        } fail:^{
+            //
+        }];
+    }
+
+    
+    
+    
+    
+    //    if (infoDic[@"ad3"] == nil) {
+//        NSMutableArray * arr = [NSMutableArray array];
+//        //非常重要
+//        //        [dic setValue:@"id" forKey:@"id"];
+//        [arr addObject:dic];
+//        [infoDic setValue:arr forKey:@"ad3"];
+//        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+//    }else{
+//        //            NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad2"]];
+//        [infoDic[@"ad3"] addObject:dic];
+//        //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
+//        //        for (NSDictionary * dic in tempArr) {
+//        //            if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
+//        //            {
+//        //                [dic setValue:self.adTextField.text forKey:@"adTitle"];
+//        //                [dic setValue:self.linkTextField.text forKey:@"url"];
+//        //                [dic setValue:self.imgData forKey:@"bgImg"];
+//        //            }
+//        //        }
+//        [infoDic setValue:infoDic[@"ad3"] forKey:@"ad3"];
+//    }
+//    //把刚才写的数组存到沙盒当中去
+//    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+//        ZSLog(@"信息保存成功");
+//        //        [self changeEnable];
+//        [self goBack];
+//    }else{
+//        ZSLog(@"信息保存失败");
+//    }
+//    
+//    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField

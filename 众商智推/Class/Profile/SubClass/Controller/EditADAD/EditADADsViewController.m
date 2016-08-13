@@ -288,7 +288,7 @@
         for (NSDictionary * dic in infoDic[@"ad1"]) {
             AdtypeOneModel * model = [[AdtypeOneModel alloc] initWithDictionary:dic];
             [modelarr addObject:model];
-            NSLog(@"model数量%ld",self.modelArr1.count);
+            NSLog(@"model数量%lu",(unsigned long)self.modelArr1.count);
         }
         self.modelArr1 = [NSMutableArray arrayWithArray:modelarr];
     }
@@ -358,6 +358,11 @@
     [self.userADTableView reloadData];
 }
 
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
 #pragma mark cell的侧滑删除，编辑自定义按钮
 - (NSArray*)tableView:(UITableView*)tableView editActionsForRowAtIndexPath:(NSIndexPath*)indexPath
 
@@ -367,35 +372,76 @@
     UITableViewRowAction * deleteAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleDefault title:@"删除" handler:^(UITableViewRowAction*_Nonnullaction,NSIndexPath*_NonnullindexPath) {
         //删除实现的代码（先网络请求删除后台的数据，成功回调后再删除本地数据）
         switch (indexPath.section) {
-            case 0:
-                [self.modelArr1 removeObjectAtIndex:indexPath.row];
-                [infoDic[@"ad1"] removeObjectAtIndex:indexPath.row];
-                break;
-               
-            case 2:
-                [self.modelArr2 removeObjectAtIndex:indexPath.row];
-                [infoDic[@"ad2"] removeObjectAtIndex:indexPath.row];
+            case 0:{
+                AdtypeOneModel * model = (AdtypeOneModel*)[self.modelArr1 objectAtIndex:indexPath.row];
+                [HTTPToolsPost DeletePostRequestWithUrl:DeleteUrl parameters:model.adId completion:^{
+                    [self.modelArr1 removeObjectAtIndex:indexPath.row];
+                    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    [infoDic[@"ad1"] removeObjectAtIndex:indexPath.row];
+                    if (!self.modelArr1) {
+                        tableView.sectionHeaderHeight = 0;
+                    }
+                }];
+                 break;
+            }
+            case 1:{
+                AdtypeTwoModel * model = (AdtypeTwoModel*)[self.modelArr2 objectAtIndex:indexPath.row];
+                [HTTPToolsPost DeletePostRequestWithUrl:DeleteUrl parameters:model.adId completion:^{
+                    [self.modelArr2 removeObjectAtIndex:indexPath.row];
+                    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    [infoDic[@"ad2"] removeObjectAtIndex:indexPath.row];
+                    if (!self.modelArr2) {
+                        tableView.sectionHeaderHeight = 0;
+                    }
+                }];
+            }
                 break;
                 
-            case 3:
-                [self.modelArr3 removeObjectAtIndex:indexPath.row];
-                [infoDic[@"ad3"] removeObjectAtIndex:indexPath.row];
+            case 2:{
+                AdtypeThreeModel * model = (AdtypeThreeModel*)[self.modelArr3 objectAtIndex:indexPath.row];
+                [HTTPToolsPost DeletePostRequestWithUrl:DeleteUrl parameters:model.adId completion:^{
+                    [self.modelArr3 removeObjectAtIndex:indexPath.row];
+                    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    [infoDic[@"ad3"] removeObjectAtIndex:indexPath.row];
+                    if (!self.modelArr3) {
+                        tableView.sectionHeaderHeight = 0;
+                    }
+                }];
+            }
                 break;
                 
-            case 4:
-                [self.modelArr4 removeObjectAtIndex:indexPath.row];
-                [infoDic[@"ad4"] removeObjectAtIndex:indexPath.row];
+            case 3:{
+                AdtypeFourModel * model = (AdtypeFourModel*)[self.modelArr3 objectAtIndex:indexPath.row];
+                [HTTPToolsPost DeletePostRequestWithUrl:DeleteUrl parameters:model.adId completion:^{
+                    [self.modelArr4 removeObjectAtIndex:indexPath.row];
+                    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    [infoDic[@"ad4"] removeObjectAtIndex:indexPath.row];
+                    if (!self.modelArr4) {
+                        tableView.sectionHeaderHeight = 0;
+                    }
+                }];
+            }
+
                 break;
                 
-            case 5:
-                [self.modelArr5 removeObjectAtIndex:indexPath.row];
-                [infoDic[@"ad5"] removeObjectAtIndex:indexPath.row];
+            case 4:{
+                AdtypeFiveModel * model = (AdtypeFiveModel*)[self.modelArr3 objectAtIndex:indexPath.row];
+                [HTTPToolsPost DeletePostRequestWithUrl:DeleteUrl parameters:model.adId completion:^{
+                    [self.modelArr5 removeObjectAtIndex:indexPath.row];
+                    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                    [infoDic[@"ad5"] removeObjectAtIndex:indexPath.row];
+                    if (!self.modelArr5) {
+                        tableView.sectionHeaderHeight = 0;
+                    }
+                }];
+            }
+
                 break;
                 
             default:
                 break;
         }
-        
+        [tableView reloadData];
         [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
         
     }];
@@ -406,15 +452,15 @@
             case 0:{
                 [self presentViewController:oneCTL animated:YES completion:^{
                     oneCTL.orderNum = [infoDic[@"ad1"][indexPath.row][@"orderNum"] integerValue];
-                    oneCTL.adTextField.text = infoDic[@"ad1"][indexPath.row][@"adTitle"];
-                    oneCTL.linkTextField.text = infoDic[@"ad1"][indexPath.row][@"url"];
-                    oneCTL.imgData = infoDic[@"ad1"][indexPath.row][@"bgImg"];
+                    oneCTL.adTextField.text = infoDic[@"ad1"][indexPath.row][@"title"];
+                    oneCTL.linkTextField.text = infoDic[@"ad1"][indexPath.row][@"adurl"];
+                    oneCTL.imgData = infoDic[@"ad1"][indexPath.row][@"image"];
                     if (oneCTL.orderNum == 44) {
                         oneCTL.selectedImg.center = CGPointMake(CGRectGetMaxX(oneCTL.hiddenBtn.frame), CGRectGetMinY(oneCTL.hiddenBtn.frame));
                         
                         [oneCTL.hiddenBtn setBackgroundImage:[UIImage imageWithData:oneCTL.imgData] forState:UIControlStateNormal];
                         [oneCTL.selectedImg removeFromSuperview];
-                        oneCTL.selectedImg.size = CGSizeMake(20,20);
+                        oneCTL.selectedImg.size = CGSizeMake(15,15);
                         oneCTL.selectedImg.center = CGPointMake(CGRectGetMaxX(oneCTL.hiddenBtn.frame), CGRectGetMinY(oneCTL.hiddenBtn.frame));
                         
                         CGSize size = CGSizeMake(0, 840);
@@ -442,11 +488,11 @@
                 break;
             case 1:{
                 [self presentViewController:twoCTL animated:YES completion:^{
-                    twoCTL.adTitleTextField.text = infoDic[@"ad2"][indexPath.row][@"adTitle"];
-                    twoCTL.adIntroductionTextField.text = infoDic[@"ad2"][indexPath.row][@"adDescrible"];
-                    twoCTL.imgData = infoDic[@"ad2"][indexPath.row][@"imgData"];
+                    twoCTL.adTitleTextField.text = infoDic[@"ad2"][indexPath.row][@"title"];
+                    twoCTL.adIntroductionTextField.text = infoDic[@"ad2"][indexPath.row][@"content"];
+                    twoCTL.imgData = infoDic[@"ad2"][indexPath.row][@"image"];
                     [twoCTL.pictureBtn setBackgroundImage:[UIImage imageWithData:twoCTL.imgData] forState:UIControlStateNormal];
-                    twoCTL.linkTextField.text = infoDic[@"ad2"][indexPath.row][@"url"];
+                    twoCTL.linkTextField.text = infoDic[@"ad2"][indexPath.row][@"adurl"];
                 }];}
                 break;
             case 2:{
@@ -464,9 +510,9 @@
                     {
                         [threeCTL buttonSelected:threeCTL.background3];
                     }
-                    threeCTL.adTextField.text = infoDic[@"ad1"][indexPath.row][@"adTitle"];
-                    threeCTL.linkTextField.text = infoDic[@"ad1"][indexPath.row][@"url"];
-                    threeCTL.imgData = infoDic[@"ad1"][indexPath.row][@"bgImg"];
+                    threeCTL.adTextField.text = infoDic[@"ad1"][indexPath.row][@"title"];
+                    threeCTL.linkTextField.text = infoDic[@"ad1"][indexPath.row][@"adurl"];
+                    threeCTL.imgData = infoDic[@"ad1"][indexPath.row][@"image"];
                 }];}
                 break;
             case 3:{

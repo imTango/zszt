@@ -14,6 +14,7 @@
 @property (strong, nonatomic)  UILabel * secAdTitle;
 @property (strong, nonatomic)  UILabel * secAdDescrible;
 @property (nonatomic, strong)  NSString * secUrl;
+@property (nonatomic, strong) NSString  * adId;
 
 -(void)loadDataWithModel:(AdtypeTwoModel*)model indexPath:(NSIndexPath *)indexpath;
 

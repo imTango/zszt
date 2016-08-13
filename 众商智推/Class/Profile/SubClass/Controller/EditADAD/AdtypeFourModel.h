@@ -10,19 +10,15 @@
 
 @interface AdtypeFourModel : NSObject
 
-@property (nonatomic,strong) NSData * iconImg;
-@property (nonatomic,strong) NSString * adTitle;
-@property (nonatomic,strong) NSString * adDescrible;
-@property (nonatomic,strong) NSData * focusBtnImg;
-@property (nonatomic,strong) NSString * url;
+@property (nonatomic,strong) NSData * image;
+@property (nonatomic,strong) NSString * title;
+@property (nonatomic,strong) NSString * content;
+@property (nonatomic,strong) NSData * twoDimensionCode;
+@property (nonatomic,strong) NSString * adurl;
+@property (nonatomic,strong) NSString * adId;
 
 -(instancetype)initWithDictionary:(NSDictionary *)dic;
 
 @end
 
 
-/*
-  //第五种广告的cell
- @property (strong, nonatomic) IBOutlet UIImageView * fifthIconImg;
- @property (strong, nonatomic) IBOutlet UILabel * fifthAdTitle;
- */

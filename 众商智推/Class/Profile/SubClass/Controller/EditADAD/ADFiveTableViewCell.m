@@ -30,9 +30,10 @@
 }
 
 -(void)loadDataWithModel:(AdtypeFiveModel*)model indexPath:(NSIndexPath *)indexpath{
-    self.fifthBgImg.image = [UIImage imageWithData:model.bgImg];
-    self. fifthAdTitle.text = model.adTitle;
-    self.fifthUrl = model.url;
+    self.fifthBgImg.image = [UIImage imageWithData:model.image];
+    self. fifthAdTitle.text = model.title;
+    self.fifthUrl = model.adurl;
+    self.adId = model.adId;
 }
 - (void)awakeFromNib {
     // Initialization code

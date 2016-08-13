@@ -162,7 +162,7 @@
 //点击索引回调方法
 - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
 {
-    NSLog(@"title:%@  index:%ld",title,index);
+    NSLog(@"title:%@  index:%ld",title,(long)index);
     return index;
 }
 //标题高

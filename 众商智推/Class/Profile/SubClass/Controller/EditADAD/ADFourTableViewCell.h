@@ -14,7 +14,8 @@
 @property (strong, nonatomic)  UILabel * fourthAdTitle;
 @property (strong, nonatomic)  UILabel * fourthAdDescrible;
 @property (strong, nonatomic)  UIButton * fourthFocusBtn;
-@property (nonatomic,strong)   NSString * fourthUrl;
+@property (nonatomic, strong)  NSString * fourthUrl;
+@property (nonatomic, strong)  NSString * adId;
 
 -(void)loadDataWithModel:(AdtypeFourModel*)model indexPath:(NSIndexPath *)indexpath;
 

@@ -31,10 +31,12 @@
 }
 
 -(void)loadDataWithModel:(AdtypeTwoModel*)model indexPath:(NSIndexPath *)indexpath{
-    self.secIconImg.image = [UIImage imageWithData:model.iconImg];
-    self.secAdTitle.text = model.adTitle;
-    self.secAdDescrible.text = model.adDescrible;
-    self.secUrl = model.url;
+    self.secIconImg.image = [UIImage imageWithData:model.image];
+    self.secAdTitle.text = model.title;
+    self.secAdDescrible.text = model.content;
+    self.secUrl = model.adurl;
+    self.adId = model.adId;
+
 }
 
 - (void)awakeFromNib {

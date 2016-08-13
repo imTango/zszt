@@ -49,6 +49,7 @@
 
 @property (strong,nonatomic) UIButton * hiddenBtn;
 
+@property (nonatomic,strong) NSString * adId;
 
 /**
  *保存按钮

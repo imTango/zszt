@@ -21,4 +21,6 @@
 //广告背景图片
 @property (nonatomic,strong) NSData * imgData;
 
+@property (nonatomic,strong) NSString * adId;
+
 @end

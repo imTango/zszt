@@ -28,9 +28,11 @@
 }
 
 -(void)loadDataWithModel:(AdtypeOneModel*)model indexPath:(NSIndexPath *)indexpath{
-    self.firstBgImg.image = [UIImage imageWithData:model.bgImg];
-    self.fisrtADLabel.text = model.adTitle;
-    self.firstUrl = model.url;
+    self.firstBgImg.image = [UIImage imageWithData:model.image];
+    self.fisrtADLabel.text = model.title;
+    self.firstUrl = model.adurl;
+    self.adId = model.adId;
+
 }
 
 

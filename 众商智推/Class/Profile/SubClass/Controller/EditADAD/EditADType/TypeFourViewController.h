@@ -26,6 +26,9 @@
 //icon的image
 @property (nonatomic,strong) NSData * imgData;
 //二维码的图片
-@property (nonatomic,strong) NSData * qrData;
+@property (nonatomic,strong) NSData * qrCodeData;
+
+@property (nonatomic,strong) NSString * adId;
+
 
 @end

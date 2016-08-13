@@ -52,6 +52,7 @@
     [headView addSubview:self.shareBtn];
     
 }
+
 - (void)goBack
 {
     [self dismissViewControllerAnimated:YES completion:nil];

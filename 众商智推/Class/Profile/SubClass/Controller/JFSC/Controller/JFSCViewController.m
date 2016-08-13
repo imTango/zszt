@@ -191,7 +191,7 @@ static NSString *reuseID = @"reuseID";
     return 7;
 }
 
-#warning 选中单元格方法
+#pragma mark 选中单元格方法
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     ZSLog(@"collectionView被点击了%lu",indexPath.row);

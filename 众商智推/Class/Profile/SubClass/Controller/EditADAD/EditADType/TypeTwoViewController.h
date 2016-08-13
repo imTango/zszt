@@ -31,4 +31,6 @@
 //icon的图片
 @property (nonatomic,strong) UIButton *pictureBtn;
 
+@property (nonatomic,strong) NSString * adId;
+
 @end

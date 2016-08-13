@@ -50,6 +50,9 @@
 //广告的序号
 @property (nonatomic,assign) NSInteger orderNum;
 
+@property (nonatomic,strong) NSString * adId;
+
+
 -(void)buttonSelected:(UIButton*)sender;
 
 @end

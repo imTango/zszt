@@ -10,9 +10,10 @@
 #import "AdtypeFiveModel.h"
 @interface ADFiveTableViewCell : UITableViewCell
 
-@property (strong, nonatomic)  UIImageView * fifthBgImg;
-@property (strong, nonatomic)  UILabel * fifthAdTitle;
-@property (nonatomic,strong)   NSString * fifthUrl;
+@property (strong, nonatomic) UIImageView * fifthBgImg;
+@property (strong, nonatomic) UILabel     * fifthAdTitle;
+@property (nonatomic, strong) NSString    * fifthUrl;
+@property (nonatomic, strong) NSString    * adId;
 
 -(void)loadDataWithModel:(AdtypeFiveModel*)model indexPath:(NSIndexPath *)indexpath;
 @end

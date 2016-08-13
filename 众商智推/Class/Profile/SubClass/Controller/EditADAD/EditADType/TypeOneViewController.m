@@ -28,6 +28,7 @@
     [self createHeadUI];
     [self createContentControls];
     self.adInfoDic = [[NSMutableDictionary alloc] init];
+    self.imgData = [NSData dataWithData:UIImagePNGRepresentation([UIImage imageNamed:@"11"])];
     
 }
 #pragma mark - 创建顶部View
@@ -92,11 +93,6 @@
     backgroundLabel.text = @"广告背景";
     backgroundLabel.font = [UIFont boldSystemFontOfSize:20];
     [self.scrollView addSubview:backgroundLabel];
-    
-    
-    //选中的按钮
-    self.selectedImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vv"]];
-    [self.scrollView addSubview:self.selectedImg];
 
     //背景1
     self.background1 = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -107,7 +103,7 @@
     [self.background1 setTitle:@"广告语" forState:UIControlStateNormal];
     [self.background1 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.background1 setBackgroundImage:[UIImage imageNamed:@"11.png"] forState:UIControlStateNormal];
-    [self.background1 setBackgroundImage:[UIImage imageNamed:@"11.png"] forState:UIControlStateSelected];
+//    [self.background1 setBackgroundImage:[UIImage imageNamed:@"11.png"] forState:UIControlStateSelected];
     [self.background1 addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.background1];
     
@@ -120,7 +116,7 @@
     [self.background2 setTitle:@"广告语" forState:UIControlStateNormal];
     [self.background2 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.background2 setBackgroundImage:[UIImage imageNamed:@"22.png"] forState:UIControlStateNormal];
-    [self.background2 setBackgroundImage:[UIImage imageNamed:@"22.png"] forState:UIControlStateSelected];
+//    [self.background2 setBackgroundImage:[UIImage imageNamed:@"22.png"] forState:UIControlStateSelected];
     [self.background2 addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.background2];
     //背景3
@@ -132,7 +128,7 @@
     [self.background3 setTitle:@"广告语" forState:UIControlStateNormal];
     [self.background3 setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.background3 setBackgroundImage:[UIImage imageNamed:@"33.png"] forState:UIControlStateNormal];
-    [self.background3 setBackgroundImage:[UIImage imageNamed:@"33.png"] forState:UIControlStateSelected];
+//    [self.background3 setBackgroundImage:[UIImage imageNamed:@"33.png"] forState:UIControlStateSelected];
     [self.background3 addTarget:self action:@selector(buttonSelected:) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.background3];
     
@@ -166,11 +162,16 @@
     [self.saveMessageBtn setTitle:@"保存" forState:UIControlStateNormal];
     self.saveMessageBtn.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.saveMessageBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
-    [self.saveMessageBtn setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
     [self.saveMessageBtn addTarget:self action:@selector(saveMessageBtnMethod) forControlEvents:UIControlEventTouchUpInside];
     self.saveMessageBtn.layer.cornerRadius = 5;
     self.saveMessageBtn.layer.masksToBounds = YES;
     [self.scrollView addSubview:self.saveMessageBtn];
+    
+    //选中的按钮
+    self.selectedImg = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"vv"]];
+    self.selectedImg.size = CGSizeMake(20,20);
+    self.selectedImg.center = CGPointMake(CGRectGetMaxX(self.background1.frame), CGRectGetMinY(self.background1.frame));
+    [self.scrollView addSubview:self.selectedImg];
     
     self.scrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(self.saveMessageBtn.frame)+20);
 
@@ -184,6 +185,7 @@
     [self.selectedImg removeFromSuperview];
     self.selectedImg.size = CGSizeMake(20,20);
     self.selectedImg.center = CGPointMake(CGRectGetMaxX(sender.frame), CGRectGetMinY(sender.frame));
+    [self.scrollView addSubview:self.selectedImg];
     UIImage * img = [UIImage imageNamed:[NSString stringWithFormat:@"%ld.png",(long)sender.tag]];
     self.imgData = UIImagePNGRepresentation(img);
 }
@@ -195,27 +197,64 @@
     NSMutableDictionary * infoDic = [NSMutableDictionary dictionaryWithCapacity:0];
     infoDic = (NSMutableDictionary*)[NSKeyedUnarchiver unarchiveObjectWithFile:kPath];//将沙盒路径下的归档对象解档出来
     NSMutableDictionary * dic = [NSMutableDictionary dictionary];
-    [dic setValue:self.adTextField.text forKey:@"adTitle"];
-    [dic setValue:self.linkTextField.text forKey:@"url"];
-    [dic setValue:self.imgData forKey:@"bgImg"];
-    [dic setValue:[NSString stringWithFormat:@"%ld",self.orderNum] forKey:@"orderNum"];
-    if (infoDic[@"ad1"] == nil) {
-        NSMutableArray * arr = [NSMutableArray array];
-        //非常重要
-//        [dic setValue:@"id" forKey:@"id"];
+    [dic setValue:self.adTextField.text forKey:@"title"];
+    [dic setValue:self.linkTextField.text forKey:@"adurl"];
+    [dic setValue:@"1" forKey:@"type"];
+    NSMutableDictionary * para = [NSMutableDictionary dictionaryWithDictionary:dic];
+    [dic setValue:[NSString stringWithFormat:@"%ld",(long)self.orderNum] forKey:@"orderNum"];
+    NSMutableArray * arr = [NSMutableArray array];
 
-        [arr addObject:dic];
-        
-        [infoDic setValue:arr forKey:@"ad1"];
-        [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
-    }
-    else{
-//        NSMutableArray * tempArr = [NSMutableArray arrayWithObject:infoDic[@"ad1"]];
-//        ZSLog(@"temp%@",tempArr);
-        if ([infoDic[@"ad1"] isKindOfClass:[NSMutableArray class]]) {
-            [infoDic[@"ad1"] addObject:dic];
-            [infoDic setValue:infoDic[@"ad1"] forKey:@"ad1"];
+    //存在ad1，先去查找ad1里面的所有广告id，有的话说明是要编辑，没有自然就是添加喽
+    if (self.adId != nil) {
+        for (__strong NSMutableDictionary * tempDic in infoDic[@"ad1"]) {
+            NSString * adIdStr = tempDic[@"adId"];
+            if ([self.adId isEqualToString:adIdStr]) {
+                //如果当前类中adId有值且和本地储存的一个广告中的adId相等，说明用户在修改广告条
+                tempDic = [NSMutableDictionary dictionaryWithDictionary:dic];
+                [HTTPToolsPost EditPostRequestWithUrl:EditUrl parameters:para imageData:self.imgData QRCode:nil completion:^{
+                    [tempDic setValue:self.imgData forKey:@"image"];
+                    [arr addObject:tempDic];
+                    [infoDic setValue:arr forKey:@"ad1"];
+                    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                        [self goBack];
+                    }
+                }];
+            }
         }
+    }else{
+        //
+        [HTTPToolsPost StoragePostRequestWithUrl:StorageUrl parameters:para imageData:self.imgData QRCode:nil success:^(NSString *ADId) {
+            [dic setValue:ADId forKey:@"adId"];
+            [dic setValue:self.imgData forKey:@"image"];
+            [arr addObject:dic];
+            [infoDic setValue:arr forKey:@"ad1"];
+            if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
+                [self goBack];
+            }
+        } fail:^{
+            //
+        }];
+    }
+
+    
+//    if (infoDic[@"ad1"] == nil) {
+//        //非常重要
+//        [HTTPToolsPost StoragePostRequestWithUrl:StorageUrl parameters:dic success:^(NSString *ADId) {
+//            [dic setValue:ADId forKey:@"adId"];
+//            [arr addObject:dic];
+//            [infoDic setValue:arr forKey:@"ad1"];
+//            BOOL sucess = [NSKeyedArchiver archiveRootObject:infoDic toFile:kPath];
+//            if (sucess) {
+//                [self goBack];
+//            }
+//        } fail:^{
+//            [MBProgressHUD showError:@"网络状况较差，存储失败"];
+//        }];
+//
+//            }
+//    else{
+    
+        
     //保存用户添加的数据（如果数据存在，则覆盖setObject: forkey:，否则添加addObject）
 //    for (NSDictionary * dic in tempArr) {
 //        if ([dic[@"id"] isEqualToString:self.ID])//@"从服务器请求回来的id添加到广告条中作为一个value，编辑跳转到这个页面时把id当做参数传过来，并找到id对应的dictionary，重新保存数据，然后写入plist文件，若是添加跳转到这个页面时，则else{addObject到tempArr数组中，并写入plist文件}，重点：无论怎样写入plist文件之前要先将数据进行post到后台成功返回再存储"])
@@ -226,18 +265,7 @@
 //        }
 //    }
         
-    }
-    //把刚才写的数组存到沙盒当中去
-    if ([NSKeyedArchiver archiveRootObject:infoDic toFile:kPath]) {
-        ZSLog(@"信息保存成功");
-//        NSLog(@"plist:%@",infoDic);
-        //        [self changeEnable];
-        [self goBack];
-    }else{
-        ZSLog(@"信息保存失败");
-    }
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    }
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -279,7 +307,6 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     [self.view endEditing:YES];
-    //    [self.editingTextField resignFirstResponder];
     
 }
 

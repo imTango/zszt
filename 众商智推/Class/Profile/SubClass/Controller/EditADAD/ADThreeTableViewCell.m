@@ -25,8 +25,9 @@
     self.thirdBgImg.layer.borderWidth = 0.6f;
     self.thirdBgImg.layer.masksToBounds = YES;
     self.thirdBgImg.layer.cornerRadius = 5;
-    self.thirdBgImg.layer.borderColor = [UIColor grayColor].CGColor;
-
+    self.thirdBgImg.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.thirdBgImg.layer.shadowOffset = CGSizeMake(1, 0);
+    self.thirdBgImg.layer.shadowRadius = 5;
     [self.contentView addSubview:self.thirdBgImg];
     
     self.thirdFocusBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -45,10 +46,11 @@
 }
 
 -(void)loadDataWithModel:(AdtypeThreeModel*)model indexPath:(NSIndexPath *)indexpath{
-    self.thirdBgImg.image = [UIImage imageWithData:model.bgImg];
-    self.thirdAdTitle.text = model.adTitle;
-    [self.thirdFocusBtn setBackgroundImage:[UIImage imageWithData:model.focusBtnImg] forState:UIControlStateNormal];
-    self.thirdUrl = model.url;
+    self.thirdBgImg.image = [UIImage imageWithData:model.image];
+    self.thirdAdTitle.text = model.title;
+    [self.thirdFocusBtn setBackgroundImage:[UIImage imageWithData:model.twoDimensionCode] forState:UIControlStateNormal];
+    self.thirdUrl = model.adurl;
+    self.adId = model.adId;
     
 }
 - (void)awakeFromNib {

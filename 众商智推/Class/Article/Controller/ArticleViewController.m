@@ -46,7 +46,7 @@
 
 
 //顶部使用collectionView的情况
-@property (strong, nonatomic) UICollectionView * headTitleCollectView;
+//@property (strong, nonatomic) UICollectionView * headTitleCollectView;
 @property (strong, nonatomic) UIButton *titleButton;
 
 @property (strong,nonatomic)  NSArray *allVC;
@@ -334,9 +334,9 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
             ZSLog(@"保存失败");
         }
         
-        ZSLog(@"%@",SELECTORCITYPATH);
-        NSArray *list = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithFile:SELECTORCITYPATH];
-        ZSLog(@"%@",list);
+//        ZSLog(@"%@",SELECTORCITYPATH);
+//        NSArray *list = (NSArray *)[NSKeyedUnarchiver unarchiveObjectWithFile:SELECTORCITYPATH];
+//        ZSLog(@"%@",list);
     }
     
 }
@@ -468,30 +468,30 @@ static NSString *cellIdentifier = @"UICollectionViewCell";
     return _headerscrollView;
 }
 
-- (UICollectionView *)headTitleCollectView
-{
-    if (!_headTitleCollectView) {
-        
-        // 布局
-        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
-        [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-        // 初始化
-        _headTitleCollectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth - 120, 60) collectionViewLayout:layout];
-        // 背景颜色
-        _headTitleCollectView.backgroundColor = [UIColor whiteColor];
-        // _headTitleCollectView移动范围
-        _headTitleCollectView.contentSize = CGSizeMake(1118, 0);
-        _headTitleCollectView.showsHorizontalScrollIndicator = NO;
-        // 设置代理
-        _headTitleCollectView.delegate = self;
-        _headTitleCollectView.dataSource = self;
-        // 注册cell
-        [_headTitleCollectView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
-        // 注册view
-        [_headTitleCollectView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseID];
-    }
-    return _headTitleCollectView;
-}
+//- (UICollectionView *)headTitleCollectView
+//{
+//    if (!_headTitleCollectView) {
+//        
+//        // 布局
+//        UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
+//        [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+//        // 初始化
+//        _headTitleCollectView = [[UICollectionView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth - 120, 60) collectionViewLayout:layout];
+//        // 背景颜色
+//        _headTitleCollectView.backgroundColor = [UIColor whiteColor];
+//        // _headTitleCollectView移动范围
+//        _headTitleCollectView.contentSize = CGSizeMake(1118, 0);
+//        _headTitleCollectView.showsHorizontalScrollIndicator = NO;
+//        // 设置代理
+//        _headTitleCollectView.delegate = self;
+//        _headTitleCollectView.dataSource = self;
+//        // 注册cell
+//        [_headTitleCollectView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:cellIdentifier];
+//        // 注册view
+//        [_headTitleCollectView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseID];
+//    }
+//    return _headTitleCollectView;
+//}
 
 
 - (void)didReceiveMemoryWarning {

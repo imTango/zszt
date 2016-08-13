@@ -120,7 +120,7 @@
     [self.goodsScrollView addSubview:numberLabel];
     
     self.amountLabel = [[UILabel alloc] initWithFrame:CGRectMake(85, 460, 100, 30)];
-    self.amountLabel.text = [NSString stringWithFormat:@"%lu",self.goodsAmount];
+    self.amountLabel.text = [NSString stringWithFormat:@"%ld",(long)self.goodsAmount];
     self.amountLabel.font = [UIFont systemFontOfSize:15];
     self.amountLabel.textAlignment = NSTextAlignmentCenter;
     [self.goodsScrollView addSubview:self.amountLabel];
@@ -155,17 +155,17 @@
 {
     if (self.goodsAmount > 0) {
         self.goodsAmount -= 1;
-        self.amountLabel.text = [NSString stringWithFormat:@"%lu",self.goodsAmount];
+        self.amountLabel.text = [NSString stringWithFormat:@"%ld",(long)self.goodsAmount];
     }else{
         self.goodsAmount = 0;
-        self.amountLabel.text = [NSString stringWithFormat:@"%lu",self.goodsAmount];
+        self.amountLabel.text = [NSString stringWithFormat:@"%ld",(long)self.goodsAmount];
     }
 }
 //增加数量的按钮实现方法
 - (void)addBtnBeClick
 {
     self.goodsAmount += 1;
-    self.amountLabel.text = [NSString stringWithFormat:@"%lu",self.goodsAmount];
+    self.amountLabel.text = [NSString stringWithFormat:@"%ld",(long)self.goodsAmount];
 }
 //立即兑换的按钮实现方法
 - (void)changeBtnBeClick

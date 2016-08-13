@@ -43,7 +43,7 @@
         [self createHeadUI];
     }else{
         //创建二个View
-        [self createViewHeight:75 andImage:[UIImage imageNamed:@"v-red"] andTitle:@" 在线支付  " andButtonClickEventName:@selector(weiNameButtonClickEvent)];
+        [self createViewHeight:75 andImage:[UIImage imageNamed:@"v-red"] andTitle:@" 在线支付  " andButtonClickEventName:@selector(weiNameButtonClickEven)];
         [self createViewHeight:152 andImage:[UIImage imageNamed:@"v-yellow"] andTitle:@"VIP激活码" andButtonClickEventName:@selector(ADsButtonClickEvent)];
     }
     //通知传值 注册观察者
@@ -130,7 +130,7 @@
 }
 #pragma mark -
 #pragma mark - 按钮的点击事件
-- (void)weiNameButtonClickEvent
+- (void)weiNameButtonClickEven
 {
     
     //微信支付----------------------------
